@@ -1,0 +1,25 @@
+# Build output
+/duplexchat
+/duplexchat.exe
+/dist/
+*.test
+*.out
+coverage.*
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Runtime files the app writes beside itself — never commit
+config.json
+error.log
+# sign-in tokens and client secrets for the reply dock
+secrets.json
+.secrets.json.*.tmp
+secrets.json.broken-*
+sending.lock
+.window-profile/
+
+# Fonts are dropped in by the user
+fonts/*
+!fonts/.gitkeep
