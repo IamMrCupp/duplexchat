@@ -133,7 +133,9 @@ byte-order-mark handling and the port fallback do not, so they need new tests.
   source leaves the platform with no target rather than hopping to another.
 - **YouTube quota discipline.** Reading never uses the Data API. Sending uses
   `channels.list` once per sign-in, `videos.list` once per broadcast and
-  `liveChatMessages.insert` once per reply, and nothing else. Stream info
+  `liveChatMessages.insert` once per reply, and nothing else. The opt-in
+  viewer count (`youtubeViewers: "api"`) adds one `videos.list` per poll; the
+  default reads the count for free from InnerTube. Stream info
   spends quota only when the info panel is opened, refreshed or saved:
   `liveBroadcasts.list`, `videos.list` (for tags), `videoCategories.list`
   once per run, `liveBroadcasts.update`, and `videos.update` (50 units) only
