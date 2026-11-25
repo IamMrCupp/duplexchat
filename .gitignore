@@ -1,0 +1,44 @@
+# Build output
+/duplexchat
+/duplexchat.exe
+/dist/
+*.test
+*.out
+coverage.*
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Runtime files the app writes beside itself — never commit
+config.json
+error.log
+# sign-in tokens and client secrets for the reply dock
+secrets.json
+.secrets.json.*.tmp
+secrets.json.broken-*
+sending.lock
+.window-profile/
+
+# Fonts are dropped in by the user
+fonts/*
+!fonts/.gitkeep
+
+# claude-project-kit — managed block START
+# Local-only Claude Code state — installed globally via install-commands.sh
+# or scoped per-project, but never committed to the source-code repo.
+.claude/
+
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+# claude-project-kit — managed block END
