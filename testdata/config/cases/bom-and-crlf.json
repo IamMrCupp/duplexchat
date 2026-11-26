@@ -1,0 +1,8 @@
+{
+  "file": "﻿{\r\n  \"host\": \"127.0.0.1\",\r\n  \"port\": 3131,\r\n  \"sources\": [\r\n    {\r\n      \"id\": \"aaaa1111\",\r\n      \"url\": \"https://www.twitch.tv/examplechannel\"\r\n    }\r\n  ]\r\n}",
+  "ops": [
+    {
+      "add": "https://www.youtube.com/@ExampleChannel"
+    }
+  ]
+}

@@ -1,0 +1,624 @@
+{
+  "directVideoId": [
+    {
+      "url": "https://www.youtube.com/watch?v=AAAAAAAAAAA",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://www.youtube.com/watch?feature=x&v=AAAAAAAAAAA&t=1",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://youtu.be/AAAAAAAAAAA?si=x",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://www.youtube.com/live/AAAAAAAAAAA?feature=share",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/AAAAAAAAAAA",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://www.youtube.com/embed/AAAAAAAAAAA",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://www.youtube.com/v/AAAAAAAAAAA",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://www.youtube.com/e/AAAAAAAAAAA",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "https://www.youtube.com/@ExampleChannel",
+      "id": null
+    },
+    {
+      "url": "https://www.youtube.com/channel/UCfakeownerfakeownerfake",
+      "id": null
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=short",
+      "id": null
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=AAAAAAAAAAAextra",
+      "id": "AAAAAAAAAAA"
+    },
+    {
+      "url": "AAAAAAAAAAA",
+      "id": null
+    },
+    {
+      "url": "https://www.youtube.com/live/AAAAAAAAAAA/v=BBBBBBBBBBB?v=CCCCCCCCCCC",
+      "id": "CCCCCCCCCCC"
+    }
+  ],
+  "intColor": [
+    {
+      "n": 4278239141,
+      "color": "#00bfa5"
+    },
+    {
+      "n": 4280150454,
+      "color": "#1de9b6"
+    },
+    {
+      "n": 0,
+      "color": "#000000"
+    },
+    {
+      "n": -1,
+      "color": "#ffffff"
+    },
+    {
+      "n": 16777215,
+      "color": "#ffffff"
+    },
+    {
+      "n": 4294967295,
+      "color": "#ffffff"
+    },
+    {
+      "n": 1.5,
+      "color": "#000001"
+    },
+    {
+      "n": "123",
+      "color": null
+    },
+    {
+      "n": null,
+      "color": null
+    }
+  ],
+  "thumbUrl": [
+    {
+      "obj": {
+        "thumbnails": [
+          {
+            "url": "https://a.example/1"
+          },
+          {
+            "url": "https://a.example/2"
+          }
+        ]
+      },
+      "url": "https://a.example/2"
+    },
+    {
+      "obj": {
+        "thumbnails": [
+          {
+            "url": "//a.example/proto-relative"
+          }
+        ]
+      },
+      "url": "https://a.example/proto-relative"
+    },
+    {
+      "obj": {
+        "thumbnails": [
+          {
+            "url": "http://a.example/insecure"
+          }
+        ]
+      },
+      "url": null
+    },
+    {
+      "obj": {
+        "thumbnails": []
+      },
+      "url": null
+    },
+    {
+      "obj": {
+        "thumbnails": [
+          {}
+        ]
+      },
+      "url": null
+    },
+    {
+      "obj": {},
+      "url": null
+    },
+    {
+      "obj": null,
+      "url": null
+    },
+    {
+      "obj": {
+        "thumbnails": "nope"
+      },
+      "url": null
+    }
+  ],
+  "runs": [
+    {
+      "runs": [
+        {
+          "text": "a"
+        },
+        {
+          "text": "b"
+        }
+      ],
+      "parts": [
+        {
+          "t": "text",
+          "v": "ab"
+        }
+      ],
+      "text": "ab"
+    },
+    {
+      "runs": [
+        {
+          "emoji": {
+            "emojiId": "😀",
+            "shortcuts": [
+              ":grinning:"
+            ],
+            "searchTerms": [
+              "grinning"
+            ]
+          }
+        },
+        {
+          "emoji": {
+            "emojiId": "UCx/abc",
+            "shortcuts": [
+              ":yt:"
+            ],
+            "searchTerms": [
+              "yt"
+            ],
+            "isCustomEmoji": true,
+            "image": {
+              "thumbnails": [
+                {
+                  "url": "https://yt3.ggpht.example/emoji=w24"
+                },
+                {
+                  "url": "https://yt3.ggpht.example/emoji=w48"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "text": "x"
+        }
+      ],
+      "parts": [
+        {
+          "t": "text",
+          "v": "😀"
+        },
+        {
+          "t": "emote",
+          "url": "https://yt3.ggpht.example/emoji=w48",
+          "alt": ":yt:"
+        },
+        {
+          "t": "text",
+          "v": "x"
+        }
+      ],
+      "text": "😀UCx/abcx"
+    },
+    {
+      "runs": [
+        {
+          "emoji": {
+            "emojiId": "UCx/ghi",
+            "shortcuts": [
+              ":broken:"
+            ],
+            "isCustomEmoji": true,
+            "image": {
+              "thumbnails": []
+            }
+          }
+        },
+        {
+          "emoji": {
+            "isCustomEmoji": true,
+            "image": {
+              "thumbnails": [
+                {
+                  "url": "https://yt3.ggpht.example/bare"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emoji": {
+            "emojiId": "UCx/def",
+            "searchTerms": [
+              "hype"
+            ],
+            "isCustomEmoji": true,
+            "image": {
+              "thumbnails": [
+                {
+                  "url": "//yt3.ggpht.example/hype=w48"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "parts": [
+        {
+          "t": "text",
+          "v": ":broken:"
+        },
+        {
+          "t": "emote",
+          "url": "https://yt3.ggpht.example/bare",
+          "alt": "emoji"
+        },
+        {
+          "t": "emote",
+          "url": "https://yt3.ggpht.example/hype=w48",
+          "alt": "hype"
+        }
+      ],
+      "text": "UCx/ghiUCx/def"
+    },
+    {
+      "runs": [
+        {
+          "text": ""
+        },
+        {
+          "emoji": {
+            "shortcuts": [
+              ":wave:"
+            ]
+          }
+        },
+        {
+          "emoji": {}
+        }
+      ],
+      "parts": [
+        {
+          "t": "text",
+          "v": ":wave:"
+        }
+      ],
+      "text": ""
+    },
+    {
+      "runs": [],
+      "parts": [],
+      "text": ""
+    },
+    {
+      "runs": null,
+      "parts": [],
+      "text": ""
+    }
+  ],
+  "simpleOrRuns": [
+    {
+      "node": {
+        "simpleText": "simple"
+      },
+      "text": "simple"
+    },
+    {
+      "node": {
+        "simpleText": ""
+      },
+      "text": ""
+    },
+    {
+      "node": {
+        "runs": [
+          {
+            "text": "r1"
+          },
+          {
+            "emoji": {
+              "emojiId": "😀",
+              "shortcuts": [
+                ":grinning:"
+              ],
+              "searchTerms": [
+                "grinning"
+              ]
+            }
+          }
+        ]
+      },
+      "text": "r1😀"
+    },
+    {
+      "node": {
+        "simpleText": "wins",
+        "runs": [
+          {
+            "text": "loses"
+          }
+        ]
+      },
+      "text": "wins"
+    },
+    {
+      "node": {},
+      "text": ""
+    },
+    {
+      "node": null,
+      "text": ""
+    }
+  ],
+  "authorFrom": [
+    {
+      "r": {
+        "authorName": {
+          "simpleText": "A"
+        },
+        "authorExternalChannelId": "UCaaaaaaaaaaaaaaaaaaaaaa",
+        "authorPhoto": {
+          "thumbnails": [
+            {
+              "url": "https://yt4.ggpht.example/small=s32",
+              "width": 32
+            },
+            {
+              "url": "//yt4.ggpht.example/large=s64",
+              "width": 64
+            }
+          ]
+        },
+        "authorBadges": [
+          {
+            "liveChatAuthorBadgeRenderer": {
+              "icon": {
+                "iconType": "MODERATOR"
+              },
+              "tooltip": "Moderator"
+            }
+          },
+          {
+            "liveChatAuthorBadgeRenderer": {
+              "icon": {
+                "iconType": "OWNER"
+              },
+              "tooltip": "Owner"
+            }
+          },
+          {
+            "liveChatAuthorBadgeRenderer": {
+              "icon": {
+                "iconType": "VERIFIED"
+              },
+              "tooltip": "Verified"
+            }
+          }
+        ]
+      },
+      "author": {
+        "name": "A",
+        "color": null,
+        "roles": [
+          "mod",
+          "owner",
+          "verified"
+        ],
+        "key": "UCaaaaaaaaaaaaaaaaaaaaaa",
+        "avatar": "https://yt4.ggpht.example/large=s64"
+      }
+    },
+    {
+      "r": {
+        "authorName": {
+          "simpleText": "B"
+        },
+        "authorExternalChannelId": null,
+        "authorPhoto": {
+          "thumbnails": [
+            {
+              "url": "https://yt4.ggpht.example/small=s32",
+              "width": 32
+            },
+            {
+              "url": "//yt4.ggpht.example/large=s64",
+              "width": 64
+            }
+          ]
+        },
+        "authorBadges": [
+          {
+            "liveChatAuthorBadgeRenderer": {
+              "customThumbnail": {
+                "thumbnails": [
+                  {
+                    "url": "https://yt3.ggpht.example/member1=s16"
+                  },
+                  {
+                    "url": "https://yt3.ggpht.example/member1=s32"
+                  }
+                ]
+              },
+              "tooltip": "Member (1 months)"
+            }
+          }
+        ]
+      },
+      "author": {
+        "name": "B",
+        "color": null,
+        "roles": [
+          "member"
+        ],
+        "key": null,
+        "avatar": "https://yt4.ggpht.example/large=s64",
+        "badgeUrl": "https://yt3.ggpht.example/member1=s32"
+      }
+    },
+    {
+      "r": {
+        "authorName": {
+          "runs": [
+            {
+              "text": "Run "
+            },
+            {
+              "text": "Name"
+            }
+          ]
+        }
+      },
+      "author": {
+        "name": "Run Name",
+        "color": null,
+        "roles": [],
+        "key": null,
+        "avatar": null
+      }
+    },
+    {
+      "r": {},
+      "author": {
+        "name": "",
+        "color": null,
+        "roles": [],
+        "key": null,
+        "avatar": null
+      }
+    }
+  ],
+  "contData": [
+    {
+      "conts": [
+        {
+          "invalidationContinuationData": {
+            "continuation": "INV",
+            "timeoutMs": 10000
+          }
+        }
+      ],
+      "data": {
+        "token": "INV",
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "conts": [
+        {
+          "timedContinuationData": {
+            "timeoutMs": 5000,
+            "continuation": "TIMED"
+          }
+        }
+      ],
+      "data": {
+        "token": "TIMED",
+        "timeoutMs": 5000
+      }
+    },
+    {
+      "conts": [
+        {
+          "liveChatReplayContinuationData": {
+            "continuation": "REPLAY"
+          }
+        }
+      ],
+      "data": {
+        "token": "REPLAY",
+        "timeoutMs": null
+      }
+    },
+    {
+      "conts": [
+        {
+          "clickTrackingParams": "x",
+          "reloadContinuationData": {
+            "continuation": "RELOAD",
+            "timeoutMs": "7"
+          }
+        }
+      ],
+      "data": {
+        "token": "RELOAD",
+        "timeoutMs": null
+      }
+    },
+    {
+      "conts": [
+        {
+          "a": {
+            "continuation": "FIRST"
+          },
+          "b": {
+            "continuation": "SECOND"
+          }
+        }
+      ],
+      "data": {
+        "token": "FIRST",
+        "timeoutMs": null
+      }
+    },
+    {
+      "conts": [
+        null,
+        "x",
+        {
+          "a": {
+            "continuation": 5
+          }
+        },
+        {
+          "b": {
+            "continuation": "THIRD"
+          }
+        }
+      ],
+      "data": {
+        "token": "THIRD",
+        "timeoutMs": null
+      }
+    },
+    {
+      "conts": [],
+      "data": null
+    },
+    {
+      "conts": null,
+      "data": null
+    }
+  ]
+}

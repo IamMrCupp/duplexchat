@@ -1,0 +1,27 @@
+{
+  "file": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"a\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    },\n    {\n      \"id\": \"b\",\n      \"url\": \"https://www.twitch.tv/otherchannel\"\n    },\n    {\n      \"id\": \"c\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"https://www.twitch.tv/otherchannel\"\n  }\n}",
+  "ids": [
+    "00000003",
+    "00000004"
+  ],
+  "steps": [
+    {
+      "op": {
+        "add": "https://www.youtube.com/watch?v=AAAAAAAAAAA"
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    },\n    {\n      \"id\": \"00000002\",\n      \"url\": \"https://www.twitch.tv/otherchannel\"\n    },\n    {\n      \"id\": \"00000003\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    },\n    {\n      \"id\": \"00000004\",\n      \"url\": \"https://www.youtube.com/watch?v=AAAAAAAAAAA\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"https://www.twitch.tv/otherchannel\",\n    \"youtube\": \"https://www.youtube.com/@ExampleChannel\"\n  }\n}"
+    },
+    {
+      "op": {
+        "remove": 1
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    },\n    {\n      \"id\": \"00000003\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    },\n    {\n      \"id\": \"00000004\",\n      \"url\": \"https://www.youtube.com/watch?v=AAAAAAAAAAA\"\n    }\n  ],\n  \"replyTo\": {\n    \"youtube\": \"https://www.youtube.com/@ExampleChannel\"\n  }\n}"
+    },
+    {
+      "op": {
+        "remove": 0
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000003\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    },\n    {\n      \"id\": \"00000004\",\n      \"url\": \"https://www.youtube.com/watch?v=AAAAAAAAAAA\"\n    }\n  ],\n  \"replyTo\": {\n    \"youtube\": \"https://www.youtube.com/@ExampleChannel\"\n  }\n}"
+    }
+  ]
+}

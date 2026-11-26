@@ -1,0 +1,137 @@
+{
+  "url": "https://www.youtube.com/watch?v=AAAAAAAAAAA&feature=share",
+  "steps": [
+    "resolve",
+    "poll",
+    "poll",
+    "poll"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/watch?v=AAAAAAAAAAA": {
+      "status": 200,
+      "bodyFile": "youtube/pages/watch-live.html"
+    },
+    "GET https://www.youtube.com/live_chat?continuation=BASE_TOKEN_1": {
+      "status": 200,
+      "bodyFile": "youtube/pages/live-chat.html"
+    },
+    "GET https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DAAAAAAAAAAA&format=json": {
+      "status": 200,
+      "body": {
+        "author_name": "Example Channel",
+        "title": "Repair night"
+      }
+    },
+    "POST https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key=AIzaFAKEKEYfakekeyfakekeyfakekey00000&prettyPrint=false": [
+      {
+        "status": 200,
+        "body": {
+          "continuationContents": {
+            "liveChatContinuation": {
+              "continuations": [
+                {
+                  "timedContinuationData": {
+                    "continuation": "NEXT_TOKEN_2",
+                    "timeoutMs": 3000
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "addChatItemAction": {
+                    "item": {
+                      "liveChatTextMessageRenderer": {
+                        "id": "M1",
+                        "message": {
+                          "runs": [
+                            {
+                              "text": "first poll"
+                            }
+                          ]
+                        },
+                        "authorName": {
+                          "simpleText": "Viewer M1"
+                        },
+                        "authorExternalChannelId": "UCviewerviewerviewer0000"
+                      }
+                    }
+                  }
+                },
+                {
+                  "addChatItemAction": {
+                    "item": {
+                      "liveChatTextMessageRenderer": {
+                        "id": "SEED_1",
+                        "message": {
+                          "runs": [
+                            {
+                              "text": "seen already"
+                            }
+                          ]
+                        },
+                        "authorName": {
+                          "simpleText": "Viewer SEED_1"
+                        },
+                        "authorExternalChannelId": "UCviewerviewerviewer0000"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "continuationContents": {
+            "liveChatContinuation": {
+              "continuations": [
+                {
+                  "invalidationContinuationData": {
+                    "continuation": "NEXT_TOKEN_3",
+                    "timeoutMs": 20000
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "addChatItemAction": {
+                    "item": {
+                      "liveChatTextMessageRenderer": {
+                        "id": "M2",
+                        "message": {
+                          "runs": [
+                            {
+                              "text": "long timeout clamps to 8 s"
+                            }
+                          ]
+                        },
+                        "authorName": {
+                          "simpleText": "Viewer M2"
+                        },
+                        "authorExternalChannelId": "UCviewerviewerviewer0000"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "continuationContents": {
+            "liveChatContinuation": {
+              "continuations": [],
+              "actions": []
+            }
+          }
+        }
+      }
+    ]
+  }
+}

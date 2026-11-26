@@ -1,0 +1,324 @@
+{
+  "events": [
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "later",
+      "ms": 4627.073940588161,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "later",
+      "ms": 8002.7357211802155,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "later",
+      "ms": 16527.447039959952,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "later",
+      "ms": 32981.050967471674,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "error",
+        "потерял чат, переподключаюсь: HTTP 503"
+      ]
+    },
+    {
+      "event": "later",
+      "ms": 5000,
+      "next": "initChat"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "later",
+      "ms": 30000,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "later",
+      "ms": 15000,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=TOKEN%2Fwith%2Bchars%3D"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "TOKEN/with+chars="
+      }
+    },
+    {
+      "event": "later",
+      "ms": 16968.377898214385,
+      "next": "poll"
+    }
+  ],
+  "state": {
+    "videoId": "FFFFFFFFFFF",
+    "ownerChannelId": null,
+    "apiKey": null,
+    "clientVersion": "2.20261120.01.00",
+    "continuation": "TOKEN/with+chars=",
+    "errStreak": 3
+  }
+}

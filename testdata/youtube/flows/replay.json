@@ -1,0 +1,12 @@
+{
+  "url": "https://www.youtube.com/live/AAAAAAAAAAA",
+  "steps": [
+    "resolve"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/watch?v=AAAAAAAAAAA": {
+      "status": 200,
+      "bodyFile": "youtube/pages/watch-replay.html"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+[
+  {
+    "line": "PING :tmi.twitch.tv",
+    "calls": [
+      {
+        "call": "write",
+        "args": [
+          "PONG :tmi.twitch.tv\r\n"
+        ]
+      }
+    ]
+  },
+  {
+    "line": "PING",
+    "calls": [
+      {
+        "call": "write",
+        "args": [
+          "PONG :tmi.twitch.tv\r\n"
+        ]
+      }
+    ]
+  },
+  {
+    "line": ":tmi.twitch.tv 001 justinfan12345 :Welcome, GLHF!",
+    "calls": []
+  },
+  {
+    "line": ":justinfan12345.tmi.twitch.tv 353 justinfan12345 = #examplechannel :justinfan12345",
+    "calls": []
+  },
+  {
+    "line": ":justinfan12345.tmi.twitch.tv 366 justinfan12345 #examplechannel :End of /NAMES list",
+    "calls": [
+      {
+        "call": "onStatus",
+        "args": [
+          "live",
+          ""
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@emote-only=0;followers-only=-1;r9k=0;room-id=12345;slow=0;subs-only=0 :tmi.twitch.tv ROOMSTATE #examplechannel",
+    "calls": []
+  },
+  {
+    "line": ":justinfan12345!justinfan12345@justinfan12345.tmi.twitch.tv JOIN #examplechannel",
+    "calls": []
+  },
+  {
+    "line": "@badge-info=;badges=;color=;display-name=justinfan12345;emote-sets=0;mod=0;subscriber=0;user-type= :tmi.twitch.tv USERSTATE #examplechannel",
+    "calls": []
+  },
+  {
+    "line": ":tmi.twitch.tv NOTICE * :Login authentication failed",
+    "calls": [
+      {
+        "call": "onStatus",
+        "args": [
+          "error",
+          "Login authentication failed"
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@msg-id=msg_channel_suspended :tmi.twitch.tv NOTICE #examplechannel :This channel does not exist or has been suspended.",
+    "calls": []
+  },
+  {
+    "line": ":tmi.twitch.tv HOSTTARGET #examplechannel :- 0",
+    "calls": []
+  },
+  {
+    "line": ":tmi.twitch.tv RECONNECT",
+    "calls": [
+      {
+        "call": "destroy",
+        "args": []
+      }
+    ]
+  },
+  {
+    "line": "not an irc line at all",
+    "calls": []
+  },
+  {
+    "line": "@",
+    "calls": []
+  },
+  {
+    "line": "@a=b",
+    "calls": []
+  },
+  {
+    "line": ":",
+    "calls": []
+  },
+  {
+    "line": ":onlyprefix",
+    "calls": []
+  }
+]

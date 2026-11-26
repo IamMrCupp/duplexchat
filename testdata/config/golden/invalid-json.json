@@ -1,0 +1,14 @@
+{
+  "file": "{\"host\": \"0.0.0.0\", \"port\": 3131, \"sources\": [ ",
+  "ids": [
+    "00000001"
+  ],
+  "steps": [
+    {
+      "op": {
+        "add": "https://www.twitch.tv/examplechannel"
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"https://www.twitch.tv/examplechannel\"\n  }\n}"
+    }
+  ]
+}

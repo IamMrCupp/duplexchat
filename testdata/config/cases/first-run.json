@@ -1,0 +1,14 @@
+{
+  "file": null,
+  "ops": [
+    {
+      "add": "https://www.twitch.tv/examplechannel"
+    },
+    {
+      "add": "https://www.youtube.com/@ExampleChannel"
+    },
+    {
+      "remove": 0
+    }
+  ]
+}

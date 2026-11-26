@@ -1,0 +1,11 @@
+{
+  "url": "https://www.youtube.com/c/ExampleChannel",
+  "steps": [
+    "resolve"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/c/ExampleChannel/live": {
+      "throw": "getaddrinfo ENOTFOUND www.youtube.com"
+    }
+  }
+}

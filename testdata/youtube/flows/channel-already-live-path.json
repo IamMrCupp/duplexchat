@@ -1,0 +1,12 @@
+{
+  "url": "m.youtube.com/channel/UCfakeownerfakeownerfake/live?x=1",
+  "steps": [
+    "resolve"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/channel/UCfakeownerfakeownerfake/live": {
+      "status": 200,
+      "bodyFile": "youtube/pages/channel-offline.html"
+    }
+  }
+}

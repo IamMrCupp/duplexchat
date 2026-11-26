@@ -1,0 +1,203 @@
+[
+  {
+    "page": "channel-live.html",
+    "ytInitialData": null,
+    "ownerChannelId": null
+  },
+  {
+    "page": "channel-offline.html",
+    "ytInitialData": null,
+    "ownerChannelId": null
+  },
+  {
+    "page": "live-chat-legacy.html",
+    "ytInitialData": {
+      "contents": {
+        "liveChatRenderer": {
+          "continuations": [
+            {
+              "timedContinuationData": {
+                "continuation": "LEGACY_TIMED",
+                "timeoutMs": 4000
+              }
+            }
+          ],
+          "actions": []
+        }
+      }
+    },
+    "ownerChannelId": null
+  },
+  {
+    "page": "live-chat.html",
+    "ytInitialData": {
+      "continuationContents": {
+        "liveChatContinuation": {
+          "continuations": [
+            {
+              "invalidationContinuationData": {
+                "continuation": "TOP_INVALIDATION",
+                "timeoutMs": 10000
+              }
+            }
+          ],
+          "header": {
+            "liveChatHeaderRenderer": {
+              "viewSelector": {
+                "sortFilterSubMenuRenderer": {
+                  "subMenuItems": [
+                    {
+                      "title": "Top chat",
+                      "selected": true,
+                      "continuation": {
+                        "reloadContinuationData": {
+                          "continuation": "TOP_VIEW_TOKEN"
+                        }
+                      }
+                    },
+                    {
+                      "title": "Live chat",
+                      "selected": false,
+                      "continuation": {
+                        "reloadContinuationData": {
+                          "continuation": "ALL_VIEW_TOKEN"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "actions": [
+            {
+              "addChatItemAction": {
+                "item": {
+                  "liveChatTextMessageRenderer": {
+                    "id": "SEED_1",
+                    "message": {
+                      "runs": [
+                        {
+                          "text": "seed message from the live_chat page"
+                        }
+                      ]
+                    },
+                    "authorName": {
+                      "simpleText": "Early Bird"
+                    },
+                    "authorExternalChannelId": "UCearlybirdearlybirdearl"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ownerChannelId": null
+  },
+  {
+    "page": "watch-live.html",
+    "ytInitialData": {
+      "contents": {
+        "twoColumnWatchNextResults": {
+          "conversationBar": {
+            "liveChatRenderer": {
+              "continuations": [
+                {
+                  "reloadContinuationData": {
+                    "continuation": "BASE_TOKEN_1"
+                  }
+                }
+              ],
+              "header": {
+                "text": "a } brace in a string { and an escaped \" quote"
+              }
+            }
+          },
+          "results": {
+            "recommended": {
+              "channelId": "UCrecommendedrecommended"
+            }
+          }
+        }
+      }
+    },
+    "ownerChannelId": "UCfakeownerfakeownerfake"
+  },
+  {
+    "page": "watch-login.html",
+    "ytInitialData": null,
+    "ownerChannelId": null
+  },
+  {
+    "page": "watch-nothing.html",
+    "ytInitialData": null,
+    "ownerChannelId": null
+  },
+  {
+    "page": "watch-offline.html",
+    "ytInitialData": {
+      "contents": {
+        "twoColumnWatchNextResults": {
+          "results": {}
+        }
+      }
+    },
+    "ownerChannelId": "UCfakeownerfakeownerfake"
+  },
+  {
+    "page": "watch-regex-fallback.html",
+    "ytInitialData": null,
+    "ownerChannelId": null
+  },
+  {
+    "page": "watch-replay.html",
+    "ytInitialData": {
+      "contents": {
+        "twoColumnWatchNextResults": {
+          "conversationBar": {
+            "liveChatRenderer": {
+              "continuations": [
+                {
+                  "reloadContinuationData": {
+                    "continuation": "REPLAY_TOKEN"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ownerChannelId": "UCfakeownerfakeownerfake"
+  },
+  {
+    "page": "watch-unavailable.html",
+    "ytInitialData": {
+      "contents": {
+        "twoColumnWatchNextResults": {
+          "conversationBar": {
+            "conversationBarRenderer": {
+              "availabilityMessage": {
+                "messageRenderer": {
+                  "text": {
+                    "runs": [
+                      {
+                        "text": "Chat is disabled "
+                      },
+                      {
+                        "text": "for this live stream."
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ownerChannelId": null
+  }
+]

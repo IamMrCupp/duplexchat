@@ -1,0 +1,81 @@
+{
+  "events": [
+    {
+      "event": "step",
+      "step": "resolve"
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "connecting",
+        "ищу трансляцию…"
+      ]
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/@ExampleChannel/live",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/watch?v=CCCCCCCCCCC",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/live_chat?continuation=BASE_TOKEN_1",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "live",
+        "чат подключен"
+      ]
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DCCCCCCCCCCC&format=json",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "later",
+      "ms": 1000,
+      "next": "poll"
+    }
+  ],
+  "state": {
+    "videoId": "CCCCCCCCCCC",
+    "ownerChannelId": "UCfakeownerfakeownerfake",
+    "apiKey": "AIzaFAKEKEYfakekeyfakekeyfakekey00000",
+    "clientVersion": "2.20261120.01.00",
+    "continuation": "BASE_TOKEN_1",
+    "errStreak": 0
+  }
+}

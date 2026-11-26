@@ -1,0 +1,300 @@
+[
+  [
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatMembershipItemRenderer": {
+            "id": "MB1",
+            "headerPrimaryText": {
+              "runs": [
+                {
+                  "text": "Member for "
+                },
+                {
+                  "text": "6"
+                },
+                {
+                  "text": " months"
+                }
+              ]
+            },
+            "headerSubtext": {
+              "simpleText": "Repair Crew"
+            },
+            "message": {
+              "runs": [
+                {
+                  "text": "six months already "
+                },
+                {
+                  "emoji": {
+                    "emojiId": "UCx/abc",
+                    "shortcuts": [
+                      ":yt:"
+                    ],
+                    "searchTerms": [
+                      "yt"
+                    ],
+                    "isCustomEmoji": true,
+                    "image": {
+                      "thumbnails": [
+                        {
+                          "url": "https://yt3.ggpht.example/emoji=w24"
+                        },
+                        {
+                          "url": "https://yt3.ggpht.example/emoji=w48"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "authorName": {
+              "simpleText": "Loyal Member"
+            },
+            "authorExternalChannelId": "UCloyalloyalloyalloyal01",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            },
+            "authorBadges": [
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "customThumbnail": {
+                    "thumbnails": [
+                      {
+                        "url": "https://yt3.ggpht.example/member6=s16"
+                      },
+                      {
+                        "url": "https://yt3.ggpht.example/member6=s32"
+                      }
+                    ]
+                  },
+                  "tooltip": "Member (6 months)"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatMembershipItemRenderer": {
+            "id": "MB2",
+            "headerSubtext": {
+              "runs": [
+                {
+                  "text": "Welcome to "
+                },
+                {
+                  "text": "Repair Crew"
+                },
+                {
+                  "text": "!"
+                }
+              ]
+            },
+            "authorName": {
+              "simpleText": "New Member"
+            },
+            "authorExternalChannelId": "UCnewmembernewmembernew1",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatMembershipItemRenderer": {
+            "id": "MB3",
+            "headerSubtext": {
+              "simpleText": "New member"
+            },
+            "authorName": {
+              "simpleText": "Simple Member"
+            },
+            "authorExternalChannelId": "UCsimplememberSimplemem1",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatMembershipItemRenderer": {
+            "id": "MB4",
+            "authorName": {
+              "simpleText": "Bare Member"
+            },
+            "authorExternalChannelId": "UCbarememberbarememberb1",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatSponsorshipsGiftPurchaseAnnouncementRenderer": {
+            "id": "G1",
+            "authorExternalChannelId": "UCgiftergiftergiftergif1",
+            "header": {
+              "liveChatSponsorshipsHeaderRenderer": {
+                "authorName": {
+                  "simpleText": "Generous One"
+                },
+                "authorPhoto": {
+                  "thumbnails": [
+                    {
+                      "url": "https://yt4.ggpht.example/gifter"
+                    }
+                  ]
+                },
+                "primaryText": {
+                  "runs": [
+                    {
+                      "text": "Gifted "
+                    },
+                    {
+                      "text": "5"
+                    },
+                    {
+                      "text": " Repair Crew memberships"
+                    }
+                  ]
+                },
+                "authorBadges": [
+                  {
+                    "liveChatAuthorBadgeRenderer": {
+                      "customThumbnail": {
+                        "thumbnails": [
+                          {
+                            "url": "https://yt3.ggpht.example/member24=s16"
+                          },
+                          {
+                            "url": "https://yt3.ggpht.example/member24=s32"
+                          }
+                        ]
+                      },
+                      "tooltip": "Member (24 months)"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatSponsorshipsGiftPurchaseAnnouncementRenderer": {
+            "authorExternalChannelId": "UCnoidgifternoidgifterno",
+            "header": {
+              "liveChatSponsorshipsHeaderRenderer": {
+                "authorName": {
+                  "simpleText": "No Id Gifter"
+                },
+                "primaryText": {
+                  "simpleText": "Gifted 1 membership"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatSponsorshipsGiftPurchaseAnnouncementRenderer": {
+            "id": "G3",
+            "authorExternalChannelId": "UCnoheadernoheadernohead"
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatSponsorshipsGiftRedemptionAnnouncementRenderer": {
+            "id": "GR1",
+            "message": {
+              "runs": [
+                {
+                  "text": "received a gift membership by "
+                },
+                {
+                  "text": "Generous One"
+                }
+              ]
+            },
+            "authorName": {
+              "simpleText": "Lucky Viewer"
+            },
+            "authorExternalChannelId": "UCluckyluckyluckylucky01",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+]

@@ -1,0 +1,262 @@
+{
+  "events": [
+    {
+      "event": "step",
+      "step": "resolve"
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "connecting",
+        "ищу трансляцию…"
+      ]
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/watch?v=AAAAAAAAAAA",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/live_chat?continuation=BASE_TOKEN_1",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "live",
+        "чат подключен"
+      ]
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DAAAAAAAAAAA&format=json",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "call",
+      "call": "onMessage",
+      "args": [
+        {
+          "id": "yt:SEED_1",
+          "kind": "chat",
+          "author": {
+            "name": "Early Bird",
+            "color": null,
+            "roles": [],
+            "key": "UCearlybirdearlybirdearl",
+            "avatar": null
+          },
+          "parts": [
+            {
+              "t": "text",
+              "v": "seed message from the live_chat page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "later",
+      "ms": 1000,
+      "next": "poll"
+    },
+    {
+      "event": "call",
+      "call": "onMeta",
+      "args": [
+        {
+          "channel": "Example Channel"
+        }
+      ]
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key=AIzaFAKEKEYfakekeyfakekeyfakekey00000&prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=ALL_VIEW_TOKEN"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "ALL_VIEW_TOKEN"
+      }
+    },
+    {
+      "event": "call",
+      "call": "onMessage",
+      "args": [
+        {
+          "id": "yt:M1",
+          "kind": "chat",
+          "author": {
+            "name": "Viewer M1",
+            "color": null,
+            "roles": [],
+            "key": "UCviewerviewerviewer0000",
+            "avatar": null
+          },
+          "parts": [
+            {
+              "t": "text",
+              "v": "first poll"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "later",
+      "ms": 3000,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key=AIzaFAKEKEYfakekeyfakekeyfakekey00000&prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=NEXT_TOKEN_2"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "NEXT_TOKEN_2"
+      }
+    },
+    {
+      "event": "call",
+      "call": "onMessage",
+      "args": [
+        {
+          "id": "yt:M2",
+          "kind": "chat",
+          "author": {
+            "name": "Viewer M2",
+            "color": null,
+            "roles": [],
+            "key": "UCviewerviewerviewer0000",
+            "avatar": null
+          },
+          "parts": [
+            {
+              "t": "text",
+              "v": "long timeout clamps to 8 s"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "later",
+      "ms": 8000,
+      "next": "poll"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key=AIzaFAKEKEYfakekeyfakekeyfakekey00000&prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20261120.01.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=NEXT_TOKEN_3"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20261120.01.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "NEXT_TOKEN_3"
+      }
+    },
+    {
+      "event": "later",
+      "ms": 5000,
+      "next": "poll"
+    }
+  ],
+  "state": {
+    "videoId": "AAAAAAAAAAA",
+    "ownerChannelId": "UCfakeownerfakeownerfake",
+    "apiKey": "AIzaFAKEKEYfakekeyfakekeyfakekey00000",
+    "clientVersion": "2.20261120.01.00",
+    "continuation": "NEXT_TOKEN_3",
+    "errStreak": 0
+  }
+}

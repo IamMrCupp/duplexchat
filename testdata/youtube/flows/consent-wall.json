@@ -1,0 +1,12 @@
+{
+  "url": "https://www.youtube.com/watch?v=BBBBBBBBBBB",
+  "steps": [
+    "resolve"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/watch?v=BBBBBBBBBBB": {
+      "status": 200,
+      "bodyFile": "youtube/pages/watch-nothing.html"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "url": "https://www.youtube.com/watch?v=FFFFFFFFFFF",
+  "state": {
+    "videoId": "FFFFFFFFFFF",
+    "apiKey": "AIzaFAKEKEYfakekeyfakekeyfakekey00000",
+    "continuation": "LAST",
+    "errStreak": 2
+  },
+  "steps": [
+    "poll"
+  ],
+  "routes": {
+    "POST https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key=AIzaFAKEKEYfakekeyfakekeyfakekey00000&prettyPrint=false": {
+      "status": 200,
+      "body": {
+        "responseContext": {}
+      }
+    }
+  }
+}

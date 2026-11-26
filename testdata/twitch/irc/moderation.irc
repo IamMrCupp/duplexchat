@@ -1,0 +1,6 @@
+# Deletions, timeouts, bans and full clears.
+@login=baduser;room-id=12345;target-msg-id=aaaa0001-0000-0000-0000-000000000002;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARMSG #examplechannel :no display name or colour
+@login=baduser;room-id=12345;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARMSG #examplechannel :no target id
+@ban-duration=600;room-id=12345;target-user-id=99;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel :BadUser
+@room-id=12345;target-user-id=98;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel :banneduser
+@room-id=12345;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel

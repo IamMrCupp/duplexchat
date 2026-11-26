@@ -1,0 +1,221 @@
+[
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:T1",
+        "kind": "chat",
+        "author": {
+          "name": "Mod Person",
+          "color": null,
+          "roles": [
+            "mod"
+          ],
+          "key": "UCmodmodmodmodmodmodmod01",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "hello 😀 and "
+          },
+          {
+            "t": "emote",
+            "url": "https://yt3.ggpht.example/emoji=w48",
+            "alt": ":yt:"
+          },
+          {
+            "t": "text",
+            "v": "!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:T2",
+        "kind": "chat",
+        "author": {
+          "name": "The Owner",
+          "color": null,
+          "roles": [
+            "owner",
+            "verified"
+          ],
+          "key": "UCownerownerownerowner001",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "owner here"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:T3",
+        "kind": "chat",
+        "author": {
+          "name": "Member Person",
+          "color": null,
+          "roles": [
+            "member",
+            "member"
+          ],
+          "key": "UCmembermembermember0001",
+          "avatar": "https://yt4.ggpht.example/large=s64",
+          "badgeUrl": "https://yt3.ggpht.example/member12=s32"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "member "
+          },
+          {
+            "t": "emote",
+            "url": "https://yt3.ggpht.example/hype=w48",
+            "alt": "hype"
+          },
+          {
+            "t": "text",
+            "v": ":broken:"
+          },
+          {
+            "t": "emote",
+            "url": "https://yt3.ggpht.example/bare",
+            "alt": "emoji"
+          },
+          {
+            "t": "text",
+            "v": ":wave:"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:T4",
+        "kind": "chat",
+        "author": {
+          "name": "No Photo",
+          "color": null,
+          "roles": [],
+          "key": "UCnophotonophotonophot01",
+          "avatar": null
+        },
+        "parts": []
+      }
+    ]
+  },
+  {
+    "event": "batch-end"
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:R1",
+        "kind": "chat",
+        "author": {
+          "name": "Replacer",
+          "color": null,
+          "roles": [],
+          "key": "UCreplacerreplacerreplac",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "replacement with a new id"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onRemove",
+    "args": [
+      "yt:T1"
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onRemove",
+    "args": [
+      "yt:T3"
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onRemoveAuthor",
+    "args": [
+      "UCmodmodmodmodmodmodmod01"
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:RP1",
+        "kind": "chat",
+        "author": {
+          "name": "Replay Viewer",
+          "color": null,
+          "roles": [],
+          "key": "UCreplayreplayreplayrepl",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "from a replay wrapper"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:RP2",
+        "kind": "chat",
+        "author": {
+          "name": "Replay Viewer",
+          "color": null,
+          "roles": [],
+          "key": "UCreplayreplayreplayrepl",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "nested replay"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "event": "batch-end"
+  }
+]

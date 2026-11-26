@@ -1,0 +1,38 @@
+[
+  {
+    "raw": "plain",
+    "value": "plain"
+  },
+  {
+    "raw": "a\\sb",
+    "value": "a b"
+  },
+  {
+    "raw": "semi\\:colon",
+    "value": "semi;colon"
+  },
+  {
+    "raw": "back\\\\slash",
+    "value": "back\\slash"
+  },
+  {
+    "raw": "cr\\rlf\\n",
+    "value": "cr\rlf\n"
+  },
+  {
+    "raw": "other\\qx",
+    "value": "otherqx"
+  },
+  {
+    "raw": "trailing\\",
+    "value": "trailing"
+  },
+  {
+    "raw": "double\\\\\\s",
+    "value": "double\\ "
+  },
+  {
+    "raw": "",
+    "value": ""
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "url": "https://www.youtube.com/watch?v=DDDDDDDDDDD",
+  "steps": [
+    "resolve"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/watch?v=DDDDDDDDDDD": {
+      "status": 200,
+      "bodyFile": "youtube/pages/watch-regex-fallback.html"
+    },
+    "GET https://www.youtube.com/live_chat?continuation=REGEX_TOKEN": {
+      "throw": "socket hang up"
+    },
+    "GET https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DDDDDDDDDDDD&format=json": {
+      "status": 200,
+      "body": {}
+    }
+  }
+}

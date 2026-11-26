@@ -1,0 +1,104 @@
+{
+  "events": [
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key=AIzaFAKEKEYfakekeyfakekeyfakekey00000&prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20260708.00.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=STALE"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20260708.00.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "STALE"
+      }
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "connecting",
+        "токен чата устарел, переподключаюсь…"
+      ]
+    },
+    {
+      "event": "later",
+      "ms": 3000,
+      "next": "initChat"
+    },
+    {
+      "event": "step",
+      "step": "poll"
+    },
+    {
+      "event": "fetch",
+      "method": "POST",
+      "url": "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key=AIzaFAKEKEYfakekeyfakekeyfakekey00000&prettyPrint=false",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI",
+        "content-type": "application/json",
+        "origin": "https://www.youtube.com",
+        "x-origin": "https://www.youtube.com",
+        "x-youtube-client-name": "1",
+        "x-youtube-client-version": "2.20260708.00.00",
+        "referer": "https://www.youtube.com/live_chat?continuation=STALE"
+      },
+      "body": {
+        "context": {
+          "client": {
+            "clientName": "WEB",
+            "clientVersion": "2.20260708.00.00",
+            "hl": "en",
+            "gl": "US",
+            "timeZone": "UTC",
+            "utcOffsetMinutes": 0
+          }
+        },
+        "continuation": "STALE"
+      }
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "connecting",
+        "токен чата устарел, переподключаюсь…"
+      ]
+    },
+    {
+      "event": "later",
+      "ms": 3000,
+      "next": "initChat"
+    }
+  ],
+  "state": {
+    "videoId": "FFFFFFFFFFF",
+    "ownerChannelId": null,
+    "apiKey": "AIzaFAKEKEYfakekeyfakekeyfakekey00000",
+    "clientVersion": "2.20260708.00.00",
+    "continuation": "STALE",
+    "errStreak": 3
+  }
+}

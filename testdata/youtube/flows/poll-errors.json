@@ -1,0 +1,57 @@
+{
+  "url": "https://www.youtube.com/watch?v=FFFFFFFFFFF",
+  "state": {
+    "videoId": "FFFFFFFFFFF",
+    "apiKey": null,
+    "continuation": "TOKEN/with+chars=",
+    "clientVersion": "2.20261120.01.00"
+  },
+  "steps": [
+    "poll",
+    "poll",
+    "poll",
+    "poll",
+    "poll",
+    "poll",
+    "poll",
+    "poll"
+  ],
+  "routes": {
+    "POST https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?prettyPrint=false": [
+      {
+        "status": 500,
+        "body": {}
+      },
+      {
+        "status": 502,
+        "body": {}
+      },
+      {
+        "throw": "ETIMEDOUT"
+      },
+      {
+        "status": 500,
+        "body": {}
+      },
+      {
+        "status": 503,
+        "body": {}
+      },
+      {
+        "status": 429,
+        "headers": {
+          "Retry-After": "30"
+        },
+        "body": {}
+      },
+      {
+        "status": 403,
+        "body": {}
+      },
+      {
+        "status": 200,
+        "raw": "not json"
+      }
+    ]
+  }
+}

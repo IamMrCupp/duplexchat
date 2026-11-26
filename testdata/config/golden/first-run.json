@@ -1,0 +1,26 @@
+{
+  "file": null,
+  "ids": [
+    "00000002"
+  ],
+  "steps": [
+    {
+      "op": {
+        "add": "https://www.twitch.tv/examplechannel"
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"https://www.twitch.tv/examplechannel\"\n  }\n}"
+    },
+    {
+      "op": {
+        "add": "https://www.youtube.com/@ExampleChannel"
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    },\n    {\n      \"id\": \"00000002\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"https://www.twitch.tv/examplechannel\",\n    \"youtube\": \"https://www.youtube.com/@ExampleChannel\"\n  }\n}"
+    },
+    {
+      "op": {
+        "remove": 0
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000002\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"youtube\": \"https://www.youtube.com/@ExampleChannel\"\n  }\n}"
+    }
+  ]
+}

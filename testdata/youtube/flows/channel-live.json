@@ -1,0 +1,23 @@
+{
+  "url": "https://www.youtube.com/@ExampleChannel/streams/",
+  "steps": [
+    "resolve"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/@ExampleChannel/live": {
+      "status": 200,
+      "bodyFile": "youtube/pages/channel-live.html"
+    },
+    "GET https://www.youtube.com/watch?v=CCCCCCCCCCC": {
+      "status": 200,
+      "bodyFile": "youtube/pages/watch-live.html"
+    },
+    "GET https://www.youtube.com/live_chat?continuation=BASE_TOKEN_1": {
+      "status": 500,
+      "raw": "oops"
+    },
+    "GET https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DCCCCCCCCCCC&format=json": {
+      "throw": "network down"
+    }
+  }
+}

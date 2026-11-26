@@ -1,0 +1,107 @@
+[
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:S1",
+        "kind": "super",
+        "author": {
+          "name": "Rich Viewer",
+          "color": null,
+          "roles": [
+            "member"
+          ],
+          "key": "UCrichrichrichrichrichri1",
+          "avatar": "https://yt4.ggpht.example/large=s64",
+          "badgeUrl": "https://yt3.ggpht.example/member3=s32"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "great stream 😀"
+          }
+        ],
+        "amount": "$5.00",
+        "colors": {
+          "header": "#00bfa5",
+          "body": "#1de9b6"
+        }
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:S2",
+        "kind": "super",
+        "author": {
+          "name": "Quiet Rich",
+          "color": null,
+          "roles": [],
+          "key": "UCquietrichquietrichqui1",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [],
+        "amount": "€10,00",
+        "colors": {
+          "header": "#ffffff",
+          "body": null
+        }
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:K1",
+        "kind": "super",
+        "author": {
+          "name": "Sticker Fan",
+          "color": null,
+          "roles": [],
+          "key": "UCstickerstickersticker01",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [],
+        "amount": "CA$2.79",
+        "sticker": "https://lh3.googleusercontent.example/sticker=s80",
+        "colors": {
+          "header": "#1e88e5",
+          "body": "#00b8d4"
+        }
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:K2",
+        "kind": "super",
+        "author": {
+          "name": "Bad Sticker",
+          "color": null,
+          "roles": [],
+          "key": "UCbadstickerbadstickerba",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [],
+        "amount": "",
+        "sticker": null,
+        "colors": {
+          "header": null,
+          "body": null
+        }
+      }
+    ]
+  },
+  {
+    "event": "batch-end"
+  }
+]
