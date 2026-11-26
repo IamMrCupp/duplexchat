@@ -79,11 +79,15 @@ func start(t *testing.T, config map[string]any, env ...string) *instance {
 	return startIn(t, dir, append([]string{"DUPLEXCHAT_DIR=" + dir}, env...)...)
 }
 
+// offline keeps the binary's readers off the internet: Twitch goes to a port
+// nothing listens on, so a source stays "connecting".
+var offline = []string{"DUPLEXCHAT_TWITCH_IRC=127.0.0.1:1"}
+
 func startIn(t *testing.T, dir string, env ...string) *instance {
 	t.Helper()
 	a := &instance{dir: dir, out: &syncBuf{}}
 	a.cmd = exec.Command(binary)
-	a.cmd.Env = append(os.Environ(), env...)
+	a.cmd.Env = append(append(os.Environ(), offline...), env...)
 	a.cmd.Stdout, a.cmd.Stderr = a.out, a.out
 	if err := a.cmd.Start(); err != nil {
 		t.Fatal(err)
