@@ -53,6 +53,11 @@ type Options struct {
 	State    func() State      // GET /api/state; nil → 404
 	FontsDir string            // the user's fonts/ folder; "" → no fonts
 	Log      func(string, any) // error.log; nil → ignored
+
+	Port      int              // the port actually bound; Host and Origin must name it
+	Token     string           // the per-process session token
+	Platforms func() Platforms // the session's platforms; nil → NoSending
+	Peer      *string          // test seam for the gate: the peer address
 }
 
 // Server answers HTTP requests.
@@ -71,6 +76,10 @@ func New(opts Options) *Server {
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	rw := &recorder{ResponseWriter: w}
 	defer s.recover(rw)
+	if r.Method == http.MethodGet && r.URL.Path == "/api/dock/session" {
+		s.session(rw, r)
+		return
+	}
 	if r.Method == http.MethodGet && s.get(rw, r) {
 		return
 	}

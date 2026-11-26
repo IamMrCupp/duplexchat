@@ -17,6 +17,7 @@ import (
 
 	"github.com/IamMrCupp/duplexchat/internal/applog"
 	"github.com/IamMrCupp/duplexchat/internal/config"
+	"github.com/IamMrCupp/duplexchat/internal/gate"
 	"github.com/IamMrCupp/duplexchat/internal/hub"
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
@@ -70,6 +71,8 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	store := sources.NewStore(cfg, cfgPath, sources.Options{Warn: func(s string) { fmt.Fprintln(stderr, s) }})
 
 	handler := server.New(server.Options{
+		Port:     actual,
+		Token:    gate.NewToken(),
 		Pages:    pages(),
 		Events:   feed,
 		FontsDir: fontsDir,
