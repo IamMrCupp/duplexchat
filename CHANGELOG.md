@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/IamMrCupp/duplexchat/compare/v0.4.0...v0.5.0) (2026-11-26)
+
+
+### Features
+
+* **panel:** sources, test and clear behind the gate ([#16](https://github.com/IamMrCupp/duplexchat/issues/16)) ([fa578dc](https://github.com/IamMrCupp/duplexchat/commit/fa578dc07cab47f63dfa2c8b77ad930af2ddafb2))
+
 ## [0.4.0](https://github.com/IamMrCupp/duplexchat/compare/v0.3.0...v0.4.0) (2026-11-26)
 
 
