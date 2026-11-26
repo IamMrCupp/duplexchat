@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/IamMrCupp/duplexchat/compare/v0.7.0...v0.8.0) (2026-11-26)
+
+
+### Features
+
+* **youtube:** read live chat through InnerTube ([#8](https://github.com/IamMrCupp/duplexchat/issues/8)) ([c6f1a22](https://github.com/IamMrCupp/duplexchat/commit/c6f1a2276a4f7ee468b1346a4380d95862b7f9d9))
+
 ## [0.7.0](https://github.com/IamMrCupp/duplexchat/compare/v0.6.0...v0.7.0) (2026-11-26)
 
 
