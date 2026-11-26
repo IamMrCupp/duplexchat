@@ -58,6 +58,7 @@ type Options struct {
 	Token     string           // the per-process session token
 	Platforms func() Platforms // the session's platforms; nil → NoSending
 	Peer      *string          // test seam for the gate: the peer address
+	Panel     Panel            // the panel's buttons; nil → their routes 404
 }
 
 // Server answers HTTP requests.
@@ -81,6 +82,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Method == http.MethodGet && s.get(rw, r) {
+		return
+	}
+	if s.opts.Panel != nil && s.panel(rw, r) {
 		return
 	}
 	notFound(rw)

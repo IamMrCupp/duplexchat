@@ -15,6 +15,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/IamMrCupp/duplexchat/internal/app"
 	"github.com/IamMrCupp/duplexchat/internal/applog"
 	"github.com/IamMrCupp/duplexchat/internal/config"
 	"github.com/IamMrCupp/duplexchat/internal/gate"
@@ -69,10 +70,12 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	feed := hub.New(hub.Options{})
 	go feed.Run(ctx)
 	store := sources.NewStore(cfg, cfgPath, sources.Options{Warn: func(s string) { fmt.Fprintln(stderr, s) }})
+	chats := &app.App{Store: store, Hub: feed}
 
 	handler := server.New(server.Options{
 		Port:     actual,
 		Token:    gate.NewToken(),
+		Panel:    chats,
 		Pages:    pages(),
 		Events:   feed,
 		FontsDir: fontsDir,
@@ -87,8 +90,7 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	srv := &http.Server{Handler: handler, ReadHeaderTimeout: 10 * time.Second}
 
 	fmt.Fprint(stdout, server.Banner(actual, server.LANOrigins(cfg.Host, actual), nil))
-	store.StartSources()
-	feed.Status(store.Status())
+	chats.Start()
 
 	served := make(chan error, 1)
 	go func() { served <- srv.Serve(ln) }()

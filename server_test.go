@@ -48,7 +48,7 @@ func freePort(t *testing.T) int {
 	return l.Addr().(*net.TCPAddr).Port
 }
 
-type app struct {
+type instance struct {
 	port int
 	dir  string
 	out  *syncBuf
@@ -67,7 +67,7 @@ var dockLine = regexp.MustCompile(`http://127\.0\.0\.1:(\d+)/dock`)
 
 // start runs the binary in a fresh folder holding config (nil: no file) and
 // waits for the banner, as the source's startServer helper does.
-func start(t *testing.T, config map[string]any, env ...string) *app {
+func start(t *testing.T, config map[string]any, env ...string) *instance {
 	t.Helper()
 	dir := t.TempDir()
 	if config != nil {
@@ -79,9 +79,9 @@ func start(t *testing.T, config map[string]any, env ...string) *app {
 	return startIn(t, dir, append([]string{"DUPLEXCHAT_DIR=" + dir}, env...)...)
 }
 
-func startIn(t *testing.T, dir string, env ...string) *app {
+func startIn(t *testing.T, dir string, env ...string) *instance {
 	t.Helper()
-	a := &app{dir: dir, out: &syncBuf{}}
+	a := &instance{dir: dir, out: &syncBuf{}}
 	a.cmd = exec.Command(binary)
 	a.cmd.Env = append(os.Environ(), env...)
 	a.cmd.Stdout, a.cmd.Stderr = a.out, a.out
@@ -101,7 +101,7 @@ func startIn(t *testing.T, dir string, env ...string) *app {
 	return nil
 }
 
-func (a *app) get(t *testing.T, path string, host string) (int, http.Header, string) {
+func (a *instance) get(t *testing.T, path string, host string) (int, http.Header, string) {
 	t.Helper()
 	req, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("http://127.0.0.1:%d%s", a.port, path), nil)
 	if host != "" {
@@ -116,7 +116,7 @@ func (a *app) get(t *testing.T, path string, host string) (int, http.Header, str
 	return resp.StatusCode, resp.Header, string(b)
 }
 
-func (a *app) state(t *testing.T) map[string]any {
+func (a *instance) state(t *testing.T) map[string]any {
 	t.Helper()
 	_, _, body := a.get(t, "/api/state", "")
 	var v map[string]any
@@ -127,7 +127,7 @@ func (a *app) state(t *testing.T) map[string]any {
 }
 
 // firstEvent reads /events up to the first data frame.
-func (a *app) firstEvent(t *testing.T) map[string]any {
+func (a *instance) firstEvent(t *testing.T) map[string]any {
 	t.Helper()
 	resp, err := http.Get(fmt.Sprintf("http://127.0.0.1:%d/events", a.port))
 	if err != nil {
@@ -323,5 +323,156 @@ func TestSessionFromBinary(t *testing.T) {
 	_, _, again := a.get(t, "/api/dock/session", "")
 	if !strings.Contains(again, s.Token) {
 		t.Error("the token changed within one run")
+	}
+}
+
+func (a *instance) token(t *testing.T) string {
+	t.Helper()
+	_, _, body := a.get(t, "/api/dock/session", "")
+	var s struct{ Token string }
+	json.Unmarshal([]byte(body), &s)
+	if s.Token == "" {
+		t.Fatalf("no token: %s", body)
+	}
+	return s.Token
+}
+
+// do sends a request with exactly these headers (Host defaults to the
+// server's own), as the source's request() helper does.
+func (a *instance) do(t *testing.T, method, path string, headers map[string]string, body string) (int, string) {
+	t.Helper()
+	req, _ := http.NewRequest(method, fmt.Sprintf("http://127.0.0.1:%d%s", a.port, path), strings.NewReader(body))
+	for k, v := range headers {
+		if k == "host" {
+			req.Host = v
+			continue
+		}
+		req.Header.Set(k, v)
+	}
+	if body != "" && req.Header.Get("content-type") == "" {
+		req.Header.Set("content-type", "application/json")
+	}
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	b, _ := io.ReadAll(resp.Body)
+	return resp.StatusCode, string(b)
+}
+
+// Source case 4: "the panel's controls are gated like sending".
+func TestPanelGated(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	token := a.token(t)
+	origin := fmt.Sprintf("http://127.0.0.1:%d", a.port)
+	good := map[string]string{"origin": origin, "x-dock-token": token}
+	with := func(extra map[string]string) map[string]string {
+		out := map[string]string{}
+		for k, v := range good {
+			out[k] = v
+		}
+		for k, v := range extra {
+			out[k] = v
+		}
+		return out
+	}
+	writes := []struct{ method, path, body string }{
+		{"POST", "/api/sources", `{"url":"https://www.twitch.tv/someoneelse"}`},
+		{"DELETE", "/api/sources/abcd1234", ""},
+		{"POST", "/api/sources/abcd1234/reconnect", ""},
+		{"POST", "/api/clear", ""},
+		{"POST", "/api/test", ""},
+	}
+	refusals := []struct {
+		headers map[string]string
+		code    string
+	}{
+		{map[string]string{}, "bad_origin"},
+		{map[string]string{"origin": "https://evil.example", "content-type": "text/plain"}, "bad_origin"},
+		{with(map[string]string{"sec-fetch-site": "cross-site"}), "bad_origin"},
+		{map[string]string{"origin": origin}, "no_token"},
+		{with(map[string]string{"x-dock-token": "wrong"}), "bad_token"},
+		{with(map[string]string{"host": fmt.Sprintf("192.168.1.20:%d", a.port)}), "bad_host"},
+		{with(map[string]string{"x-forwarded-for": "203.0.113.9"}), "proxied"},
+	}
+	for _, w := range writes {
+		for _, r := range refusals {
+			code, body := a.do(t, w.method, w.path, r.headers, w.body)
+			var v map[string]string
+			json.Unmarshal([]byte(body), &v)
+			if code != 403 || v["code"] != r.code {
+				t.Errorf("%s %s with %v: %d %s, want 403 %s", w.method, w.path, r.headers, code, body, r.code)
+			}
+		}
+	}
+	if s := a.state(t); fmt.Sprint(s["sources"]) != "[]" {
+		t.Errorf("a refused write changed the sources: %v", s["sources"])
+	}
+	if hist := a.firstEvent(t)["history"].([]any); len(hist) != 0 {
+		t.Errorf("a refused test button still posted: %v", hist)
+	}
+
+	code, body := a.do(t, "POST", "/api/sources", good, `{"url":"https://example.com/not-a-stream"}`)
+	if code != 400 || !strings.Contains(body, `"error"`) || strings.Contains(body, `"code"`) {
+		t.Errorf("not a stream: %d %s", code, body)
+	}
+	if code, _ := a.do(t, "POST", "/api/clear", good, ""); code != 200 {
+		t.Errorf("clear: %d", code)
+	}
+	if code, body := a.do(t, "DELETE", "/api/sources/abcd1234", good, ""); code != 404 || body != `{"ok":true}` {
+		t.Errorf("delete unknown: %d %s", code, body)
+	}
+	if code, _, _ := a.get(t, "/overlay", fmt.Sprintf("192.168.1.20:%d", a.port)); code != 200 {
+		t.Errorf("/overlay with a LAN Host: %d", code)
+	}
+	if code, _ := a.do(t, "DELETE", "/api/sources/NOT-HEX", good, ""); code != 404 {
+		t.Errorf("non-hex id: %d", code)
+	}
+}
+
+// Source case 5: "the test button sends English samples that say they are a test".
+func TestTestButton(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	good := map[string]string{"origin": fmt.Sprintf("http://127.0.0.1:%d", a.port), "x-dock-token": a.token(t)}
+	if code, body := a.do(t, "POST", "/api/test", good, ""); code != 200 || body != `{"ok":true}` {
+		t.Fatalf("test: %d %s", code, body)
+	}
+	var kinds []string
+	for _, m := range a.firstEvent(t)["history"].([]any) {
+		mm := m.(map[string]any)
+		kinds = append(kinds, fmt.Sprintf("%s/%s", mm["platform"], mm["kind"]))
+	}
+	if strings.Join(kinds, ",") != "twitch/chat,youtube/chat,twitch/chat,youtube/super,twitch/system" {
+		t.Errorf("history = %v", kinds)
+	}
+}
+
+// Adding and removing from the panel: the source shows up, config.json is
+// saved, and removing it saves again.
+func TestPanelAddRemoveSaves(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	good := map[string]string{"origin": fmt.Sprintf("http://127.0.0.1:%d", a.port), "x-dock-token": a.token(t)}
+	code, body := a.do(t, "POST", "/api/sources", good, `{"url":"  https://www.twitch.tv/examplechannel  "}`)
+	var added struct {
+		Source struct{ ID, URL, Platform string }
+	}
+	json.Unmarshal([]byte(body), &added)
+	if code != 200 || added.Source.URL != "https://www.twitch.tv/examplechannel" || added.Source.Platform != "twitch" {
+		t.Fatalf("add: %d %s", code, body)
+	}
+	saved, _ := os.ReadFile(filepath.Join(a.dir, "config.json"))
+	if !strings.Contains(string(saved), `"url": "https://www.twitch.tv/examplechannel"`) || !strings.Contains(string(saved), `"replyTo"`) {
+		t.Errorf("config.json after add:\n%s", saved)
+	}
+	if code, _ := a.do(t, "POST", "/api/sources/"+added.Source.ID+"/reconnect", good, ""); code != 200 {
+		t.Errorf("reconnect: %d", code)
+	}
+	if code, _ := a.do(t, "DELETE", "/api/sources/"+added.Source.ID, good, ""); code != 200 {
+		t.Errorf("delete: %d", code)
+	}
+	saved, _ = os.ReadFile(filepath.Join(a.dir, "config.json"))
+	if strings.Contains(string(saved), "examplechannel") {
+		t.Errorf("config.json after delete:\n%s", saved)
 	}
 }

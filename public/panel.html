@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>megarohas_multichat — панель</title>
+<title>duplexchat — panel</title>
 <style>
   :root {
     --bg: #161310;
@@ -49,7 +49,7 @@
     text-transform: uppercase;
     margin-bottom: 14px;
   }
-  /* --- источники --- */
+  /* --- sources --- */
   .row {
     display: flex; align-items: center; gap: 11px;
     padding: 10px 13px; border-radius: 11px;
@@ -101,7 +101,7 @@
   }
   #err { color: var(--err); font-size: 13px; margin-top: 9px; min-height: 18px; }
   .empty { color: var(--mut); font-size: 14px; padding: 4px 2px 10px; }
-  /* --- адреса --- */
+  /* --- addresses --- */
   .urlrow { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
   .urlrow .lbl { flex: none; width: 92px; color: var(--mut); font-size: 12.5px; text-align: right; }
   .urlrow code {
@@ -115,13 +115,13 @@
     background: var(--field); border-radius: 5px; padding: 1px 6px;
   }
   .toolbar { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-  /* --- таблица параметров --- */
+  /* --- settings table --- */
   table { width: 100%; border-collapse: collapse; }
   td { padding: 8px 10px; border-top: 1px solid var(--line2); vertical-align: top; }
   tr:first-child td { border-top: none; }
   td.p { font-family: var(--mono); font-size: 13px; color: var(--acc); white-space: nowrap; width: 1%; }
   td.d { color: var(--ink); font-size: 14px; }
-  /* --- справка --- */
+  /* --- help --- */
   .help { list-style: none; }
   .help li { padding: 7px 0; border-top: 1px solid var(--line2); font-size: 14px; color: var(--ink); }
   .help li:first-child { border-top: none; }
@@ -138,77 +138,77 @@
 <header>
   <img src="/favicon.svg" alt="">
   <div>
-    <div class="name">megarohas_multichat</div>
-    <div class="sub">чаты Twitch и YouTube в одном оверлее</div>
+    <div class="name">duplexchat</div>
+    <div class="sub">Twitch and YouTube chat in one overlay</div>
   </div>
-  <span id="conn">● нет связи с сервером</span>
+  <span id="conn">● no connection to the server</span>
 </header>
 
 <div class="card">
-  <h2>Источники</h2>
+  <h2>Sources</h2>
   <div id="rows"></div>
-  <div id="empty" class="empty" hidden>Пока пусто — вставь ссылку на стрим или чат.</div>
+  <div id="empty" class="empty" hidden>Nothing yet — paste a link to a stream or a chat.</div>
   <form id="add">
-    <input id="url" placeholder="Вставь ссылку на стрим или чат…" autocomplete="off" spellcheck="false">
-    <button class="primary">Добавить</button>
+    <input id="url" placeholder="Paste a link to a stream or a chat…" autocomplete="off" spellcheck="false">
+    <button class="primary">Add</button>
   </form>
   <div class="examples">
-    <span>twitch.tv/канал</span>
+    <span>twitch.tv/channel</span>
     <span>youtube.com/watch?v=…</span>
-    <span>youtube.com/@канал/live</span>
+    <span>youtube.com/@channel/live</span>
     <span>youtu.be/…</span>
   </div>
   <div id="err"></div>
 </div>
 
 <div class="card">
-  <h2>Оверлей для OBS</h2>
+  <h2>OBS overlay</h2>
   <div id="urls"></div>
   <div class="hint">
-    В OBS добавь источник «Браузер» (Browser Source) с этим адресом — фон прозрачный,
-    рекомендуемый размер 450×700. Для OBS или браузера на другом устройстве используй адрес «по сети».
+    In OBS, add a Browser Source with this address — the background is transparent,
+    and 450×700 is a good size. For OBS or a browser on another device, use the “on the network” address.
   </div>
   <div class="toolbar">
-    <button id="openOverlay">Открыть оверлей</button>
-    <button id="test">Тест-сообщения</button>
-    <button id="clear">Очистить чат</button>
+    <button id="openOverlay">Open overlay</button>
+    <button id="test">Test messages</button>
+    <button id="clear">Clear chat</button>
   </div>
 </div>
 
 <div class="card">
-  <h2>Параметры оверлея</h2>
+  <h2>Overlay settings</h2>
   <table>
-    <tr><td class="p">?size=22</td><td class="d">размер шрифта, px</td></tr>
-    <tr><td class="p">?font=Имя</td><td class="d">шрифт: системный по имени или файл из папки <code>fonts</code> (имя файла без расширения)</td></tr>
+    <tr><td class="p">?size=22</td><td class="d">font size, px</td></tr>
+    <tr><td class="p">?font=Name</td><td class="d">font: an installed one by name, or a file from the <code>fonts</code> folder (file name without the extension)</td></tr>
     <tr><td class="p">?bg=88</td><td class="d">message background opacity, 0–100 (default 62)</td></tr>
-    <tr><td class="p">?dir=top</td><td class="d">чат растёт сверху вниз (по умолчанию — снизу вверх)</td></tr>
-    <tr><td class="p">?platform=0</td><td class="d">скрыть значки платформ (Twitch/YouTube)</td></tr>
-    <tr><td class="p">?badges=0</td><td class="d">скрыть значки ролей (модер, VIP, саб, спонсор)</td></tr>
-    <tr><td class="p">?fade=20</td><td class="d">прятать сообщение через N секунд</td></tr>
-    <tr><td class="p">?ts=1</td><td class="d">показывать время сообщения</td></tr>
-    <tr><td class="p">?origcolors=1</td><td class="d">родные цвета ников Twitch вместо пастельной палитры</td></tr>
-    <tr><td class="p">?limit=40</td><td class="d">потолок сообщений в DOM (по умолчанию 60)</td></tr>
+    <tr><td class="p">?dir=top</td><td class="d">chat grows from the top down (default: bottom up)</td></tr>
+    <tr><td class="p">?platform=0</td><td class="d">hide the platform icons (Twitch/YouTube)</td></tr>
+    <tr><td class="p">?badges=0</td><td class="d">hide the role badges (mod, VIP, sub, member)</td></tr>
+    <tr><td class="p">?fade=20</td><td class="d">hide each message after N seconds</td></tr>
+    <tr><td class="p">?ts=1</td><td class="d">show each message’s time</td></tr>
+    <tr><td class="p">?origcolors=1</td><td class="d">Twitch’s own name colours instead of the pastel palette</td></tr>
+    <tr><td class="p">?limit=40</td><td class="d">most messages kept on the page (default 60)</td></tr>
   </table>
-  <div class="hint">Параметры дописываются к адресу оверлея и соединяются через <code>&amp;</code>: <code>/overlay?size=20&amp;dir=top&amp;fade=30</code></div>
+  <div class="hint">Add settings to the end of the overlay address, joined with <code>&amp;</code>: <code>/overlay?size=20&amp;dir=top&amp;fade=30</code></div>
 </div>
 
 <div class="card">
-  <h2>Предпросмотр</h2>
+  <h2>Preview</h2>
   <iframe src="/overlay?limit=25"></iframe>
 </div>
 
 <div class="card">
-  <h2>Справка</h2>
+  <h2>Help</h2>
   <ul class="help">
-    <li><b>Свои шрифты</b> — кинь <code>.ttf</code>/<code>.otf</code>/<code>.woff2</code> в папку <code>fonts</code> рядом с программой и укажи <code>?font=ИмяФайла</code>.</li>
-    <li><b>Внешний вид чата</b> — полностью правится в <code>public/overlay.css</code> (при запуске из исходников); переменные — в начале файла.</li>
-    <li><b>Оконный режим</b> — запусти <code>start-window.cmd</code> (или с флагом <code>--window</code>): эта же панель откроется отдельным окном приложения.</li>
-    <li><b>Настройки</b> — <code>config.json</code> рядом с программой: <code>port</code>, <code>host</code> (<code>127.0.0.1</code> — только этот ПК), список ссылок. Ссылку на YouTube-канал вида <code>@канал/live</code> можно добавить до эфира — стрим подхватится сам.</li>
-    <li><b>Что-то не так?</b> — загляни в <code>error.log</code> рядом с программой; issues — <a href="https://github.com/megarohas/megarohas_multichat" target="_blank" rel="noopener">github.com/megarohas/megarohas_multichat</a>.</li>
+    <li><b>Your own fonts</b> — drop a <code>.ttf</code>/<code>.otf</code>/<code>.woff2</code> into the <code>fonts</code> folder next to the program and add <code>?font=FileName</code>.</li>
+    <li><b>How the chat looks</b> — all of it lives in <code>public/overlay.css</code> (when building from source); the variables are at the top of the file.</li>
+    <li><b>Window mode</b> — start the program with <code>--window</code> and this panel opens in its own app window.</li>
+    <li><b>Settings</b> — <code>config.json</code> next to the program: <code>port</code>, <code>host</code> (<code>127.0.0.1</code> — this computer only), the list of links. A YouTube channel link like <code>@channel/live</code> can go in before the stream starts — it’s picked up once you’re live.</li>
+    <li><b>Something wrong?</b> — look in <code>error.log</code> next to the program; issues go to <a href="https://github.com/IamMrCupp/duplexchat/issues" target="_blank" rel="noopener">github.com/IamMrCupp/duplexchat</a>.</li>
   </ul>
 </div>
 
-<footer>megarohas_multichat <span id="ver"></span> · MIT</footer>
+<footer>duplexchat <span id="ver"></span> · MIT</footer>
 
 <script>
 'use strict';
@@ -219,7 +219,7 @@ const urlsEl = document.getElementById('urls');
 const connEl = document.getElementById('conn');
 const overlayUrl = location.origin + '/overlay';
 
-const STATE_RU = { connecting: 'подключаюсь…', live: 'подключено', offline: 'не в эфире', error: 'ошибка' };
+const STATE_LABEL = { connecting: 'connecting…', live: 'connected', offline: 'not live', error: 'error' };
 
 function renderRows(list) {
   rows.innerHTML = '';
@@ -246,7 +246,7 @@ function renderRows(list) {
     const st = document.createElement('div');
     st.className = 'src-state' + (s.state === 'error' ? ' error' : '');
     const chan = s.channel && s.channel !== s.platform ? s.channel + ' — ' : '';
-    st.textContent = chan + (STATE_RU[s.state] || s.state) + (s.detail ? ' · ' + s.detail : '');
+    st.textContent = chan + (STATE_LABEL[s.state] || s.state) + (s.detail ? ' · ' + s.detail : '');
     st.title = st.textContent;
     main.appendChild(u);
     main.appendChild(st);
@@ -255,14 +255,14 @@ function renderRows(list) {
     const re = document.createElement('button');
     re.className = 'icon';
     re.textContent = '⟳';
-    re.title = 'Переподключить';
+    re.title = 'Reconnect';
     re.onclick = () => write('/api/sources/' + s.id + '/reconnect', { method: 'POST' }).then(refresh, refresh);
     row.appendChild(re);
 
     const del = document.createElement('button');
     del.className = 'icon';
     del.textContent = '✕';
-    del.title = 'Удалить';
+    del.title = 'Remove';
     del.onclick = () => write('/api/sources/' + s.id, { method: 'DELETE' }).then(refresh, refresh);
     row.appendChild(del);
 
@@ -280,15 +280,15 @@ function urlRow(label, url) {
   code.textContent = url;
   code.title = url;
   const btn = document.createElement('button');
-  btn.textContent = 'Копировать';
+  btn.textContent = 'Copy';
   btn.onclick = async () => {
     try { await navigator.clipboard.writeText(url); } catch (e) {
       const ta = document.createElement('textarea');
       ta.value = url; document.body.appendChild(ta); ta.select();
       document.execCommand('copy'); ta.remove();
     }
-    btn.textContent = 'Скопировано ✓';
-    setTimeout(() => { btn.textContent = 'Копировать'; }, 1400);
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1400);
   };
   row.appendChild(lbl);
   row.appendChild(code);
@@ -298,9 +298,9 @@ function urlRow(label, url) {
 
 function renderUrls(state) {
   urlsEl.innerHTML = '';
-  urlsEl.appendChild(urlRow('на этом ПК', overlayUrl));
+  urlsEl.appendChild(urlRow('on this computer', overlayUrl));
   for (const o of state.lan || []) {
-    if (location.origin !== o) urlsEl.appendChild(urlRow('по сети', o + '/overlay'));
+    if (location.origin !== o) urlsEl.appendChild(urlRow('on the network', o + '/overlay'));
   }
 }
 
@@ -322,8 +322,8 @@ async function write(path, opts = {}) {
   }
 }
 
-// Не полагаемся на один только SSE-пуш: любые действия сразу
-// подтягивают свежий список, плюс страховочный периодический рефреш.
+// Don’t rely on the SSE push alone: every action fetches
+// the fresh list right away, plus a periodic refresh as a safety net.
 async function refresh() {
   try {
     const s = await (await fetch('/api/state')).json();
@@ -353,7 +353,7 @@ document.getElementById('add').addEventListener('submit', async e => {
     else if (j.error) errEl.textContent = j.error;
     else input.value = '';
   } catch (err) {
-    errEl.textContent = 'Сервер не отвечает';
+    errEl.textContent = 'The server isn’t answering';
   }
   refresh();
 });

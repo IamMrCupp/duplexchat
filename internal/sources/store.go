@@ -170,6 +170,42 @@ func (s *Store) add(link string, save bool) (Entry, error) {
 	return e, nil
 }
 
+// Get returns one source.
+func (s *Store) Get(id string) (Entry, bool) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for _, e := range s.entries {
+		if e.ID == id {
+			return e, true
+		}
+	}
+	return Entry{}, false
+}
+
+// SetStatus records what a source's reader says about it. It reports
+// whether the source still exists.
+func (s *Store) SetStatus(id, state, detail string) bool {
+	return s.update(id, func(e *Entry) { e.State, e.Detail = state, detail })
+}
+
+// SetChannel records the channel a reader resolved (a Twitch login, a
+// YouTube channel title).
+func (s *Store) SetChannel(id, channel string) bool {
+	return s.update(id, func(e *Entry) { e.Channel = channel })
+}
+
+func (s *Store) update(id string, f func(*Entry)) bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for i := range s.entries {
+		if s.entries[i].ID == id {
+			f(&s.entries[i])
+			return true
+		}
+	}
+	return false
+}
+
 // Remove drops a source and saves. It reports whether the ID was known.
 func (s *Store) Remove(id string) bool {
 	s.mu.Lock()
