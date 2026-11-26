@@ -22,6 +22,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/hub"
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
+	"github.com/IamMrCupp/duplexchat/internal/twitch"
 )
 
 // version is set at release with -ldflags "-X main.version=…".
@@ -70,7 +71,10 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	feed := hub.New(hub.Options{})
 	go feed.Run(ctx)
 	store := sources.NewStore(cfg, cfgPath, sources.Options{Warn: func(s string) { fmt.Fprintln(stderr, s) }})
-	chats := &app.App{Store: store, Hub: feed}
+	chats := &app.App{Store: store, Hub: feed, Readers: map[string]app.Factory{
+		// DUPLEXCHAT_TWITCH_IRC points the reader at another IRC server (tests)
+		"twitch": twitch.Factory(nil, getenv("DUPLEXCHAT_TWITCH_IRC")),
+	}}
 
 	handler := server.New(server.Options{
 		Port:     actual,

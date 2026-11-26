@@ -153,3 +153,6 @@ func (a *App) Test() {
 		a.Hub.Publish(toMsg(m))
 	}
 }
+
+// Encode is a message's JSON with its fields in order.
+func Encode(fields []Field) []byte { return encode(fields) }
