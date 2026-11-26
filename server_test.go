@@ -298,3 +298,30 @@ func TestVersionFlag(t *testing.T) {
 		t.Errorf("--version: %q, %v", out, err)
 	}
 }
+
+// Source case 2 (the part before sending): the session hands out a token to
+// this server's own pages and refuses a foreign Host.
+func TestSessionFromBinary(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	code, hdr, body := a.get(t, "/api/dock/session", "")
+	var s struct {
+		Token     string                    `json:"token"`
+		Platforms map[string]map[string]any `json:"platforms"`
+	}
+	json.Unmarshal([]byte(body), &s)
+	if code != 200 || len(s.Token) < 43 || hdr.Get("Cache-Control") != "no-store" {
+		t.Fatalf("session: %d %q %s", code, hdr.Get("Cache-Control"), body)
+	}
+	for _, p := range []string{"twitch", "youtube"} {
+		if s.Platforms[p]["signedIn"] != false || s.Platforms[p]["available"] != false {
+			t.Errorf("%s: %v", p, s.Platforms[p])
+		}
+	}
+	if code, _, body := a.get(t, "/api/dock/session", fmt.Sprintf("evil.example:%d", a.port)); code != 403 || !strings.Contains(body, "bad_host") {
+		t.Errorf("evil Host: %d %s", code, body)
+	}
+	_, _, again := a.get(t, "/api/dock/session", "")
+	if !strings.Contains(again, s.Token) {
+		t.Error("the token changed within one run")
+	}
+}
