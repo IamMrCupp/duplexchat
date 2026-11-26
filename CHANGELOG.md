@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/IamMrCupp/duplexchat/compare/v0.6.0...v0.7.0) (2026-11-26)
+
+
+### Features
+
+* **emotes:** 7TV, BTTV and FFZ emotes ([#7](https://github.com/IamMrCupp/duplexchat/issues/7)) ([cf255d4](https://github.com/IamMrCupp/duplexchat/commit/cf255d4a3c1b3b12f13888c0cec0ab6e9f1c315b))
+
 ## [0.6.0](https://github.com/IamMrCupp/duplexchat/compare/v0.5.0...v0.6.0) (2026-11-26)
 
 
