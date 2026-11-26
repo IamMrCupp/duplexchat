@@ -13,6 +13,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"sync"
 
 	"github.com/IamMrCupp/duplexchat/internal/config"
 	"github.com/IamMrCupp/duplexchat/internal/info"
@@ -49,7 +50,18 @@ func DetectPlatform(link string) string {
 
 // Entry is one source.
 type Entry struct {
-	ID, URL, Platform string
+	ID, URL, Platform      string
+	Channel, State, Detail string
+}
+
+// StatusItem is a source as the pages see it, in multichat's key order.
+type StatusItem struct {
+	ID       string `json:"id"`
+	URL      string `json:"url"`
+	Platform string `json:"platform"`
+	Channel  string `json:"channel"`
+	State    string `json:"state"`
+	Detail   string `json:"detail"`
 }
 
 // Options are the store's seams.
@@ -60,6 +72,7 @@ type Options struct {
 
 // Store is the ordered source list plus everything saving depends on.
 type Store struct {
+	mu      sync.Mutex
 	cfg     config.Config
 	path    string
 	opts    Options
@@ -88,6 +101,7 @@ func randomID() string {
 	return hex.EncodeToString(b)
 }
 
+// targetList is called by the pins while the store's lock is held.
 func (s *Store) targetList() []targets.Source {
 	out := make([]targets.Source, len(s.entries))
 	for i, e := range s.entries {
@@ -98,13 +112,28 @@ func (s *Store) targetList() []targets.Source {
 
 // List returns the sources in the order they were added.
 func (s *Store) List() []Entry {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	return append([]Entry(nil), s.entries...)
+}
+
+// Status is the source list as /events and /api/state send it; [] when empty.
+func (s *Store) Status() []StatusItem {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := make([]StatusItem, len(s.entries))
+	for i, e := range s.entries {
+		out[i] = StatusItem{e.ID, e.URL, e.Platform, e.Channel, e.State, e.Detail}
+	}
+	return out
 }
 
 // StartSources adds every saved source without saving, then restores the
 // saved reply pins. Sources get new IDs every run; bad entries are reported
 // and dropped from the file at the next save.
 func (s *Store) StartSources() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	for _, raw := range s.cfg.Sources {
 		m, _ := raw.(map[string]any)
 		u, ok := m["url"]
@@ -120,29 +149,36 @@ func (s *Store) StartSources() {
 }
 
 // Add adds a source from the panel and saves.
-func (s *Store) Add(link string) (Entry, error) { return s.add(link, true) }
+func (s *Store) Add(link string) (Entry, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.add(link, true)
+}
 
 func (s *Store) add(link string, save bool) (Entry, error) {
 	platform := DetectPlatform(link)
 	if platform == "" {
 		return Entry{}, ErrNotAStream
 	}
-	e := Entry{ID: s.opts.NewID(), URL: link, Platform: platform}
+	// channel starts as the platform name until a reader learns the real one
+	e := Entry{ID: s.opts.NewID(), URL: link, Platform: platform, Channel: platform, State: "connecting"}
 	s.entries = append(s.entries, e)
 	s.pins.Added(targets.Source{ID: e.ID, URL: e.URL, Platform: e.Platform})
 	if save {
-		s.Save()
+		s.save()
 	}
 	return e, nil
 }
 
 // Remove drops a source and saves. It reports whether the ID was known.
 func (s *Store) Remove(id string) bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	for i, e := range s.entries {
 		if e.ID == id {
 			s.entries = append(s.entries[:i], s.entries[i+1:]...)
 			s.pins.Removed(targets.Source{ID: e.ID, URL: e.URL, Platform: e.Platform})
-			s.Save()
+			s.save()
 			return true
 		}
 	}
@@ -151,6 +187,12 @@ func (s *Store) Remove(id string) bool {
 
 // Save writes config.json. A failure is reported and the app keeps running.
 func (s *Store) Save() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.save()
+}
+
+func (s *Store) save() {
 	refs := make([]config.SourceRef, len(s.entries))
 	for i, e := range s.entries {
 		refs[i] = config.SourceRef{ID: e.ID, URL: e.URL}

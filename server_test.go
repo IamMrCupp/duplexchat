@@ -1,0 +1,300 @@
+package main
+
+// The source's server.test.js cases that apply before sending exists, run
+// against the real binary as the source runs `node server.js`.
+
+import (
+	"bufio"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net"
+	"net/http"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"regexp"
+	"strings"
+	"sync"
+	"testing"
+	"time"
+)
+
+var binary string
+
+func TestMain(m *testing.M) {
+	dir, err := os.MkdirTemp("", "duplexchat-bin-")
+	if err != nil {
+		panic(err)
+	}
+	binary = filepath.Join(dir, "duplexchat")
+	if out, err := exec.Command("go", "build", "-o", binary, ".").CombinedOutput(); err != nil {
+		fmt.Fprintf(os.Stderr, "go build: %v\n%s", err, out)
+		os.Exit(1)
+	}
+	code := m.Run()
+	os.RemoveAll(dir)
+	os.Exit(code)
+}
+
+func freePort(t *testing.T) int {
+	t.Helper()
+	l, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer l.Close()
+	return l.Addr().(*net.TCPAddr).Port
+}
+
+type app struct {
+	port int
+	dir  string
+	out  *syncBuf
+	cmd  *exec.Cmd
+}
+
+type syncBuf struct {
+	mu sync.Mutex
+	b  bytes.Buffer
+}
+
+func (s *syncBuf) Write(p []byte) (int, error) { s.mu.Lock(); defer s.mu.Unlock(); return s.b.Write(p) }
+func (s *syncBuf) String() string              { s.mu.Lock(); defer s.mu.Unlock(); return s.b.String() }
+
+var dockLine = regexp.MustCompile(`http://127\.0\.0\.1:(\d+)/dock`)
+
+// start runs the binary in a fresh folder holding config (nil: no file) and
+// waits for the banner, as the source's startServer helper does.
+func start(t *testing.T, config map[string]any, env ...string) *app {
+	t.Helper()
+	dir := t.TempDir()
+	if config != nil {
+		b, _ := json.Marshal(config)
+		if err := os.WriteFile(filepath.Join(dir, "config.json"), b, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return startIn(t, dir, append([]string{"DUPLEXCHAT_DIR=" + dir}, env...)...)
+}
+
+func startIn(t *testing.T, dir string, env ...string) *app {
+	t.Helper()
+	a := &app{dir: dir, out: &syncBuf{}}
+	a.cmd = exec.Command(binary)
+	a.cmd.Env = append(os.Environ(), env...)
+	a.cmd.Stdout, a.cmd.Stderr = a.out, a.out
+	if err := a.cmd.Start(); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { a.cmd.Process.Kill(); a.cmd.Wait() })
+	deadline := time.Now().Add(10 * time.Second)
+	for time.Now().Before(deadline) {
+		if m := dockLine.FindStringSubmatch(a.out.String()); m != nil {
+			fmt.Sscan(m[1], &a.port)
+			return a
+		}
+		time.Sleep(20 * time.Millisecond)
+	}
+	t.Fatalf("no banner in 10 s:\n%s", a.out.String())
+	return nil
+}
+
+func (a *app) get(t *testing.T, path string, host string) (int, http.Header, string) {
+	t.Helper()
+	req, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("http://127.0.0.1:%d%s", a.port, path), nil)
+	if host != "" {
+		req.Host = host
+	}
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	b, _ := io.ReadAll(resp.Body)
+	return resp.StatusCode, resp.Header, string(b)
+}
+
+func (a *app) state(t *testing.T) map[string]any {
+	t.Helper()
+	_, _, body := a.get(t, "/api/state", "")
+	var v map[string]any
+	if err := json.Unmarshal([]byte(body), &v); err != nil {
+		t.Fatalf("/api/state: %v: %s", err, body)
+	}
+	return v
+}
+
+// firstEvent reads /events up to the first data frame.
+func (a *app) firstEvent(t *testing.T) map[string]any {
+	t.Helper()
+	resp, err := http.Get(fmt.Sprintf("http://127.0.0.1:%d/events", a.port))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	sc := bufio.NewScanner(resp.Body)
+	sc.Buffer(make([]byte, 1<<20), 1<<20)
+	for sc.Scan() {
+		if line := sc.Text(); strings.HasPrefix(line, "data: ") {
+			var v map[string]any
+			if err := json.Unmarshal([]byte(line[6:]), &v); err != nil {
+				t.Fatal(err)
+			}
+			return v
+		}
+	}
+	t.Fatal("no event")
+	return nil
+}
+
+// Source case 1: dock and setup pages are served, overlay routes unchanged,
+// and reads stay open to a LAN Host.
+func TestPagesServed(t *testing.T) {
+	a := start(t, map[string]any{"host": "127.0.0.1", "port": freePort(t), "sources": []any{}})
+	for path, marker := range map[string]string{"/dock": `id="composer"`, "/setup": "Sending setup", "/overlay": `id="chat"`, "/": `id="rows"`} {
+		code, _, body := a.get(t, path, "")
+		if code != 200 || !strings.Contains(body, marker) {
+			t.Errorf("%s: %d, has %q: %v", path, code, marker, strings.Contains(body, marker))
+		}
+	}
+	if s := a.state(t); fmt.Sprint(s["sources"]) != "[]" {
+		t.Errorf("sources = %v", s["sources"])
+	}
+	if code, _, _ := a.get(t, "/api/state", fmt.Sprintf("some-lan-name:%d", a.port)); code != 200 {
+		t.Errorf("/api/state with a LAN Host: %d", code)
+	}
+	if regexp.MustCompile(`\p{Cyrillic}`).MatchString(a.out.String()) {
+		t.Errorf("output has Cyrillic:\n%s", a.out.String())
+	}
+}
+
+// Source case 3: binds loopback by default.
+func TestLoopbackByDefault(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	s := a.state(t)
+	if s["host"] != "127.0.0.1" || fmt.Sprint(s["lan"]) != "[]" {
+		t.Errorf("host %v, lan %v", s["host"], s["lan"])
+	}
+	if strings.Contains(a.out.String(), "On the local network") {
+		t.Errorf("printed a LAN line:\n%s", a.out.String())
+	}
+	if s["version"] != "dev" || s["port"] != float64(a.port) {
+		t.Errorf("version %v, port %v", s["version"], s["port"])
+	}
+}
+
+// Source case 10 (the parts before viewer counting): viewers ride the event
+// stream as "none", and the bar's files and CSS are served.
+func TestViewersAndOverlayFiles(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	hello := a.firstEvent(t)
+	none := map[string]any{"state": "none", "count": nil, "note": ""}
+	want := map[string]any{"twitch": none, "youtube": none}
+	if fmt.Sprint(hello["viewers"]) != fmt.Sprint(want) {
+		t.Errorf("hello viewers = %v", hello["viewers"])
+	}
+	if fmt.Sprint(a.state(t)["viewers"]) != fmt.Sprint(want) {
+		t.Errorf("state viewers = %v", a.state(t)["viewers"])
+	}
+	checks := map[string][]string{
+		"/viewer-bar.js":      {"ViewerBar"},
+		"/overlay?viewers=1":  {`id="viewers"`, "/viewer-bar.js", "/overlay-options.js"},
+		"/overlay-options.js": {"OverlayOptions"},
+		"/overlay.css":        {"--bg: rgba(10, 10, 14, var(--bg-opacity))", "--viewers-", ".vchip.inside"},
+		"/dock-logic.js":      {"DockLogic"},
+		"/info":               {`id="form"`, "/info-logic.js"},
+		"/info-logic.js":      {"InfoLogic"},
+	}
+	for path, wants := range checks {
+		code, hdr, body := a.get(t, path, "")
+		if code != 200 {
+			t.Errorf("%s: %d", path, code)
+		}
+		for _, w := range wants {
+			if !strings.Contains(body, w) {
+				t.Errorf("%s doesn't contain %q", path, w)
+			}
+		}
+		if strings.HasSuffix(path, ".js") && !strings.Contains(hdr.Get("Content-Type"), "javascript") {
+			t.Errorf("%s: Content-Type %q", path, hdr.Get("Content-Type"))
+		}
+	}
+	if !regexp.MustCompile(`Stream info:\s+http://127.0.0.1:\d+/info`).MatchString(a.out.String()) {
+		t.Errorf("no Stream info line:\n%s", a.out.String())
+	}
+}
+
+// Port busy: the next one is used and the banner shows the real port.
+func TestPortFallback(t *testing.T) {
+	busy, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer busy.Close()
+	port := busy.Addr().(*net.TCPAddr).Port
+	a := start(t, map[string]any{"port": port, "sources": []any{}})
+	if a.port == port {
+		t.Fatalf("banner shows the busy port %d", port)
+	}
+	if !strings.Contains(a.out.String(), fmt.Sprintf("Port %d is busy", port)) {
+		t.Errorf("no busy-port line:\n%s", a.out.String())
+	}
+	if s := a.state(t); s["port"] != float64(a.port) {
+		t.Errorf("/api/state port = %v, want %d", s["port"], a.port)
+	}
+}
+
+// Drop-in: an existing config with sources and settings loads, its sources
+// show up, and starting doesn't rewrite the file.
+func TestExistingConfigLoadsUntouched(t *testing.T) {
+	dir := t.TempDir()
+	raw := fmt.Sprintf("\ufeff{\n  \"host\": \"127.0.0.1\",\n  \"port\": %d,\n  \"sources\": [{\"id\": \"old1\", \"url\": \"https://www.twitch.tv/examplechannel\"}, {\"id\": \"old2\", \"url\": \"https://www.youtube.com/@ExampleChannel\"}, {\"url\": \"https://example.com/nope\"}],\n  \"twitchClientId\": \"abc\",\n  \"youtubeViewers\": \"api\",\n  \"infoPresets\": [{\"name\": \"Repair night\"}],\n  \"replyTo\": {\"twitch\": \"https://www.twitch.tv/examplechannel\"}\n}", freePort(t))
+	path := filepath.Join(dir, "config.json")
+	os.WriteFile(path, []byte(raw), 0o644)
+	a := startIn(t, dir, "MULTICHAT_DIR="+dir) // multichat's variable still works
+	var plats []string
+	for _, s := range a.state(t)["sources"].([]any) {
+		m := s.(map[string]any)
+		plats = append(plats, m["platform"].(string)+"/"+m["state"].(string))
+		if id := m["id"].(string); !regexp.MustCompile(`^[0-9a-f]{8}$`).MatchString(id) {
+			t.Errorf("source id %q isn't 8 hex characters", id)
+		}
+	}
+	if strings.Join(plats, ",") != "twitch/connecting,youtube/connecting" {
+		t.Errorf("sources = %v", plats)
+	}
+	if !strings.Contains(a.out.String(), "Source https://example.com/nope:") {
+		t.Errorf("bad source not reported:\n%s", a.out.String())
+	}
+	if b, _ := os.ReadFile(path); string(b) != raw {
+		t.Errorf("config.json was rewritten at startup:\n%s", b)
+	}
+	if _, err := os.Stat(filepath.Join(dir, "fonts")); err != nil {
+		t.Errorf("fonts/ not created: %v", err)
+	}
+}
+
+// A port that can't be bound is logged to error.log and the process exits 1.
+func TestBadPortExits(t *testing.T) {
+	dir := t.TempDir()
+	os.WriteFile(filepath.Join(dir, "config.json"), []byte(`{"port":"not a port"}`), 0o644)
+	cmd := exec.Command(binary)
+	cmd.Env = append(os.Environ(), "DUPLEXCHAT_DIR="+dir)
+	out, err := cmd.CombinedOutput()
+	if ee, ok := err.(*exec.ExitError); !ok || ee.ExitCode() != 1 {
+		t.Fatalf("exit: %v\n%s", err, out)
+	}
+	log, _ := os.ReadFile(filepath.Join(dir, "error.log"))
+	if !regexp.MustCompile(`^\[\d{4}-\d\d-\d\dT[\d:.]+Z\] listen: `).Match(log) {
+		t.Errorf("error.log = %q", log)
+	}
+}
+
+func TestVersionFlag(t *testing.T) {
+	out, err := exec.Command(binary, "--version").Output()
+	if err != nil || strings.TrimSpace(string(out)) != "dev" {
+		t.Errorf("--version: %q, %v", out, err)
+	}
+}
