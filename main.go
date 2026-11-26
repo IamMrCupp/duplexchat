@@ -24,6 +24,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
 	"github.com/IamMrCupp/duplexchat/internal/twitch"
+	"github.com/IamMrCupp/duplexchat/internal/youtube"
 )
 
 // version is set at release with -ldflags "-X main.version=…".
@@ -75,6 +76,8 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	chats := &app.App{Store: store, Hub: feed, Readers: map[string]app.Factory{
 		// DUPLEXCHAT_TWITCH_IRC points the reader at another IRC server (tests)
 		"twitch": twitch.Factory(emotes.New().For, getenv("DUPLEXCHAT_TWITCH_IRC")),
+		// DUPLEXCHAT_YOUTUBE_ORIGIN points the reader at another YouTube (tests)
+		"youtube": youtube.Factory(getenv("DUPLEXCHAT_YOUTUBE_ORIGIN")),
 	}}
 
 	handler := server.New(server.Options{

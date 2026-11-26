@@ -79,9 +79,9 @@ func start(t *testing.T, config map[string]any, env ...string) *instance {
 	return startIn(t, dir, append([]string{"DUPLEXCHAT_DIR=" + dir}, env...)...)
 }
 
-// offline keeps the binary's readers off the internet: Twitch goes to a port
-// nothing listens on, so a source stays "connecting".
-var offline = []string{"DUPLEXCHAT_TWITCH_IRC=127.0.0.1:1"}
+// offline keeps the binary's readers off the internet: Twitch and YouTube go
+// to a port nothing listens on.
+var offline = []string{"DUPLEXCHAT_TWITCH_IRC=127.0.0.1:1", "DUPLEXCHAT_YOUTUBE_ORIGIN=http://127.0.0.1:1"}
 
 func startIn(t *testing.T, dir string, env ...string) *instance {
 	t.Helper()
@@ -266,7 +266,9 @@ func TestExistingConfigLoadsUntouched(t *testing.T) {
 			t.Errorf("source id %q isn't 8 hex characters", id)
 		}
 	}
-	if strings.Join(plats, ",") != "twitch/connecting,youtube/connecting" {
+	// offline, the readers can't connect: Twitch keeps retrying (connecting),
+	// YouTube says it can't reach YouTube (error) between tries
+	if len(plats) != 2 || plats[0] != "twitch/connecting" || (plats[1] != "youtube/connecting" && plats[1] != "youtube/error") {
 		t.Errorf("sources = %v", plats)
 	}
 	if !strings.Contains(a.out.String(), "Source https://example.com/nope:") {
