@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/IamMrCupp/duplexchat/compare/v0.5.0...v0.6.0) (2026-11-26)
+
+
+### Features
+
+* **twitch:** read chat over anonymous IRC ([#6](https://github.com/IamMrCupp/duplexchat/issues/6)) ([707c1a1](https://github.com/IamMrCupp/duplexchat/commit/707c1a132b58bd5a9bc4d944f462bc7ba0ff75ea))
+
 ## [0.5.0](https://github.com/IamMrCupp/duplexchat/compare/v0.4.0...v0.5.0) (2026-11-26)
 
 
