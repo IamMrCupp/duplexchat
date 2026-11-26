@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/IamMrCupp/duplexchat/compare/v0.3.0...v0.4.0) (2026-11-26)
+
+
+### Features
+
+* **gate:** port the write-route gate and session token ([#32](https://github.com/IamMrCupp/duplexchat/issues/32)) ([849f122](https://github.com/IamMrCupp/duplexchat/commit/849f122a599347681c90818748d281f1748a162c))
+
 ## [0.3.0](https://github.com/IamMrCupp/duplexchat/compare/v0.2.0...v0.3.0) (2026-11-26)
 
 
