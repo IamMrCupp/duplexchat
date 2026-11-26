@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/IamMrCupp/duplexchat/compare/v0.8.0...v0.9.0) (2026-11-26)
+
+
+### Features
+
+* **cli:** open the panel in an app window with --window ([#5](https://github.com/IamMrCupp/duplexchat/issues/5)) ([956c6e6](https://github.com/IamMrCupp/duplexchat/commit/956c6e6ece4def65bd8e077a9d71ceaebe564f7b))
+
 ## [0.8.0](https://github.com/IamMrCupp/duplexchat/compare/v0.7.0...v0.8.0) (2026-11-26)
 
 
