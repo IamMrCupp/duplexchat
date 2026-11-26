@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"net/http"
 	"path"
+	"strings"
 )
 
 // routes is the source's static route table (multichat server.js at 29a9d2c).
@@ -45,33 +46,63 @@ func contentType(name string) string {
 	return "application/octet-stream"
 }
 
-// Server answers HTTP requests. pages holds the contents of public/.
-type Server struct {
-	pages fs.FS
+// Options are what the server serves from.
+type Options struct {
+	Pages    fs.FS             // public/, usually embedded
+	Events   http.Handler      // GET /events (the SSE hub); nil → 404
+	State    func() State      // GET /api/state; nil → 404
+	FontsDir string            // the user's fonts/ folder; "" → no fonts
+	Log      func(string, any) // error.log; nil → ignored
 }
 
-// New returns a server for the given pages, which are usually the embedded
-// public/ directory.
-func New(pages fs.FS) *Server {
-	return &Server{pages: pages}
+// Server answers HTTP requests.
+type Server struct {
+	opts Options
+}
+
+// New returns a server.
+func New(opts Options) *Server {
+	if opts.Log == nil {
+		opts.Log = func(string, any) {}
+	}
+	return &Server{opts: opts}
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		if r.URL.Path == "/favicon.ico" {
-			w.WriteHeader(http.StatusNoContent)
-			return
-		}
-		if name, ok := routes[r.URL.Path]; ok {
-			s.serveFile(w, name)
-			return
-		}
+	rw := &recorder{ResponseWriter: w}
+	defer s.recover(rw)
+	if r.Method == http.MethodGet && s.get(rw, r) {
+		return
 	}
-	notFound(w)
+	notFound(rw)
+}
+
+// get answers the GET routes; false means none matched.
+func (s *Server) get(w http.ResponseWriter, r *http.Request) bool {
+	p := r.URL.Path
+	switch {
+	case p == "/favicon.ico":
+		w.WriteHeader(http.StatusNoContent)
+	case p == "/events" && s.opts.Events != nil:
+		s.opts.Events.ServeHTTP(w, r)
+	case p == "/api/state" && s.opts.State != nil:
+		writeJSON(w, http.StatusOK, s.opts.State())
+	case p == "/api/fonts":
+		writeJSON(w, http.StatusOK, s.fontList())
+	case strings.HasPrefix(p, "/fonts/"):
+		s.serveFont(w, r)
+	default:
+		name, ok := routes[p]
+		if !ok {
+			return false
+		}
+		s.serveFile(w, name)
+	}
+	return true
 }
 
 func (s *Server) serveFile(w http.ResponseWriter, name string) {
-	data, err := fs.ReadFile(s.pages, name)
+	data, err := fs.ReadFile(s.opts.Pages, name)
 	if err != nil {
 		notFound(w)
 		return

@@ -21,8 +21,11 @@ type Log struct {
 }
 
 // New logs to path and echoes to stderr.
-func New(path string) *Log {
-	return &Log{path: path, echo: os.Stderr, now: time.Now}
+func New(path string) *Log { return NewTo(path, os.Stderr) }
+
+// NewTo logs to path and echoes to echo (nil for no echo).
+func NewTo(path string, echo io.Writer) *Log {
+	return &Log{path: path, echo: echo, now: time.Now}
 }
 
 // Line formats an entry: [2026-11-25T12:34:56.789Z] kind: what

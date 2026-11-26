@@ -47,7 +47,7 @@ func TestStaticRoutes(t *testing.T) {
 		{"/overlay-options.js", "overlay-options", js},
 		{"/favicon.svg", "<svg/>", svg},
 	}
-	h := New(testPages)
+	h := New(Options{Pages: testPages})
 	for _, c := range cases {
 		t.Run(c.path, func(t *testing.T) {
 			rec := httptest.NewRecorder()
@@ -72,7 +72,7 @@ func TestStaticRoutes(t *testing.T) {
 
 func TestFaviconICO(t *testing.T) {
 	rec := httptest.NewRecorder()
-	New(testPages).ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/favicon.ico", nil))
+	New(Options{Pages: testPages}).ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/favicon.ico", nil))
 	if rec.Code != http.StatusNoContent {
 		t.Fatalf("status = %d, want 204", rec.Code)
 	}
@@ -91,7 +91,7 @@ func TestNotFound(t *testing.T) {
 		{http.MethodPost, "/"}, // static routes are GET only
 		{http.MethodHead, "/dock"},
 	}
-	h := New(testPages)
+	h := New(Options{Pages: testPages})
 	for _, c := range cases {
 		t.Run(c.method+" "+c.path, func(t *testing.T) {
 			rec := httptest.NewRecorder()
@@ -108,7 +108,7 @@ func TestNotFound(t *testing.T) {
 
 func TestMissingFileIs404(t *testing.T) {
 	rec := httptest.NewRecorder()
-	New(fstest.MapFS{}).ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/dock", nil))
+	New(Options{Pages: fstest.MapFS{}}).ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/dock", nil))
 	if rec.Code != http.StatusNotFound {
 		t.Fatalf("status = %d, want 404", rec.Code)
 	}
