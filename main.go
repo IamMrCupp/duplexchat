@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"runtime"
 	"syscall"
 	"time"
 
@@ -24,6 +25,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
 	"github.com/IamMrCupp/duplexchat/internal/twitch"
+	"github.com/IamMrCupp/duplexchat/internal/window"
 	"github.com/IamMrCupp/duplexchat/internal/youtube"
 )
 
@@ -38,6 +40,7 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	flags := flag.NewFlagSet("duplexchat", flag.ContinueOnError)
 	flags.SetOutput(stderr)
 	showVersion := flags.Bool("version", false, "print the version and exit")
+	openWindow := flags.Bool("window", false, "open the control panel in an app window")
 	if err := flags.Parse(args); err != nil {
 		return 2
 	}
@@ -99,6 +102,17 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 
 	fmt.Fprint(stdout, server.Banner(actual, server.LANOrigins(cfg.Host, actual), nil))
 	chats.Start()
+	if *openWindow {
+		go func() {
+			time.Sleep(300 * time.Millisecond)
+			line, err := window.Open(window.Real(runtime.GOOS), fmt.Sprintf("http://127.0.0.1:%d/", actual), dir)
+			if err != nil {
+				log.Write("window", err)
+				return
+			}
+			fmt.Fprintln(stdout, "  "+line)
+		}()
+	}
 
 	served := make(chan error, 1)
 	go func() { served <- srv.Serve(ln) }()
