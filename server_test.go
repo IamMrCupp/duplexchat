@@ -298,6 +298,14 @@ func TestBadPortExits(t *testing.T) {
 	}
 }
 
+func TestWindowFlagAccepted(t *testing.T) {
+	// --window with --version: the flag parses, nothing opens
+	out, err := exec.Command(binary, "--window", "--version").Output()
+	if err != nil || strings.TrimSpace(string(out)) != "dev" {
+		t.Errorf("--window --version: %q, %v", out, err)
+	}
+}
+
 func TestVersionFlag(t *testing.T) {
 	out, err := exec.Command(binary, "--version").Output()
 	if err != nil || strings.TrimSpace(string(out)) != "dev" {
