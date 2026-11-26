@@ -240,10 +240,14 @@ func TestFirstClientCallback(t *testing.T) {
 	}
 }
 
-// A client that stops reading is dropped; the others keep getting frames and
-// publishing never blocks.
+// A client that stops reading is dropped; a client that keeps up gets every
+// frame, and publishing never waits on either. The fast client confirms each
+// batch before the next is sent, so it's never more than a batch behind its
+// queue; the slow client never reads, so once the socket buffers fill its
+// queue does too.
 func TestSlowClientDropped(t *testing.T) {
-	h, srv := newHub(t, Options{Buffer: 4})
+	const batch, total = 16, 6000
+	h, srv := newHub(t, Options{Buffer: 64})
 	fast := open(t, srv)
 	fast.next()
 	fast.next()
@@ -251,22 +255,33 @@ func TestSlowClientDropped(t *testing.T) {
 	slow.next()
 	slow.next()
 	waitClients(t, h, 2)
-	done := make(chan struct{})
+
+	got := make(chan string, batch)
 	go func() {
-		for i := 0; i < 5000; i++ {
-			h.Publish(padded(fmt.Sprintf("m%d", i)))
+		for i := 0; i < total; i++ {
+			f := fast.next()
+			id, _ := f["id"].(string)
+			got <- id
 		}
-		close(done)
 	}()
-	for i := 0; i < 5000; i++ {
-		if f := fast.next(); f["id"] != fmt.Sprintf("m%d", i) {
-			t.Fatalf("fast client frame %d = %v", i, f)
+	for i := 0; i < total; i += batch {
+		start := time.Now()
+		for j := i; j < i+batch; j++ {
+			h.Publish(padded(fmt.Sprintf("m%d", j)))
 		}
-	}
-	select {
-	case <-done:
-	case <-time.After(5 * time.Second):
-		t.Fatal("publishing blocked on a slow client")
+		if d := time.Since(start); d > 2*time.Second {
+			t.Fatalf("publishing a batch took %v", d)
+		}
+		for j := i; j < i+batch; j++ {
+			select {
+			case id := <-got:
+				if id != fmt.Sprintf("m%d", j) {
+					t.Fatalf("fast client got %q, want m%d", id, j)
+				}
+			case <-time.After(5 * time.Second):
+				t.Fatalf("fast client stalled at m%d", j)
+			}
+		}
 	}
 	waitClients(t, h, 1)
 }
