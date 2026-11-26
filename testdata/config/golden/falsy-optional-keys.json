@@ -1,0 +1,20 @@
+{
+  "file": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [],\n  \"twitchClientId\": \"\",\n  \"youtubeViewers\": \"free\",\n  \"infoPresets\": [],\n  \"replyTo\": {}\n}",
+  "ids": [
+    "00000001"
+  ],
+  "steps": [
+    {
+      "op": {
+        "add": "twitch.tv/examplechannel"
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"twitch.tv/examplechannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"twitch.tv/examplechannel\"\n  }\n}"
+    },
+    {
+      "op": {
+        "add": "not a stream"
+      },
+      "saved": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"twitch.tv/examplechannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"twitch.tv/examplechannel\"\n  }\n}"
+    }
+  ]
+}

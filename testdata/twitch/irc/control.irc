@@ -1,0 +1,18 @@
+# Connection control: keepalive, join, room state, reconnect, notices, noise.
+PING :tmi.twitch.tv
+PING
+:tmi.twitch.tv 001 justinfan12345 :Welcome, GLHF!
+:justinfan12345.tmi.twitch.tv 353 justinfan12345 = #examplechannel :justinfan12345
+:justinfan12345.tmi.twitch.tv 366 justinfan12345 #examplechannel :End of /NAMES list
+@emote-only=0;followers-only=-1;r9k=0;room-id=12345;slow=0;subs-only=0 :tmi.twitch.tv ROOMSTATE #examplechannel
+:justinfan12345!justinfan12345@justinfan12345.tmi.twitch.tv JOIN #examplechannel
+@badge-info=;badges=;color=;display-name=justinfan12345;emote-sets=0;mod=0;subscriber=0;user-type= :tmi.twitch.tv USERSTATE #examplechannel
+:tmi.twitch.tv NOTICE * :Login authentication failed
+@msg-id=msg_channel_suspended :tmi.twitch.tv NOTICE #examplechannel :This channel does not exist or has been suspended.
+:tmi.twitch.tv HOSTTARGET #examplechannel :- 0
+:tmi.twitch.tv RECONNECT
+not an irc line at all
+@
+@a=b
+:
+:onlyprefix

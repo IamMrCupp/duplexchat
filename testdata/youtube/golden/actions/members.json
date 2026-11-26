@@ -1,0 +1,154 @@
+[
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:MB1",
+        "kind": "member",
+        "author": {
+          "name": "Loyal Member",
+          "color": null,
+          "roles": [
+            "member"
+          ],
+          "key": "UCloyalloyalloyalloyal01",
+          "avatar": "https://yt4.ggpht.example/large=s64",
+          "badgeUrl": "https://yt3.ggpht.example/member6=s32"
+        },
+        "parts": [
+          {
+            "t": "text",
+            "v": "six months already "
+          },
+          {
+            "t": "emote",
+            "url": "https://yt3.ggpht.example/emoji=w48",
+            "alt": ":yt:"
+          }
+        ],
+        "system": "Member for 6 months"
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:MB2",
+        "kind": "member",
+        "author": {
+          "name": "New Member",
+          "color": null,
+          "roles": [],
+          "key": "UCnewmembernewmembernew1",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [],
+        "system": "Welcome to Repair Crew!"
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:MB3",
+        "kind": "member",
+        "author": {
+          "name": "Simple Member",
+          "color": null,
+          "roles": [],
+          "key": "UCsimplememberSimplemem1",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [],
+        "system": "New member"
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:MB4",
+        "kind": "member",
+        "author": {
+          "name": "Bare Member",
+          "color": null,
+          "roles": [],
+          "key": "UCbarememberbarememberb1",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [],
+        "system": ""
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:G1",
+        "kind": "member",
+        "author": {
+          "name": "Generous One",
+          "color": null,
+          "roles": [
+            "member"
+          ],
+          "key": "UCgiftergiftergiftergif1",
+          "avatar": "https://yt4.ggpht.example/gifter",
+          "badgeUrl": "https://yt3.ggpht.example/member24=s32"
+        },
+        "parts": [],
+        "system": "Gifted 5 Repair Crew memberships"
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:mkorf98kqja",
+        "kind": "member",
+        "author": {
+          "name": "No Id Gifter",
+          "color": null,
+          "roles": [],
+          "key": "UCnoidgifternoidgifterno",
+          "avatar": null
+        },
+        "parts": [],
+        "system": "Gifted 1 membership"
+      }
+    ]
+  },
+  {
+    "event": "call",
+    "call": "onMessage",
+    "args": [
+      {
+        "id": "yt:GR1",
+        "kind": "member",
+        "author": {
+          "name": "Lucky Viewer",
+          "color": null,
+          "roles": [],
+          "key": "UCluckyluckyluckylucky01",
+          "avatar": "https://yt4.ggpht.example/large=s64"
+        },
+        "parts": [],
+        "system": "received a gift membership by Generous One"
+      }
+    ]
+  },
+  {
+    "event": "batch-end"
+  }
+]

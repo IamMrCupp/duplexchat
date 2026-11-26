@@ -1,0 +1,48 @@
+{
+  "events": [
+    {
+      "event": "step",
+      "step": "resolve"
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "connecting",
+        "ищу трансляцию…"
+      ]
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/watch?v=BBBBBBBBBBB",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "offline",
+        "Chat is disabled for this live stream. — проверяю раз в минуту"
+      ]
+    },
+    {
+      "event": "later",
+      "ms": 60000,
+      "next": "resolve"
+    }
+  ],
+  "state": {
+    "videoId": "BBBBBBBBBBB",
+    "ownerChannelId": null,
+    "apiKey": null,
+    "clientVersion": "2.20260708.00.00",
+    "continuation": null,
+    "errStreak": 0
+  }
+}

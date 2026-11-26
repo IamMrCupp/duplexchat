@@ -1,0 +1,365 @@
+{
+  "urls": [
+    "https://www.youtube.com/watch?v=AAAAAAAAAAA",
+    "https://www.youtube.com/watch?feature=x&v=AAAAAAAAAAA&t=1",
+    "https://youtu.be/AAAAAAAAAAA?si=x",
+    "https://www.youtube.com/live/AAAAAAAAAAA?feature=share",
+    "https://www.youtube.com/shorts/AAAAAAAAAAA",
+    "https://www.youtube.com/embed/AAAAAAAAAAA",
+    "https://www.youtube.com/v/AAAAAAAAAAA",
+    "https://www.youtube.com/e/AAAAAAAAAAA",
+    "https://www.youtube.com/@ExampleChannel",
+    "https://www.youtube.com/channel/UCfakeownerfakeownerfake",
+    "https://www.youtube.com/watch?v=short",
+    "https://www.youtube.com/watch?v=AAAAAAAAAAAextra",
+    "AAAAAAAAAAA",
+    "https://www.youtube.com/live/AAAAAAAAAAA/v=BBBBBBBBBBB?v=CCCCCCCCCCC"
+  ],
+  "colors": [
+    4278239141,
+    4280150454,
+    0,
+    -1,
+    16777215,
+    4294967295,
+    1.5,
+    "123",
+    null
+  ],
+  "thumbs": [
+    {
+      "thumbnails": [
+        {
+          "url": "https://a.example/1"
+        },
+        {
+          "url": "https://a.example/2"
+        }
+      ]
+    },
+    {
+      "thumbnails": [
+        {
+          "url": "//a.example/proto-relative"
+        }
+      ]
+    },
+    {
+      "thumbnails": [
+        {
+          "url": "http://a.example/insecure"
+        }
+      ]
+    },
+    {
+      "thumbnails": []
+    },
+    {
+      "thumbnails": [
+        {}
+      ]
+    },
+    {},
+    null,
+    {
+      "thumbnails": "nope"
+    }
+  ],
+  "runs": [
+    [
+      {
+        "text": "a"
+      },
+      {
+        "text": "b"
+      }
+    ],
+    [
+      {
+        "emoji": {
+          "emojiId": "😀",
+          "shortcuts": [
+            ":grinning:"
+          ],
+          "searchTerms": [
+            "grinning"
+          ]
+        }
+      },
+      {
+        "emoji": {
+          "emojiId": "UCx/abc",
+          "shortcuts": [
+            ":yt:"
+          ],
+          "searchTerms": [
+            "yt"
+          ],
+          "isCustomEmoji": true,
+          "image": {
+            "thumbnails": [
+              {
+                "url": "https://yt3.ggpht.example/emoji=w24"
+              },
+              {
+                "url": "https://yt3.ggpht.example/emoji=w48"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "text": "x"
+      }
+    ],
+    [
+      {
+        "emoji": {
+          "emojiId": "UCx/ghi",
+          "shortcuts": [
+            ":broken:"
+          ],
+          "isCustomEmoji": true,
+          "image": {
+            "thumbnails": []
+          }
+        }
+      },
+      {
+        "emoji": {
+          "isCustomEmoji": true,
+          "image": {
+            "thumbnails": [
+              {
+                "url": "https://yt3.ggpht.example/bare"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "emoji": {
+          "emojiId": "UCx/def",
+          "searchTerms": [
+            "hype"
+          ],
+          "isCustomEmoji": true,
+          "image": {
+            "thumbnails": [
+              {
+                "url": "//yt3.ggpht.example/hype=w48"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    [
+      {
+        "text": ""
+      },
+      {
+        "emoji": {
+          "shortcuts": [
+            ":wave:"
+          ]
+        }
+      },
+      {
+        "emoji": {}
+      }
+    ],
+    [],
+    null
+  ],
+  "nodes": [
+    {
+      "simpleText": "simple"
+    },
+    {
+      "simpleText": ""
+    },
+    {
+      "runs": [
+        {
+          "text": "r1"
+        },
+        {
+          "emoji": {
+            "emojiId": "😀",
+            "shortcuts": [
+              ":grinning:"
+            ],
+            "searchTerms": [
+              "grinning"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "simpleText": "wins",
+      "runs": [
+        {
+          "text": "loses"
+        }
+      ]
+    },
+    {},
+    null
+  ],
+  "authors": [
+    {
+      "authorName": {
+        "simpleText": "A"
+      },
+      "authorExternalChannelId": "UCaaaaaaaaaaaaaaaaaaaaaa",
+      "authorPhoto": {
+        "thumbnails": [
+          {
+            "url": "https://yt4.ggpht.example/small=s32",
+            "width": 32
+          },
+          {
+            "url": "//yt4.ggpht.example/large=s64",
+            "width": 64
+          }
+        ]
+      },
+      "authorBadges": [
+        {
+          "liveChatAuthorBadgeRenderer": {
+            "icon": {
+              "iconType": "MODERATOR"
+            },
+            "tooltip": "Moderator"
+          }
+        },
+        {
+          "liveChatAuthorBadgeRenderer": {
+            "icon": {
+              "iconType": "OWNER"
+            },
+            "tooltip": "Owner"
+          }
+        },
+        {
+          "liveChatAuthorBadgeRenderer": {
+            "icon": {
+              "iconType": "VERIFIED"
+            },
+            "tooltip": "Verified"
+          }
+        }
+      ]
+    },
+    {
+      "authorName": {
+        "simpleText": "B"
+      },
+      "authorExternalChannelId": null,
+      "authorPhoto": {
+        "thumbnails": [
+          {
+            "url": "https://yt4.ggpht.example/small=s32",
+            "width": 32
+          },
+          {
+            "url": "//yt4.ggpht.example/large=s64",
+            "width": 64
+          }
+        ]
+      },
+      "authorBadges": [
+        {
+          "liveChatAuthorBadgeRenderer": {
+            "customThumbnail": {
+              "thumbnails": [
+                {
+                  "url": "https://yt3.ggpht.example/member1=s16"
+                },
+                {
+                  "url": "https://yt3.ggpht.example/member1=s32"
+                }
+              ]
+            },
+            "tooltip": "Member (1 months)"
+          }
+        }
+      ]
+    },
+    {
+      "authorName": {
+        "runs": [
+          {
+            "text": "Run "
+          },
+          {
+            "text": "Name"
+          }
+        ]
+      }
+    },
+    {}
+  ],
+  "continuations": [
+    [
+      {
+        "invalidationContinuationData": {
+          "continuation": "INV",
+          "timeoutMs": 10000
+        }
+      }
+    ],
+    [
+      {
+        "timedContinuationData": {
+          "timeoutMs": 5000,
+          "continuation": "TIMED"
+        }
+      }
+    ],
+    [
+      {
+        "liveChatReplayContinuationData": {
+          "continuation": "REPLAY"
+        }
+      }
+    ],
+    [
+      {
+        "clickTrackingParams": "x",
+        "reloadContinuationData": {
+          "continuation": "RELOAD",
+          "timeoutMs": "7"
+        }
+      }
+    ],
+    [
+      {
+        "a": {
+          "continuation": "FIRST"
+        },
+        "b": {
+          "continuation": "SECOND"
+        }
+      }
+    ],
+    [
+      null,
+      "x",
+      {
+        "a": {
+          "continuation": 5
+        }
+      },
+      {
+        "b": {
+          "continuation": "THIRD"
+        }
+      }
+    ],
+    [],
+    null
+  ]
+}

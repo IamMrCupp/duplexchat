@@ -1,0 +1,20 @@
+{
+  "url": "youtu.be/AAAAAAAAAAA",
+  "steps": [
+    "resolve"
+  ],
+  "routes": {
+    "GET https://www.youtube.com/watch?v=AAAAAAAAAAA": {
+      "status": 200,
+      "bodyFile": "youtube/pages/watch-live.html"
+    },
+    "GET https://www.youtube.com/live_chat?continuation=BASE_TOKEN_1": {
+      "status": 200,
+      "bodyFile": "youtube/pages/live-chat-legacy.html"
+    },
+    "GET https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DAAAAAAAAAAA&format=json": {
+      "status": 404,
+      "body": {}
+    }
+  }
+}

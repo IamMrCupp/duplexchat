@@ -1,0 +1,48 @@
+[
+  {
+    "line": "@login=baduser;room-id=12345;target-msg-id=aaaa0001-0000-0000-0000-000000000002;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARMSG #examplechannel :no display name or colour",
+    "calls": [
+      {
+        "call": "onRemove",
+        "args": [
+          "tw:aaaa0001-0000-0000-0000-000000000002"
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@login=baduser;room-id=12345;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARMSG #examplechannel :no target id",
+    "calls": []
+  },
+  {
+    "line": "@ban-duration=600;room-id=12345;target-user-id=99;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel :BadUser",
+    "calls": [
+      {
+        "call": "onRemoveAuthor",
+        "args": [
+          "baduser"
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@room-id=12345;target-user-id=98;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel :banneduser",
+    "calls": [
+      {
+        "call": "onRemoveAuthor",
+        "args": [
+          "banneduser"
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@room-id=12345;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel",
+    "calls": [
+      {
+        "call": "onClear",
+        "args": []
+      }
+    ]
+  }
+]

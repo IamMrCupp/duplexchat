@@ -1,0 +1,549 @@
+[
+  [
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatTextMessageRenderer": {
+            "id": "T1",
+            "message": {
+              "runs": [
+                {
+                  "text": "hello "
+                },
+                {
+                  "emoji": {
+                    "emojiId": "😀",
+                    "shortcuts": [
+                      ":grinning:"
+                    ],
+                    "searchTerms": [
+                      "grinning"
+                    ]
+                  }
+                },
+                {
+                  "text": " and "
+                },
+                {
+                  "emoji": {
+                    "emojiId": "UCx/abc",
+                    "shortcuts": [
+                      ":yt:"
+                    ],
+                    "searchTerms": [
+                      "yt"
+                    ],
+                    "isCustomEmoji": true,
+                    "image": {
+                      "thumbnails": [
+                        {
+                          "url": "https://yt3.ggpht.example/emoji=w24"
+                        },
+                        {
+                          "url": "https://yt3.ggpht.example/emoji=w48"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": "!"
+                }
+              ]
+            },
+            "timestampUsec": "1700000000000000",
+            "authorName": {
+              "simpleText": "Mod Person"
+            },
+            "authorExternalChannelId": "UCmodmodmodmodmodmodmod01",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            },
+            "authorBadges": [
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "icon": {
+                    "iconType": "MODERATOR"
+                  },
+                  "tooltip": "Moderator"
+                }
+              }
+            ]
+          }
+        },
+        "clientId": "cT1"
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatTextMessageRenderer": {
+            "id": "T2",
+            "message": {
+              "runs": [
+                {
+                  "text": "owner here"
+                }
+              ]
+            },
+            "timestampUsec": "1700000000000000",
+            "authorName": {
+              "simpleText": "The Owner"
+            },
+            "authorExternalChannelId": "UCownerownerownerowner001",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            },
+            "authorBadges": [
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "icon": {
+                    "iconType": "OWNER"
+                  },
+                  "tooltip": "Owner"
+                }
+              },
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "icon": {
+                    "iconType": "VERIFIED"
+                  },
+                  "tooltip": "Verified"
+                }
+              }
+            ]
+          }
+        },
+        "clientId": "cT2"
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatTextMessageRenderer": {
+            "id": "T3",
+            "message": {
+              "runs": [
+                {
+                  "text": "member "
+                },
+                {
+                  "emoji": {
+                    "emojiId": "UCx/def",
+                    "searchTerms": [
+                      "hype"
+                    ],
+                    "isCustomEmoji": true,
+                    "image": {
+                      "thumbnails": [
+                        {
+                          "url": "//yt3.ggpht.example/hype=w48"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "emoji": {
+                    "emojiId": "UCx/ghi",
+                    "shortcuts": [
+                      ":broken:"
+                    ],
+                    "isCustomEmoji": true,
+                    "image": {
+                      "thumbnails": []
+                    }
+                  }
+                },
+                {
+                  "emoji": {
+                    "isCustomEmoji": true,
+                    "image": {
+                      "thumbnails": [
+                        {
+                          "url": "https://yt3.ggpht.example/bare"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "emoji": {
+                    "shortcuts": [
+                      ":wave:"
+                    ]
+                  }
+                },
+                {
+                  "emoji": {}
+                },
+                {
+                  "navigationEndpoint": {}
+                }
+              ]
+            },
+            "timestampUsec": "1700000000000000",
+            "authorName": {
+              "simpleText": "Member Person"
+            },
+            "authorExternalChannelId": "UCmembermembermember0001",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            },
+            "authorBadges": [
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "customThumbnail": {
+                    "thumbnails": [
+                      {
+                        "url": "https://yt3.ggpht.example/member6=s16"
+                      },
+                      {
+                        "url": "https://yt3.ggpht.example/member6=s32"
+                      }
+                    ]
+                  },
+                  "tooltip": "Member (6 months)"
+                }
+              },
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "icon": {
+                    "iconType": "SOMETHING_NEW"
+                  }
+                }
+              },
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "customThumbnail": {
+                    "thumbnails": [
+                      {
+                        "url": "https://yt3.ggpht.example/member12=s16"
+                      },
+                      {
+                        "url": "https://yt3.ggpht.example/member12=s32"
+                      }
+                    ]
+                  },
+                  "tooltip": "Member (12 months)"
+                }
+              }
+            ]
+          }
+        },
+        "clientId": "cT3"
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatTextMessageRenderer": {
+            "id": "T4",
+            "message": {
+              "runs": []
+            },
+            "timestampUsec": "1700000000000000",
+            "authorName": {
+              "simpleText": "No Photo"
+            },
+            "authorExternalChannelId": "UCnophotonophotonophot01"
+          }
+        },
+        "clientId": "cT4"
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatTextMessageRenderer": {
+            "id": "T1",
+            "message": {
+              "runs": [
+                {
+                  "text": "duplicate id is dropped"
+                }
+              ]
+            },
+            "timestampUsec": "1700000000000000",
+            "authorName": {
+              "simpleText": "Mod Person"
+            },
+            "authorExternalChannelId": "UCmodmodmodmodmodmodmod01",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            },
+            "authorBadges": [
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "icon": {
+                    "iconType": "MODERATOR"
+                  },
+                  "tooltip": "Moderator"
+                }
+              }
+            ]
+          }
+        },
+        "clientId": "cT1"
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatViewerEngagementMessageRenderer": {
+            "id": "E1",
+            "message": {
+              "runs": [
+                {
+                  "text": "Welcome to live chat!"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatPlaceholderItemRenderer": {
+            "id": "P1"
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {}
+    },
+    {
+      "addLiveChatTickerItemAction": {
+        "item": {}
+      }
+    },
+    {
+      "showLiveChatTooltipCommand": {}
+    }
+  ],
+  [
+    {
+      "replaceChatItemAction": {
+        "targetItemId": "P1",
+        "replacementItem": {
+          "liveChatTextMessageRenderer": {
+            "id": "R1",
+            "message": {
+              "runs": [
+                {
+                  "text": "replacement with a new id"
+                }
+              ]
+            },
+            "authorName": {
+              "simpleText": "Replacer"
+            },
+            "authorExternalChannelId": "UCreplacerreplacerreplac",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "replaceChatItemAction": {
+        "targetItemId": "T2",
+        "replacementItem": {
+          "liveChatTextMessageRenderer": {
+            "id": "T2",
+            "message": {
+              "runs": [
+                {
+                  "text": "replacement reusing an id"
+                }
+              ]
+            },
+            "authorName": {
+              "simpleText": "The Owner"
+            },
+            "authorExternalChannelId": "UCownerownerownerowner001",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "markChatItemAsDeletedAction": {
+        "targetItemId": "T1",
+        "deletedStateMessage": {
+          "runs": [
+            {
+              "text": "[message deleted]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "removeChatItemAction": {
+        "targetItemId": "T3"
+      }
+    },
+    {
+      "markChatItemsByAuthorAsDeletedAction": {
+        "externalChannelId": "UCmodmodmodmodmodmodmod01",
+        "deletedStateMessage": {
+          "runs": [
+            {
+              "text": "[message retracted]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "removeChatItemByAuthorAction": {
+        "externalChannelId": "UCignoredignoredignored1"
+      }
+    },
+    {
+      "replayChatItemAction": {
+        "actions": [
+          {
+            "addChatItemAction": {
+              "item": {
+                "liveChatTextMessageRenderer": {
+                  "id": "RP1",
+                  "message": {
+                    "runs": [
+                      {
+                        "text": "from a replay wrapper"
+                      }
+                    ]
+                  },
+                  "timestampUsec": "1700000000000000",
+                  "authorName": {
+                    "simpleText": "Replay Viewer"
+                  },
+                  "authorExternalChannelId": "UCreplayreplayreplayrepl",
+                  "authorPhoto": {
+                    "thumbnails": [
+                      {
+                        "url": "https://yt4.ggpht.example/small=s32",
+                        "width": 32
+                      },
+                      {
+                        "url": "//yt4.ggpht.example/large=s64",
+                        "width": 64
+                      }
+                    ]
+                  }
+                }
+              },
+              "clientId": "cRP1"
+            }
+          },
+          {
+            "replayChatItemAction": {
+              "actions": [
+                {
+                  "addChatItemAction": {
+                    "item": {
+                      "liveChatTextMessageRenderer": {
+                        "id": "RP2",
+                        "message": {
+                          "runs": [
+                            {
+                              "text": "nested replay"
+                            }
+                          ]
+                        },
+                        "timestampUsec": "1700000000000000",
+                        "authorName": {
+                          "simpleText": "Replay Viewer"
+                        },
+                        "authorExternalChannelId": "UCreplayreplayreplayrepl",
+                        "authorPhoto": {
+                          "thumbnails": [
+                            {
+                              "url": "https://yt4.ggpht.example/small=s32",
+                              "width": 32
+                            },
+                            {
+                              "url": "//yt4.ggpht.example/large=s64",
+                              "width": 64
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "clientId": "cRP2"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "videoOffsetTimeMsec": "1000"
+      }
+    }
+  ]
+]

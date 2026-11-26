@@ -1,0 +1,58 @@
+[
+  {
+    "tag": "",
+    "roles": []
+  },
+  {
+    "tag": "broadcaster/1",
+    "roles": [
+      "owner"
+    ]
+  },
+  {
+    "tag": "moderator/1,subscriber/6",
+    "roles": [
+      "mod",
+      "sub"
+    ]
+  },
+  {
+    "tag": "vip/1,partner/1",
+    "roles": [
+      "vip",
+      "verified"
+    ]
+  },
+  {
+    "tag": "founder/0,subscriber/12",
+    "roles": [
+      "sub"
+    ]
+  },
+  {
+    "tag": "staff/1,admin/1,global_mod/1",
+    "roles": [
+      "staff"
+    ]
+  },
+  {
+    "tag": "bits/1000,premium/1",
+    "roles": []
+  },
+  {
+    "tag": "subscriber/3,subscriber/6",
+    "roles": [
+      "sub"
+    ]
+  },
+  {
+    "tag": "moderator",
+    "roles": [
+      "mod"
+    ]
+  },
+  {
+    "tag": "turbo/1,glhf-pledge/1",
+    "roles": []
+  }
+]

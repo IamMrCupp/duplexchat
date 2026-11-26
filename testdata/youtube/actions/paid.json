@@ -1,0 +1,179 @@
+[
+  [
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatPaidMessageRenderer": {
+            "id": "S1",
+            "message": {
+              "runs": [
+                {
+                  "text": "great stream "
+                },
+                {
+                  "emoji": {
+                    "emojiId": "😀",
+                    "shortcuts": [
+                      ":grinning:"
+                    ],
+                    "searchTerms": [
+                      "grinning"
+                    ]
+                  }
+                }
+              ]
+            },
+            "purchaseAmountText": {
+              "simpleText": "$5.00"
+            },
+            "headerBackgroundColor": 4278239141,
+            "bodyBackgroundColor": 4280150454,
+            "headerTextColor": 4278190080,
+            "authorName": {
+              "simpleText": "Rich Viewer"
+            },
+            "authorExternalChannelId": "UCrichrichrichrichrichri1",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            },
+            "authorBadges": [
+              {
+                "liveChatAuthorBadgeRenderer": {
+                  "customThumbnail": {
+                    "thumbnails": [
+                      {
+                        "url": "https://yt3.ggpht.example/member3=s16"
+                      },
+                      {
+                        "url": "https://yt3.ggpht.example/member3=s32"
+                      }
+                    ]
+                  },
+                  "tooltip": "Member (3 months)"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatPaidMessageRenderer": {
+            "id": "S2",
+            "purchaseAmountText": {
+              "runs": [
+                {
+                  "text": "€"
+                },
+                {
+                  "text": "10,00"
+                }
+              ]
+            },
+            "headerBackgroundColor": -1,
+            "bodyBackgroundColor": "not a number",
+            "authorName": {
+              "simpleText": "Quiet Rich"
+            },
+            "authorExternalChannelId": "UCquietrichquietrichqui1",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatPaidStickerRenderer": {
+            "id": "K1",
+            "purchaseAmountText": {
+              "simpleText": "CA$2.79"
+            },
+            "sticker": {
+              "thumbnails": [
+                {
+                  "url": "//lh3.googleusercontent.example/sticker=s40"
+                },
+                {
+                  "url": "//lh3.googleusercontent.example/sticker=s80"
+                }
+              ]
+            },
+            "moneyChipBackgroundColor": 4280191205,
+            "backgroundColor": 4278237396,
+            "authorName": {
+              "simpleText": "Sticker Fan"
+            },
+            "authorExternalChannelId": "UCstickerstickersticker01",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "addChatItemAction": {
+        "item": {
+          "liveChatPaidStickerRenderer": {
+            "id": "K2",
+            "sticker": {
+              "thumbnails": [
+                {
+                  "url": "http://insecure.example/sticker"
+                }
+              ]
+            },
+            "authorName": {
+              "simpleText": "Bad Sticker"
+            },
+            "authorExternalChannelId": "UCbadstickerbadstickerba",
+            "authorPhoto": {
+              "thumbnails": [
+                {
+                  "url": "https://yt4.ggpht.example/small=s32",
+                  "width": 32
+                },
+                {
+                  "url": "//yt4.ggpht.example/large=s64",
+                  "width": 64
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+]

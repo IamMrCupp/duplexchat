@@ -1,0 +1,14 @@
+{
+  "file": "{\n  \"host\": \"::\",\n  \"port\": \"3131\",\n  \"sources\": []\n}",
+  "ids": [
+    "00000001"
+  ],
+  "steps": [
+    {
+      "op": {
+        "add": "youtu.be/AAAAAAAAAAA"
+      },
+      "saved": "{\n  \"host\": \"::\",\n  \"port\": \"3131\",\n  \"sources\": [\n    {\n      \"id\": \"00000001\",\n      \"url\": \"youtu.be/AAAAAAAAAAA\"\n    }\n  ],\n  \"replyTo\": {\n    \"youtube\": \"youtu.be/AAAAAAAAAAA\"\n  }\n}"
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "url": "https://www.twitch.tv/ExampleChannel",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "twitch.tv/example_channel",
+    "channel": "example_channel"
+  },
+  {
+    "url": "https://m.twitch.tv/examplechannel",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "https://www.twitch.tv/popout/examplechannel/chat",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "https://www.twitch.tv/moderator/examplechannel",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "https://www.twitch.tv/embed/examplechannel/chat",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "https://dashboard.twitch.tv/u/examplechannel/home",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "https://player.twitch.tv/?channel=examplechannel",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "https://player.twitch.tv/?channel=",
+    "channel": null
+  },
+  {
+    "url": "https://www.twitch.tv/",
+    "channel": null
+  },
+  {
+    "url": "https://www.twitch.tv/directory",
+    "channel": null
+  },
+  {
+    "url": "https://www.twitch.tv/settings",
+    "channel": null
+  },
+  {
+    "url": "https://www.twitch.tv/videos/123456",
+    "channel": null
+  },
+  {
+    "url": "https://example.com/examplechannel",
+    "channel": null
+  },
+  {
+    "url": "https://www.twitch.tv/x",
+    "channel": null
+  },
+  {
+    "url": "https://www.twitch.tv/popout",
+    "channel": "popout"
+  },
+  {
+    "url": "https://www.twitch.tv/averyveryveryverylongname123",
+    "channel": null
+  },
+  {
+    "url": "https://www.twitch.tv/bad-name",
+    "channel": null
+  },
+  {
+    "url": "HTTPS://WWW.TWITCH.TV/LOUD",
+    "channel": "loud"
+  },
+  {
+    "url": "http://twitch.tv/plainhttp?foo=bar#frag",
+    "channel": "plainhttp"
+  },
+  {
+    "url": "https://www.twitch.tv/examplechannel/videos",
+    "channel": "examplechannel"
+  },
+  {
+    "url": "https://twitch.tv.evil.example/examplechannel",
+    "channel": null
+  },
+  {
+    "url": "https://nottwitch.tv/examplechannel",
+    "channel": null
+  },
+  {
+    "url": "examplechannel",
+    "channel": null
+  },
+  {
+    "url": "not a url at all",
+    "channel": null
+  },
+  {
+    "url": "",
+    "channel": null
+  }
+]

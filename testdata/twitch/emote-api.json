@@ -1,0 +1,52 @@
+{
+  "https://api.betterttv.net/3/cached/emotes/global": [
+    { "id": "54fa925e01e468494b85b54d", "code": "OhMyGoodness" },
+    { "id": "56e9f494fff3cc5c35e5287e", "code": "monkaGlobal" },
+    { "id": "54fa8f1401e468494b85b537", "code": "Overridden" }
+  ],
+  "https://api.frankerfacez.com/v1/set/global": {
+    "default_sets": [3],
+    "sets": {
+      "3": { "emoticons": [
+        { "name": "ZreknarF", "urls": { "1": "//cdn.frankerfacez.com/emote/1/1", "2": "//cdn.frankerfacez.com/emote/1/2" } },
+        { "name": "OneOnly", "urls": { "1": "https://cdn.frankerfacez.com/emote/2/1" } },
+        { "name": "InsecureSkipped", "urls": { "2": "http://cdn.frankerfacez.com/emote/3/2" } },
+        { "name": "NoUrls" }
+      ] },
+      "4": { "emoticons": [
+        { "name": "NotADefaultSet", "urls": { "2": "//cdn.frankerfacez.com/emote/4/2" } }
+      ] }
+    }
+  },
+  "https://7tv.io/v3/emote-sets/global": {
+    "emotes": [
+      { "id": "60ae958e229664e8667aea38", "name": "EZ" },
+      { "id": "60420a8b77137b000de9e66e", "name": "Clap" }
+    ]
+  },
+  "https://api.betterttv.net/3/cached/users/twitch/12345": {
+    "channelEmotes": [
+      { "id": "chanbttv0000000000000001", "code": "chanBTTV" },
+      { "id": "chanbttv0000000000000002", "code": "sharedBeatsChannel" }
+    ],
+    "sharedEmotes": [
+      { "id": "sharedbttv00000000000001", "code": "sharedBeatsChannel" },
+      { "id": "sharedbttv00000000000002", "code": "Overridden" }
+    ]
+  },
+  "https://api.frankerfacez.com/v1/room/id/12345": {
+    "sets": {
+      "777": { "emoticons": [
+        { "name": "chanFFZ", "urls": { "1": "//cdn.frankerfacez.com/emote/777/1", "2": "//cdn.frankerfacez.com/emote/777/2" } }
+      ] },
+      "778": { "emoticons": [
+        { "name": "chanFFZtoo", "urls": { "4": "//cdn.frankerfacez.com/emote/778/4", "1": "//cdn.frankerfacez.com/emote/778/1" } }
+      ] }
+    }
+  },
+  "https://7tv.io/v3/users/twitch/12345": {
+    "emote_set": { "emotes": [
+      { "id": "chan7tv00000000000000001", "name": "chan7TV" }
+    ] }
+  }
+}

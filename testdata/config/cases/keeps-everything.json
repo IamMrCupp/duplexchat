@@ -1,0 +1,11 @@
+{
+  "file": "{\n  \"port\": 3200,\n  \"host\": \"0.0.0.0\",\n  \"sources\": [\n    {\n      \"id\": \"old1\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    },\n    {\n      \"id\": \"old2\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    },\n    {\n      \"url\": \"https://example.com/nope\"\n    },\n    {\n      \"id\": \"x\"\n    },\n    null\n  ],\n  \"twitchClientId\": \"abc123clientid\",\n  \"youtubeViewers\": \"api\",\n  \"infoPresets\": [\n    {\n      \"name\": \"Repair night\",\n      \"title\": \"Fixing things\",\n      \"tags\": [\n        \"repair\",\n        \"Repair\",\n        \" solder \"\n      ],\n      \"category\": {\n        \"twitch\": {\n          \"id\": \"509670\",\n          \"name\": \"Science & Technology\"\n        },\n        \"youtube\": {\n          \"id\": \"28\",\n          \"name\": \"Science\"\n        }\n      }\n    },\n    {\n      \"name\": \"  \"\n    },\n    {\n      \"name\": \"repair NIGHT\",\n      \"title\": \"dupe\"\n    },\n    \"junk\"\n  ],\n  \"replyTo\": {\n    \"twitch\": \"https://www.twitch.tv/examplechannel\",\n    \"youtube\": \"https://www.youtube.com/@SomeoneElse\"\n  },\n  \"unknownKey\": {\n    \"dropped\": true\n  }\n}",
+  "ops": [
+    {
+      "add": "https://www.twitch.tv/otherchannel"
+    },
+    {
+      "remove": 0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "file": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [\n    {\n      \"id\": \"a\",\n      \"url\": \"https://www.twitch.tv/examplechannel\"\n    },\n    {\n      \"id\": \"b\",\n      \"url\": \"https://www.twitch.tv/otherchannel\"\n    },\n    {\n      \"id\": \"c\",\n      \"url\": \"https://www.youtube.com/@ExampleChannel\"\n    }\n  ],\n  \"replyTo\": {\n    \"twitch\": \"https://www.twitch.tv/otherchannel\"\n  }\n}",
+  "ops": [
+    {
+      "add": "https://www.youtube.com/watch?v=AAAAAAAAAAA"
+    },
+    {
+      "remove": 1
+    },
+    {
+      "remove": 0
+    }
+  ]
+}

@@ -1,0 +1,1328 @@
+[
+  {
+    "line": "PING :tmi.twitch.tv",
+    "parsed": {
+      "tags": {},
+      "prefix": null,
+      "cmd": "PING",
+      "params": [],
+      "trailing": "tmi.twitch.tv"
+    }
+  },
+  {
+    "line": "PING",
+    "parsed": {
+      "tags": {},
+      "prefix": null,
+      "cmd": "PING",
+      "params": [],
+      "trailing": null
+    }
+  },
+  {
+    "line": ":tmi.twitch.tv 001 justinfan12345 :Welcome, GLHF!",
+    "parsed": {
+      "tags": {},
+      "prefix": "tmi.twitch.tv",
+      "cmd": "001",
+      "params": [
+        "justinfan12345"
+      ],
+      "trailing": "Welcome, GLHF!"
+    }
+  },
+  {
+    "line": ":justinfan12345.tmi.twitch.tv 353 justinfan12345 = #examplechannel :justinfan12345",
+    "parsed": {
+      "tags": {},
+      "prefix": "justinfan12345.tmi.twitch.tv",
+      "cmd": "353",
+      "params": [
+        "justinfan12345",
+        "=",
+        "#examplechannel"
+      ],
+      "trailing": "justinfan12345"
+    }
+  },
+  {
+    "line": ":justinfan12345.tmi.twitch.tv 366 justinfan12345 #examplechannel :End of /NAMES list",
+    "parsed": {
+      "tags": {},
+      "prefix": "justinfan12345.tmi.twitch.tv",
+      "cmd": "366",
+      "params": [
+        "justinfan12345",
+        "#examplechannel"
+      ],
+      "trailing": "End of /NAMES list"
+    }
+  },
+  {
+    "line": "@emote-only=0;followers-only=-1;r9k=0;room-id=12345;slow=0;subs-only=0 :tmi.twitch.tv ROOMSTATE #examplechannel",
+    "parsed": {
+      "tags": {
+        "emote-only": "0",
+        "followers-only": "-1",
+        "r9k": "0",
+        "room-id": "12345",
+        "slow": "0",
+        "subs-only": "0"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "ROOMSTATE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": ":justinfan12345!justinfan12345@justinfan12345.tmi.twitch.tv JOIN #examplechannel",
+    "parsed": {
+      "tags": {},
+      "prefix": "justinfan12345!justinfan12345@justinfan12345.tmi.twitch.tv",
+      "cmd": "JOIN",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badge-info=;badges=;color=;display-name=justinfan12345;emote-sets=0;mod=0;subscriber=0;user-type= :tmi.twitch.tv USERSTATE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badge-info": "",
+        "badges": "",
+        "color": "",
+        "display-name": "justinfan12345",
+        "emote-sets": "0",
+        "mod": "0",
+        "subscriber": "0",
+        "user-type": ""
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERSTATE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": ":tmi.twitch.tv NOTICE * :Login authentication failed",
+    "parsed": {
+      "tags": {},
+      "prefix": "tmi.twitch.tv",
+      "cmd": "NOTICE",
+      "params": [
+        "*"
+      ],
+      "trailing": "Login authentication failed"
+    }
+  },
+  {
+    "line": "@msg-id=msg_channel_suspended :tmi.twitch.tv NOTICE #examplechannel :This channel does not exist or has been suspended.",
+    "parsed": {
+      "tags": {
+        "msg-id": "msg_channel_suspended"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "NOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "This channel does not exist or has been suspended."
+    }
+  },
+  {
+    "line": ":tmi.twitch.tv HOSTTARGET #examplechannel :- 0",
+    "parsed": {
+      "tags": {},
+      "prefix": "tmi.twitch.tv",
+      "cmd": "HOSTTARGET",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "- 0"
+    }
+  },
+  {
+    "line": ":tmi.twitch.tv RECONNECT",
+    "parsed": {
+      "tags": {},
+      "prefix": "tmi.twitch.tv",
+      "cmd": "RECONNECT",
+      "params": [],
+      "trailing": null
+    }
+  },
+  {
+    "line": "not an irc line at all",
+    "parsed": {
+      "tags": {},
+      "prefix": null,
+      "cmd": "not",
+      "params": [
+        "an",
+        "irc",
+        "line",
+        "at",
+        "all"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@",
+    "parsed": {
+      "tags": {
+        "": ""
+      },
+      "prefix": null,
+      "cmd": "@",
+      "params": [],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@a=b",
+    "parsed": {
+      "tags": {
+        "a": ""
+      },
+      "prefix": null,
+      "cmd": "@a=b",
+      "params": [],
+      "trailing": null
+    }
+  },
+  {
+    "line": ":",
+    "parsed": {
+      "tags": {},
+      "prefix": "",
+      "cmd": ":",
+      "params": [],
+      "trailing": null
+    }
+  },
+  {
+    "line": ":onlyprefix",
+    "parsed": {
+      "tags": {},
+      "prefix": "onlyprefi",
+      "cmd": ":onlyprefix",
+      "params": [],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@login=baduser;room-id=12345;target-msg-id=aaaa0001-0000-0000-0000-000000000002;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARMSG #examplechannel :no display name or colour",
+    "parsed": {
+      "tags": {
+        "login": "baduser",
+        "room-id": "12345",
+        "target-msg-id": "aaaa0001-0000-0000-0000-000000000002",
+        "tmi-sent-ts": "1700000000000"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "CLEARMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "no display name or colour"
+    }
+  },
+  {
+    "line": "@login=baduser;room-id=12345;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARMSG #examplechannel :no target id",
+    "parsed": {
+      "tags": {
+        "login": "baduser",
+        "room-id": "12345",
+        "tmi-sent-ts": "1700000000000"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "CLEARMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "no target id"
+    }
+  },
+  {
+    "line": "@ban-duration=600;room-id=12345;target-user-id=99;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel :BadUser",
+    "parsed": {
+      "tags": {
+        "ban-duration": "600",
+        "room-id": "12345",
+        "target-user-id": "99",
+        "tmi-sent-ts": "1700000000000"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "CLEARCHAT",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "BadUser"
+    }
+  },
+  {
+    "line": "@room-id=12345;target-user-id=98;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel :banneduser",
+    "parsed": {
+      "tags": {
+        "room-id": "12345",
+        "target-user-id": "98",
+        "tmi-sent-ts": "1700000000000"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "CLEARCHAT",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "banneduser"
+    }
+  },
+  {
+    "line": "@room-id=12345;tmi-sent-ts=1700000000000 :tmi.twitch.tv CLEARCHAT #examplechannel",
+    "parsed": {
+      "tags": {
+        "room-id": "12345",
+        "tmi-sent-ts": "1700000000000"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "CLEARCHAT",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badge-info=;badges=broadcaster/1,subscriber/12;color=#FF4500;display-name=ExampleStreamer;emotes=;first-msg=0;id=aaaa0001-0000-0000-0000-000000000001;mod=0;room-id=12345;subscriber=1;tmi-sent-ts=1700000000000;turbo=0;user-id=12345;user-type= :examplestreamer!examplestreamer@examplestreamer.tmi.twitch.tv PRIVMSG #examplechannel :hello chat",
+    "parsed": {
+      "tags": {
+        "badge-info": "",
+        "badges": "broadcaster/1,subscriber/12",
+        "color": "#FF4500",
+        "display-name": "ExampleStreamer",
+        "emotes": "",
+        "first-msg": "0",
+        "id": "aaaa0001-0000-0000-0000-000000000001",
+        "mod": "0",
+        "room-id": "12345",
+        "subscriber": "1",
+        "tmi-sent-ts": "1700000000000",
+        "turbo": "0",
+        "user-id": "12345",
+        "user-type": ""
+      },
+      "prefix": "examplestreamer!examplestreamer@examplestreamer.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "hello chat"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=;emotes=;id=aaaa0001-0000-0000-0000-000000000002 :quietviewer!quietviewer@quietviewer.tmi.twitch.tv PRIVMSG #examplechannel :no display name or colour",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000002"
+      },
+      "prefix": "quietviewer!quietviewer@quietviewer.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "no display name or colour"
+    }
+  },
+  {
+    "line": "@badges=moderator/1,vip/1,partner/1;color=#00FF7F;display-name=ExampleMod;emotes=;id=aaaa0001-0000-0000-0000-000000000003 :examplemod!examplemod@examplemod.tmi.twitch.tv PRIVMSG #examplechannel :ACTION waves at everyone",
+    "parsed": {
+      "tags": {
+        "badges": "moderator/1,vip/1,partner/1",
+        "color": "#00FF7F",
+        "display-name": "ExampleMod",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000003"
+      },
+      "prefix": "examplemod!examplemod@examplemod.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "ACTION waves at everyone"
+    }
+  },
+  {
+    "line": "@badges=staff/1,admin/1,global_mod/1,founder/0,subscriber/3;color=#1E90FF;display-name=ExampleStaff;emotes=;id=aaaa0001-0000-0000-0000-000000000004 :examplestaff!examplestaff@examplestaff.tmi.twitch.tv PRIVMSG #examplechannel :roles dedupe: staff admin global_mod founder subscriber",
+    "parsed": {
+      "tags": {
+        "badges": "staff/1,admin/1,global_mod/1,founder/0,subscriber/3",
+        "color": "#1E90FF",
+        "display-name": "ExampleStaff",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000004"
+      },
+      "prefix": "examplestaff!examplestaff@examplestaff.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "roles dedupe: staff admin global_mod founder subscriber"
+    }
+  },
+  {
+    "line": "@badges=;color=#9ACD32;display-name=FirstTimer;emotes=;first-msg=1;id=aaaa0001-0000-0000-0000-000000000005 :firsttimer!firsttimer@firsttimer.tmi.twitch.tv PRIVMSG #examplechannel :my first message here",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#9ACD32",
+        "display-name": "FirstTimer",
+        "emotes": "",
+        "first-msg": "1",
+        "id": "aaaa0001-0000-0000-0000-000000000005"
+      },
+      "prefix": "firsttimer!firsttimer@firsttimer.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "my first message here"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:0-4,12-16;id=aaaa0001-0000-0000-0000-000000000006 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :Kappa again Kappa",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:0-4,12-16",
+        "id": "aaaa0001-0000-0000-0000-000000000006"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Kappa again Kappa"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:2-6/1902:8-12;id=aaaa0001-0000-0000-0000-000000000007 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :😀 Kappa Keepo 😀",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:2-6/1902:8-12",
+        "id": "aaaa0001-0000-0000-0000-000000000007"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "😀 Kappa Keepo 😀"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:0-4/1902:2-6;id=aaaa0001-0000-0000-0000-000000000008 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :Kappa overlapping",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:0-4/1902:2-6",
+        "id": "aaaa0001-0000-0000-0000-000000000008"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Kappa overlapping"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:6-40,99-104,x-3,5-2;id=aaaa0001-0000-0000-0000-000000000009 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :short Kappa",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:6-40,99-104,x-3,5-2",
+        "id": "aaaa0001-0000-0000-0000-000000000009"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "short Kappa"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=CheerFan;emotes=;gifs=0-6|abc123|https://example.invalid/cheer.gif,8-9|bad|http://insecure.invalid/x.gif;id=aaaa0001-0000-0000-0000-000000000010 :cheerfan!cheerfan@cheerfan.tmi.twitch.tv PRIVMSG #examplechannel :Cheer10 hi",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "CheerFan",
+        "emotes": "",
+        "gifs": "0-6|abc123|https://example.invalid/cheer.gif,8-9|bad|http://insecure.invalid/x.gif",
+        "id": "aaaa0001-0000-0000-0000-000000000010"
+      },
+      "prefix": "cheerfan!cheerfan@cheerfan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Cheer10 hi"
+    }
+  },
+  {
+    "line": "@badges=;color=#FFD700;display-name=ThirdParty;emotes=;id=aaaa0001-0000-0000-0000-000000000011 :thirdparty!thirdparty@thirdparty.tmi.twitch.tv PRIVMSG #examplechannel :catJAM and OMEGALUL,  monkaS   PepeHands catjam",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FFD700",
+        "display-name": "ThirdParty",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000011"
+      },
+      "prefix": "thirdparty!thirdparty@thirdparty.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "catJAM and OMEGALUL,  monkaS   PepeHands catjam"
+    }
+  },
+  {
+    "line": "@badges=;color=#FFD700;display-name=Mixed;emotes=25:6-10;id=aaaa0001-0000-0000-0000-000000000012 :mixed!mixed@mixed.tmi.twitch.tv PRIVMSG #examplechannel :catJAM Kappa catJAM",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FFD700",
+        "display-name": "Mixed",
+        "emotes": "25:6-10",
+        "id": "aaaa0001-0000-0000-0000-000000000012"
+      },
+      "prefix": "mixed!mixed@mixed.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "catJAM Kappa catJAM"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=SharedChat;emotes=;id=aaaa0001-0000-0000-0000-000000000013;source-id=bbbb0002-0000-0000-0000-000000000001;source-room-id=67890 :sharedchat!sharedchat@sharedchat.tmi.twitch.tv PRIVMSG #examplechannel :from a shared chat session",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "SharedChat",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000013",
+        "source-id": "bbbb0002-0000-0000-0000-000000000001",
+        "source-room-id": "67890"
+      },
+      "prefix": "sharedchat!sharedchat@sharedchat.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "from a shared chat session"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=NoId;emotes= :noid!noid@noid.tmi.twitch.tv PRIVMSG #examplechannel :a message without an id tag",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "NoId",
+        "emotes": ""
+      },
+      "prefix": "noid!noid@noid.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "a message without an id tag"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Escaped\\sName;emotes=;id=aaaa0001-0000-0000-0000-000000000015 :escaped!escaped@escaped.tmi.twitch.tv PRIVMSG #examplechannel :colons : inside :the text",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Escaped Name",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000015"
+      },
+      "prefix": "escaped!escaped@escaped.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "colons : inside :the text"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Empty;emotes=;id=aaaa0001-0000-0000-0000-000000000016 :empty!empty@empty.tmi.twitch.tv PRIVMSG #examplechannel :",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Empty",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000016"
+      },
+      "prefix": "empty!empty@empty.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": ""
+    }
+  },
+  {
+    "line": ":prefixonly!prefixonly@prefixonly.tmi.twitch.tv PRIVMSG #examplechannel :no tags at all",
+    "parsed": {
+      "tags": {},
+      "prefix": "prefixonly!prefixonly@prefixonly.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "no tags at all"
+    }
+  },
+  {
+    "line": "@badges=;login=taglogin;color=;display-name=;emotes=;id=aaaa0001-0000-0000-0000-000000000018 :tmi.twitch.tv PRIVMSG #examplechannel :login from the tag, not the prefix",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "login": "taglogin",
+        "color": "",
+        "display-name": "",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000018"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "login from the tag, not the prefix"
+    }
+  },
+  {
+    "line": "@badge-info=;badges=broadcaster/1,subscriber/12;color=#FF4500;display-name=ExampleStreamer;emotes=;first-msg=0;id=aaaa0001-0000-0000-0000-000000000001;mod=0;room-id=12345;subscriber=1;tmi-sent-ts=1700000000000;turbo=0;user-id=12345;user-type= :examplestreamer!examplestreamer@examplestreamer.tmi.twitch.tv PRIVMSG #examplechannel :hello chat",
+    "parsed": {
+      "tags": {
+        "badge-info": "",
+        "badges": "broadcaster/1,subscriber/12",
+        "color": "#FF4500",
+        "display-name": "ExampleStreamer",
+        "emotes": "",
+        "first-msg": "0",
+        "id": "aaaa0001-0000-0000-0000-000000000001",
+        "mod": "0",
+        "room-id": "12345",
+        "subscriber": "1",
+        "tmi-sent-ts": "1700000000000",
+        "turbo": "0",
+        "user-id": "12345",
+        "user-type": ""
+      },
+      "prefix": "examplestreamer!examplestreamer@examplestreamer.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "hello chat"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=;emotes=;id=aaaa0001-0000-0000-0000-000000000002 :quietviewer!quietviewer@quietviewer.tmi.twitch.tv PRIVMSG #examplechannel :no display name or colour",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000002"
+      },
+      "prefix": "quietviewer!quietviewer@quietviewer.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "no display name or colour"
+    }
+  },
+  {
+    "line": "@badges=moderator/1,vip/1,partner/1;color=#00FF7F;display-name=ExampleMod;emotes=;id=aaaa0001-0000-0000-0000-000000000003 :examplemod!examplemod@examplemod.tmi.twitch.tv PRIVMSG #examplechannel :ACTION waves at everyone",
+    "parsed": {
+      "tags": {
+        "badges": "moderator/1,vip/1,partner/1",
+        "color": "#00FF7F",
+        "display-name": "ExampleMod",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000003"
+      },
+      "prefix": "examplemod!examplemod@examplemod.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "ACTION waves at everyone"
+    }
+  },
+  {
+    "line": "@badges=staff/1,admin/1,global_mod/1,founder/0,subscriber/3;color=#1E90FF;display-name=ExampleStaff;emotes=;id=aaaa0001-0000-0000-0000-000000000004 :examplestaff!examplestaff@examplestaff.tmi.twitch.tv PRIVMSG #examplechannel :roles dedupe: staff admin global_mod founder subscriber",
+    "parsed": {
+      "tags": {
+        "badges": "staff/1,admin/1,global_mod/1,founder/0,subscriber/3",
+        "color": "#1E90FF",
+        "display-name": "ExampleStaff",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000004"
+      },
+      "prefix": "examplestaff!examplestaff@examplestaff.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "roles dedupe: staff admin global_mod founder subscriber"
+    }
+  },
+  {
+    "line": "@badges=;color=#9ACD32;display-name=FirstTimer;emotes=;first-msg=1;id=aaaa0001-0000-0000-0000-000000000005 :firsttimer!firsttimer@firsttimer.tmi.twitch.tv PRIVMSG #examplechannel :my first message here",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#9ACD32",
+        "display-name": "FirstTimer",
+        "emotes": "",
+        "first-msg": "1",
+        "id": "aaaa0001-0000-0000-0000-000000000005"
+      },
+      "prefix": "firsttimer!firsttimer@firsttimer.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "my first message here"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:0-4,12-16;id=aaaa0001-0000-0000-0000-000000000006 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :Kappa again Kappa",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:0-4,12-16",
+        "id": "aaaa0001-0000-0000-0000-000000000006"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Kappa again Kappa"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:2-6/1902:8-12;id=aaaa0001-0000-0000-0000-000000000007 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :😀 Kappa Keepo 😀",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:2-6/1902:8-12",
+        "id": "aaaa0001-0000-0000-0000-000000000007"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "😀 Kappa Keepo 😀"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:0-4/1902:2-6;id=aaaa0001-0000-0000-0000-000000000008 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :Kappa overlapping",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:0-4/1902:2-6",
+        "id": "aaaa0001-0000-0000-0000-000000000008"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Kappa overlapping"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:6-40,99-104,x-3,5-2;id=aaaa0001-0000-0000-0000-000000000009 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :short Kappa",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "EmoteFan",
+        "emotes": "25:6-40,99-104,x-3,5-2",
+        "id": "aaaa0001-0000-0000-0000-000000000009"
+      },
+      "prefix": "emotefan!emotefan@emotefan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "short Kappa"
+    }
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=CheerFan;emotes=;gifs=0-6|abc123|https://example.invalid/cheer.gif,8-9|bad|http://insecure.invalid/x.gif;id=aaaa0001-0000-0000-0000-000000000010 :cheerfan!cheerfan@cheerfan.tmi.twitch.tv PRIVMSG #examplechannel :Cheer10 hi",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FF69B4",
+        "display-name": "CheerFan",
+        "emotes": "",
+        "gifs": "0-6|abc123|https://example.invalid/cheer.gif,8-9|bad|http://insecure.invalid/x.gif",
+        "id": "aaaa0001-0000-0000-0000-000000000010"
+      },
+      "prefix": "cheerfan!cheerfan@cheerfan.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Cheer10 hi"
+    }
+  },
+  {
+    "line": "@badges=;color=#FFD700;display-name=ThirdParty;emotes=;id=aaaa0001-0000-0000-0000-000000000011 :thirdparty!thirdparty@thirdparty.tmi.twitch.tv PRIVMSG #examplechannel :catJAM and OMEGALUL,  monkaS   PepeHands catjam",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FFD700",
+        "display-name": "ThirdParty",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000011"
+      },
+      "prefix": "thirdparty!thirdparty@thirdparty.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "catJAM and OMEGALUL,  monkaS   PepeHands catjam"
+    }
+  },
+  {
+    "line": "@badges=;color=#FFD700;display-name=Mixed;emotes=25:6-10;id=aaaa0001-0000-0000-0000-000000000012 :mixed!mixed@mixed.tmi.twitch.tv PRIVMSG #examplechannel :catJAM Kappa catJAM",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FFD700",
+        "display-name": "Mixed",
+        "emotes": "25:6-10",
+        "id": "aaaa0001-0000-0000-0000-000000000012"
+      },
+      "prefix": "mixed!mixed@mixed.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "catJAM Kappa catJAM"
+    }
+  },
+  {
+    "line": "@badges=;color=#FFD700;display-name=Mixed;emotes=25:7-11;id=aaaa0001-0000-0000-0000-000000000019 :mixed!mixed@mixed.tmi.twitch.tv PRIVMSG #examplechannel :catJAM Kappa catJAM",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#FFD700",
+        "display-name": "Mixed",
+        "emotes": "25:7-11",
+        "id": "aaaa0001-0000-0000-0000-000000000019"
+      },
+      "prefix": "mixed!mixed@mixed.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "catJAM Kappa catJAM"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=SharedChat;emotes=;id=aaaa0001-0000-0000-0000-000000000013;source-id=bbbb0002-0000-0000-0000-000000000001;source-room-id=67890 :sharedchat!sharedchat@sharedchat.tmi.twitch.tv PRIVMSG #examplechannel :from a shared chat session",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "SharedChat",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000013",
+        "source-id": "bbbb0002-0000-0000-0000-000000000001",
+        "source-room-id": "67890"
+      },
+      "prefix": "sharedchat!sharedchat@sharedchat.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "from a shared chat session"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=NoId;emotes= :noid!noid@noid.tmi.twitch.tv PRIVMSG #examplechannel :a message without an id tag",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "NoId",
+        "emotes": ""
+      },
+      "prefix": "noid!noid@noid.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "a message without an id tag"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Escaped\\sName;emotes=;id=aaaa0001-0000-0000-0000-000000000015 :escaped!escaped@escaped.tmi.twitch.tv PRIVMSG #examplechannel :colons : inside :the text",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Escaped Name",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000015"
+      },
+      "prefix": "escaped!escaped@escaped.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "colons : inside :the text"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Empty;emotes=;id=aaaa0001-0000-0000-0000-000000000016 :empty!empty@empty.tmi.twitch.tv PRIVMSG #examplechannel :",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Empty",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000016"
+      },
+      "prefix": "empty!empty@empty.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": ""
+    }
+  },
+  {
+    "line": ":prefixonly!prefixonly@prefixonly.tmi.twitch.tv PRIVMSG #examplechannel :no tags at all",
+    "parsed": {
+      "tags": {},
+      "prefix": "prefixonly!prefixonly@prefixonly.tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "no tags at all"
+    }
+  },
+  {
+    "line": "@badges=;login=taglogin;color=;display-name=;emotes=;id=aaaa0001-0000-0000-0000-000000000018 :tmi.twitch.tv PRIVMSG #examplechannel :login from the tag, not the prefix",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "login": "taglogin",
+        "color": "",
+        "display-name": "",
+        "emotes": "",
+        "id": "aaaa0001-0000-0000-0000-000000000018"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "PRIVMSG",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "login from the tag, not the prefix"
+    }
+  },
+  {
+    "line": "@badge-info=subscriber/1;badges=subscriber/0;color=#8A2BE2;display-name=NewSub;emotes=;id=cccc0003-0000-0000-0000-000000000001;login=newsub;msg-id=sub;msg-param-sub-plan=1000;system-msg=NewSub\\ssubscribed\\sat\\sTier\\s1.;tmi-sent-ts=1700000000000 :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badge-info": "subscriber/1",
+        "badges": "subscriber/0",
+        "color": "#8A2BE2",
+        "display-name": "NewSub",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000001",
+        "login": "newsub",
+        "msg-id": "sub",
+        "msg-param-sub-plan": "1000",
+        "system-msg": "NewSub subscribed at Tier 1.",
+        "tmi-sent-ts": "1700000000000"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badge-info=subscriber/14;badges=subscriber/12;color=#8A2BE2;display-name=LoyalSub;emotes=25:0-4;id=cccc0003-0000-0000-0000-000000000002;login=loyalsub;msg-id=resub;msg-param-cumulative-months=14;system-msg=LoyalSub\\ssubscribed\\swith\\sPrime.\\sThey've\\ssubscribed\\sfor\\s14\\smonths! :tmi.twitch.tv USERNOTICE #examplechannel :Kappa fourteen months catJAM",
+    "parsed": {
+      "tags": {
+        "badge-info": "subscriber/14",
+        "badges": "subscriber/12",
+        "color": "#8A2BE2",
+        "display-name": "LoyalSub",
+        "emotes": "25:0-4",
+        "id": "cccc0003-0000-0000-0000-000000000002",
+        "login": "loyalsub",
+        "msg-id": "resub",
+        "msg-param-cumulative-months": "14",
+        "system-msg": "LoyalSub subscribed with Prime. They've subscribed for 14 months!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Kappa fourteen months catJAM"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Gifter;emotes=;id=cccc0003-0000-0000-0000-000000000003;login=gifter;msg-id=submysterygift;msg-param-mass-gift-count=5;system-msg=Gifter\\sis\\sgifting\\s5\\sTier\\s1\\sSubs\\sto\\sExampleChannel's\\scommunity! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Gifter",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000003",
+        "login": "gifter",
+        "msg-id": "submysterygift",
+        "msg-param-mass-gift-count": "5",
+        "system-msg": "Gifter is gifting 5 Tier 1 Subs to ExampleChannel's community!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Gifter;emotes=;id=cccc0003-0000-0000-0000-000000000004;login=gifter;msg-id=subgift;msg-param-recipient-display-name=Lucky;system-msg=Gifter\\sgifted\\sa\\sTier\\s1\\ssub\\sto\\sLucky! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Gifter",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000004",
+        "login": "gifter",
+        "msg-id": "subgift",
+        "msg-param-recipient-display-name": "Lucky",
+        "system-msg": "Gifter gifted a Tier 1 sub to Lucky!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=;emotes=;id=cccc0003-0000-0000-0000-000000000005;login=ananonymousgifter;msg-id=anonsubgift;system-msg=An\\sanonymous\\suser\\sgifted\\sa\\sTier\\s1\\ssub\\sto\\sLucky2! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000005",
+        "login": "ananonymousgifter",
+        "msg-id": "anonsubgift",
+        "system-msg": "An anonymous user gifted a Tier 1 sub to Lucky2!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=;color=#00CED1;display-name=Upgrader;emotes=;id=cccc0003-0000-0000-0000-000000000006;login=upgrader;msg-id=giftpaidupgrade;system-msg=Upgrader\\sis\\scontinuing\\sthe\\sGift\\sSub\\sthey\\sgot\\sfrom\\sGifter! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#00CED1",
+        "display-name": "Upgrader",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000006",
+        "login": "upgrader",
+        "msg-id": "giftpaidupgrade",
+        "system-msg": "Upgrader is continuing the Gift Sub they got from Gifter!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=;color=#00CED1;display-name=PrimeUp;emotes=;id=cccc0003-0000-0000-0000-000000000007;login=primeup;msg-id=primepaidupgrade;system-msg=PrimeUp\\sconverted\\sfrom\\sa\\sPrime\\ssub\\sto\\sa\\sTier\\s1\\ssub! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#00CED1",
+        "display-name": "PrimeUp",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000007",
+        "login": "primeup",
+        "msg-id": "primepaidupgrade",
+        "system-msg": "PrimeUp converted from a Prime sub to a Tier 1 sub!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=;color=#DC143C;display-name=Raider;emotes=;id=cccc0003-0000-0000-0000-000000000008;login=raider;msg-id=raid;msg-param-viewerCount=42;system-msg=42\\sraiders\\sfrom\\sRaider\\shave\\sjoined! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "#DC143C",
+        "display-name": "Raider",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000008",
+        "login": "raider",
+        "msg-id": "raid",
+        "msg-param-viewerCount": "42",
+        "system-msg": "42 raiders from Raider have joined!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=bits/1000;color=;display-name=Cheerer;emotes=;id=cccc0003-0000-0000-0000-000000000009;login=cheerer;msg-id=bitsbadgetier;system-msg=bits\\sbadge\\stier\\snotification :tmi.twitch.tv USERNOTICE #examplechannel :1000 bits!",
+    "parsed": {
+      "tags": {
+        "badges": "bits/1000",
+        "color": "",
+        "display-name": "Cheerer",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000009",
+        "login": "cheerer",
+        "msg-id": "bitsbadgetier",
+        "system-msg": "bits badge tier notification"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "1000 bits!"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Watcher;emotes=;id=cccc0003-0000-0000-0000-000000000010;login=watcher;msg-id=viewermilestone;msg-param-category=watch-streak;system-msg=Watcher\\swatched\\s10\\sconsecutive\\sstreams :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Watcher",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000010",
+        "login": "watcher",
+        "msg-id": "viewermilestone",
+        "msg-param-category": "watch-streak",
+        "system-msg": "Watcher watched 10 consecutive streams"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=moderator/1;color=;display-name=OldMod;emotes=;id=cccc0003-0000-0000-0000-000000000011;login=oldmod;msg-id=modiversary;system-msg=OldMod\\shas\\sbeen\\sa\\smod\\sfor\\s2\\syears :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "moderator/1",
+        "color": "",
+        "display-name": "OldMod",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000011",
+        "login": "oldmod",
+        "msg-id": "modiversary",
+        "system-msg": "OldMod has been a mod for 2 years"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=broadcaster/1;color=#FF4500;display-name=ExampleStreamer;emotes=;id=cccc0003-0000-0000-0000-000000000012;login=examplestreamer;msg-id=announcement;msg-param-color=PRIMARY;system-msg= :tmi.twitch.tv USERNOTICE #examplechannel :Stream starts in 5 minutes",
+    "parsed": {
+      "tags": {
+        "badges": "broadcaster/1",
+        "color": "#FF4500",
+        "display-name": "ExampleStreamer",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000012",
+        "login": "examplestreamer",
+        "msg-id": "announcement",
+        "msg-param-color": "PRIMARY",
+        "system-msg": ""
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "Stream starts in 5 minutes"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Quiet;emotes=;id=cccc0003-0000-0000-0000-000000000013;login=quiet;msg-id=announcement;system-msg= :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Quiet",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000013",
+        "login": "quiet",
+        "msg-id": "announcement",
+        "system-msg": ""
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Ritual;emotes=;id=cccc0003-0000-0000-0000-000000000014;login=ritual;msg-id=ritual;msg-param-ritual-name=new_chatter;system-msg=@Ritual\\sis\\snew\\shere.\\sSay\\shello! :tmi.twitch.tv USERNOTICE #examplechannel :HeyGuys",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Ritual",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000014",
+        "login": "ritual",
+        "msg-id": "ritual",
+        "msg-param-ritual-name": "new_chatter",
+        "system-msg": "@Ritual is new here. Say hello!"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "HeyGuys"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=NoSystem;emotes=;id=cccc0003-0000-0000-0000-000000000015;login=nosystem;msg-id=sub :tmi.twitch.tv USERNOTICE #examplechannel :a sub with text but no system-msg",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "NoSystem",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000015",
+        "login": "nosystem",
+        "msg-id": "sub"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": "a sub with text but no system-msg"
+    }
+  },
+  {
+    "line": "@badges=;color=;display-name=Escapes;emotes=;id=cccc0003-0000-0000-0000-000000000016;login=escapes;msg-id=raid;system-msg=semi\\:colon\\sback\\\\slash\\sline\\nbreak\\rreturn\\qother\\ :tmi.twitch.tv USERNOTICE #examplechannel",
+    "parsed": {
+      "tags": {
+        "badges": "",
+        "color": "",
+        "display-name": "Escapes",
+        "emotes": "",
+        "id": "cccc0003-0000-0000-0000-000000000016",
+        "login": "escapes",
+        "msg-id": "raid",
+        "system-msg": "semi;colon back\\slash line\nbreak\rreturnqother"
+      },
+      "prefix": "tmi.twitch.tv",
+      "cmd": "USERNOTICE",
+      "params": [
+        "#examplechannel"
+      ],
+      "trailing": null
+    }
+  }
+]

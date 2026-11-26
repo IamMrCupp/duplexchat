@@ -1,0 +1,11 @@
+{
+  "file": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 3131,\n  \"sources\": [],\n  \"twitchClientId\": \"\",\n  \"youtubeViewers\": \"free\",\n  \"infoPresets\": [],\n  \"replyTo\": {}\n}",
+  "ops": [
+    {
+      "add": "twitch.tv/examplechannel"
+    },
+    {
+      "add": "not a stream"
+    }
+  ]
+}

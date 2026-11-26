@@ -1,0 +1,8 @@
+{
+  "file": "{\"host\": \"0.0.0.0\", \"port\": 3131, \"sources\": [ ",
+  "ops": [
+    {
+      "add": "https://www.twitch.tv/examplechannel"
+    }
+  ]
+}

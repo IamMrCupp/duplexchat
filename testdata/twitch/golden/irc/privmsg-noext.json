@@ -1,0 +1,563 @@
+[
+  {
+    "line": "@badge-info=;badges=broadcaster/1,subscriber/12;color=#FF4500;display-name=ExampleStreamer;emotes=;first-msg=0;id=aaaa0001-0000-0000-0000-000000000001;mod=0;room-id=12345;subscriber=1;tmi-sent-ts=1700000000000;turbo=0;user-id=12345;user-type= :examplestreamer!examplestreamer@examplestreamer.tmi.twitch.tv PRIVMSG #examplechannel :hello chat",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000001",
+            "kind": "chat",
+            "author": {
+              "name": "ExampleStreamer",
+              "color": "#FF4500",
+              "roles": [
+                "owner",
+                "sub"
+              ],
+              "key": "examplestreamer"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "hello chat"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=;emotes=;id=aaaa0001-0000-0000-0000-000000000002 :quietviewer!quietviewer@quietviewer.tmi.twitch.tv PRIVMSG #examplechannel :no display name or colour",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000002",
+            "kind": "chat",
+            "author": {
+              "name": "quietviewer",
+              "color": null,
+              "roles": [],
+              "key": "quietviewer"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "no display name or colour"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=moderator/1,vip/1,partner/1;color=#00FF7F;display-name=ExampleMod;emotes=;id=aaaa0001-0000-0000-0000-000000000003 :examplemod!examplemod@examplemod.tmi.twitch.tv PRIVMSG #examplechannel :ACTION waves at everyone",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000003",
+            "kind": "chat",
+            "author": {
+              "name": "ExampleMod",
+              "color": "#00FF7F",
+              "roles": [
+                "mod",
+                "vip",
+                "verified"
+              ],
+              "key": "examplemod"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "ACTION waves at everyone"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=staff/1,admin/1,global_mod/1,founder/0,subscriber/3;color=#1E90FF;display-name=ExampleStaff;emotes=;id=aaaa0001-0000-0000-0000-000000000004 :examplestaff!examplestaff@examplestaff.tmi.twitch.tv PRIVMSG #examplechannel :roles dedupe: staff admin global_mod founder subscriber",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000004",
+            "kind": "chat",
+            "author": {
+              "name": "ExampleStaff",
+              "color": "#1E90FF",
+              "roles": [
+                "staff",
+                "sub"
+              ],
+              "key": "examplestaff"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "roles dedupe: staff admin global_mod founder subscriber"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#9ACD32;display-name=FirstTimer;emotes=;first-msg=1;id=aaaa0001-0000-0000-0000-000000000005 :firsttimer!firsttimer@firsttimer.tmi.twitch.tv PRIVMSG #examplechannel :my first message here",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000005",
+            "kind": "chat",
+            "author": {
+              "name": "FirstTimer",
+              "color": "#9ACD32",
+              "roles": [],
+              "key": "firsttimer"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "my first message here"
+              }
+            ],
+            "action": false,
+            "firstMsg": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:0-4,12-16;id=aaaa0001-0000-0000-0000-000000000006 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :Kappa again Kappa",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000006",
+            "kind": "chat",
+            "author": {
+              "name": "EmoteFan",
+              "color": "#FF69B4",
+              "roles": [],
+              "key": "emotefan"
+            },
+            "parts": [
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0",
+                "alt": "Kappa"
+              },
+              {
+                "t": "text",
+                "v": " again "
+              },
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0",
+                "alt": "Kappa"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:2-6/1902:8-12;id=aaaa0001-0000-0000-0000-000000000007 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :😀 Kappa Keepo 😀",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000007",
+            "kind": "chat",
+            "author": {
+              "name": "EmoteFan",
+              "color": "#FF69B4",
+              "roles": [],
+              "key": "emotefan"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "😀 "
+              },
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0",
+                "alt": "Kappa"
+              },
+              {
+                "t": "text",
+                "v": " "
+              },
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/1902/default/dark/2.0",
+                "alt": "Keepo"
+              },
+              {
+                "t": "text",
+                "v": " 😀"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:0-4/1902:2-6;id=aaaa0001-0000-0000-0000-000000000008 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :Kappa overlapping",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000008",
+            "kind": "chat",
+            "author": {
+              "name": "EmoteFan",
+              "color": "#FF69B4",
+              "roles": [],
+              "key": "emotefan"
+            },
+            "parts": [
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0",
+                "alt": "Kappa"
+              },
+              {
+                "t": "text",
+                "v": " overlapping"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=EmoteFan;emotes=25:6-40,99-104,x-3,5-2;id=aaaa0001-0000-0000-0000-000000000009 :emotefan!emotefan@emotefan.tmi.twitch.tv PRIVMSG #examplechannel :short Kappa",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000009",
+            "kind": "chat",
+            "author": {
+              "name": "EmoteFan",
+              "color": "#FF69B4",
+              "roles": [],
+              "key": "emotefan"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "short "
+              },
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0",
+                "alt": "Kappa"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#FF69B4;display-name=CheerFan;emotes=;gifs=0-6|abc123|https://example.invalid/cheer.gif,8-9|bad|http://insecure.invalid/x.gif;id=aaaa0001-0000-0000-0000-000000000010 :cheerfan!cheerfan@cheerfan.tmi.twitch.tv PRIVMSG #examplechannel :Cheer10 hi",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000010",
+            "kind": "chat",
+            "author": {
+              "name": "CheerFan",
+              "color": "#FF69B4",
+              "roles": [],
+              "key": "cheerfan"
+            },
+            "parts": [
+              {
+                "t": "emote",
+                "url": "https://example.invalid/cheer.gif",
+                "alt": "Cheer10"
+              },
+              {
+                "t": "text",
+                "v": " hi"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#FFD700;display-name=ThirdParty;emotes=;id=aaaa0001-0000-0000-0000-000000000011 :thirdparty!thirdparty@thirdparty.tmi.twitch.tv PRIVMSG #examplechannel :catJAM and OMEGALUL,  monkaS   PepeHands catjam",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000011",
+            "kind": "chat",
+            "author": {
+              "name": "ThirdParty",
+              "color": "#FFD700",
+              "roles": [],
+              "key": "thirdparty"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "catJAM and OMEGALUL,  monkaS   PepeHands catjam"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#FFD700;display-name=Mixed;emotes=25:6-10;id=aaaa0001-0000-0000-0000-000000000012 :mixed!mixed@mixed.tmi.twitch.tv PRIVMSG #examplechannel :catJAM Kappa catJAM",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000012",
+            "kind": "chat",
+            "author": {
+              "name": "Mixed",
+              "color": "#FFD700",
+              "roles": [],
+              "key": "mixed"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "catJAM"
+              },
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0",
+                "alt": " Kapp"
+              },
+              {
+                "t": "text",
+                "v": "a catJAM"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=SharedChat;emotes=;id=aaaa0001-0000-0000-0000-000000000013;source-id=bbbb0002-0000-0000-0000-000000000001;source-room-id=67890 :sharedchat!sharedchat@sharedchat.tmi.twitch.tv PRIVMSG #examplechannel :from a shared chat session",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:bbbb0002-0000-0000-0000-000000000001",
+            "kind": "chat",
+            "author": {
+              "name": "SharedChat",
+              "color": null,
+              "roles": [],
+              "key": "sharedchat"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "from a shared chat session"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=NoId;emotes= :noid!noid@noid.tmi.twitch.tv PRIVMSG #examplechannel :a message without an id tag",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:mkorf98kqja",
+            "kind": "chat",
+            "author": {
+              "name": "NoId",
+              "color": null,
+              "roles": [],
+              "key": "noid"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "a message without an id tag"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=Escaped\\sName;emotes=;id=aaaa0001-0000-0000-0000-000000000015 :escaped!escaped@escaped.tmi.twitch.tv PRIVMSG #examplechannel :colons : inside :the text",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000015",
+            "kind": "chat",
+            "author": {
+              "name": "Escaped Name",
+              "color": null,
+              "roles": [],
+              "key": "escaped"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "colons : inside :the text"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=Empty;emotes=;id=aaaa0001-0000-0000-0000-000000000016 :empty!empty@empty.tmi.twitch.tv PRIVMSG #examplechannel :",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000016",
+            "kind": "chat",
+            "author": {
+              "name": "Empty",
+              "color": null,
+              "roles": [],
+              "key": "empty"
+            },
+            "parts": [],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": ":prefixonly!prefixonly@prefixonly.tmi.twitch.tv PRIVMSG #examplechannel :no tags at all",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:03jmyljhjjv6",
+            "kind": "chat",
+            "author": {
+              "name": "prefixonly",
+              "color": null,
+              "roles": [],
+              "key": "prefixonly"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "no tags at all"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;login=taglogin;color=;display-name=;emotes=;id=aaaa0001-0000-0000-0000-000000000018 :tmi.twitch.tv PRIVMSG #examplechannel :login from the tag, not the prefix",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:aaaa0001-0000-0000-0000-000000000018",
+            "kind": "chat",
+            "author": {
+              "name": "taglogin",
+              "color": null,
+              "roles": [],
+              "key": "taglogin"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "login from the tag, not the prefix"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  }
+]

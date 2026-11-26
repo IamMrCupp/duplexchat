@@ -1,0 +1,390 @@
+[
+  {
+    "line": "@badge-info=subscriber/1;badges=subscriber/0;color=#8A2BE2;display-name=NewSub;emotes=;id=cccc0003-0000-0000-0000-000000000001;login=newsub;msg-id=sub;msg-param-sub-plan=1000;system-msg=NewSub\\ssubscribed\\sat\\sTier\\s1.;tmi-sent-ts=1700000000000 :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000001",
+            "kind": "system",
+            "author": {
+              "name": "NewSub",
+              "color": "#8A2BE2",
+              "roles": [
+                "sub"
+              ],
+              "key": "newsub"
+            },
+            "parts": [],
+            "system": "NewSub subscribed at Tier 1."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badge-info=subscriber/14;badges=subscriber/12;color=#8A2BE2;display-name=LoyalSub;emotes=25:0-4;id=cccc0003-0000-0000-0000-000000000002;login=loyalsub;msg-id=resub;msg-param-cumulative-months=14;system-msg=LoyalSub\\ssubscribed\\swith\\sPrime.\\sThey've\\ssubscribed\\sfor\\s14\\smonths! :tmi.twitch.tv USERNOTICE #examplechannel :Kappa fourteen months catJAM",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000002",
+            "kind": "system",
+            "author": {
+              "name": "LoyalSub",
+              "color": "#8A2BE2",
+              "roles": [
+                "sub"
+              ],
+              "key": "loyalsub"
+            },
+            "parts": [],
+            "system": "LoyalSub subscribed with Prime. They've subscribed for 14 months!"
+          }
+        ]
+      },
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000002:msg",
+            "kind": "chat",
+            "author": {
+              "name": "LoyalSub",
+              "color": "#8A2BE2",
+              "roles": [
+                "sub"
+              ],
+              "key": "loyalsub"
+            },
+            "parts": [
+              {
+                "t": "emote",
+                "url": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0",
+                "alt": "Kappa"
+              },
+              {
+                "t": "text",
+                "v": " fourteen months "
+              },
+              {
+                "t": "emote",
+                "url": "https://cdn.7tv.app/emote/60ae7316f7c927fad14e6ca2/2x.webp",
+                "alt": "catJAM"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=Gifter;emotes=;id=cccc0003-0000-0000-0000-000000000003;login=gifter;msg-id=submysterygift;msg-param-mass-gift-count=5;system-msg=Gifter\\sis\\sgifting\\s5\\sTier\\s1\\sSubs\\sto\\sExampleChannel's\\scommunity! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000003",
+            "kind": "system",
+            "author": {
+              "name": "Gifter",
+              "color": null,
+              "roles": [],
+              "key": "gifter"
+            },
+            "parts": [],
+            "system": "Gifter is gifting 5 Tier 1 Subs to ExampleChannel's community!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=Gifter;emotes=;id=cccc0003-0000-0000-0000-000000000004;login=gifter;msg-id=subgift;msg-param-recipient-display-name=Lucky;system-msg=Gifter\\sgifted\\sa\\sTier\\s1\\ssub\\sto\\sLucky! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000004",
+            "kind": "system",
+            "author": {
+              "name": "Gifter",
+              "color": null,
+              "roles": [],
+              "key": "gifter"
+            },
+            "parts": [],
+            "system": "Gifter gifted a Tier 1 sub to Lucky!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=;emotes=;id=cccc0003-0000-0000-0000-000000000005;login=ananonymousgifter;msg-id=anonsubgift;system-msg=An\\sanonymous\\suser\\sgifted\\sa\\sTier\\s1\\ssub\\sto\\sLucky2! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000005",
+            "kind": "system",
+            "author": {
+              "name": "ananonymousgifter",
+              "color": null,
+              "roles": [],
+              "key": "ananonymousgifter"
+            },
+            "parts": [],
+            "system": "An anonymous user gifted a Tier 1 sub to Lucky2!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#00CED1;display-name=Upgrader;emotes=;id=cccc0003-0000-0000-0000-000000000006;login=upgrader;msg-id=giftpaidupgrade;system-msg=Upgrader\\sis\\scontinuing\\sthe\\sGift\\sSub\\sthey\\sgot\\sfrom\\sGifter! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000006",
+            "kind": "system",
+            "author": {
+              "name": "Upgrader",
+              "color": "#00CED1",
+              "roles": [],
+              "key": "upgrader"
+            },
+            "parts": [],
+            "system": "Upgrader is continuing the Gift Sub they got from Gifter!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#00CED1;display-name=PrimeUp;emotes=;id=cccc0003-0000-0000-0000-000000000007;login=primeup;msg-id=primepaidupgrade;system-msg=PrimeUp\\sconverted\\sfrom\\sa\\sPrime\\ssub\\sto\\sa\\sTier\\s1\\ssub! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000007",
+            "kind": "system",
+            "author": {
+              "name": "PrimeUp",
+              "color": "#00CED1",
+              "roles": [],
+              "key": "primeup"
+            },
+            "parts": [],
+            "system": "PrimeUp converted from a Prime sub to a Tier 1 sub!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=#DC143C;display-name=Raider;emotes=;id=cccc0003-0000-0000-0000-000000000008;login=raider;msg-id=raid;msg-param-viewerCount=42;system-msg=42\\sraiders\\sfrom\\sRaider\\shave\\sjoined! :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000008",
+            "kind": "system",
+            "author": {
+              "name": "Raider",
+              "color": "#DC143C",
+              "roles": [],
+              "key": "raider"
+            },
+            "parts": [],
+            "system": "42 raiders from Raider have joined!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=bits/1000;color=;display-name=Cheerer;emotes=;id=cccc0003-0000-0000-0000-000000000009;login=cheerer;msg-id=bitsbadgetier;system-msg=bits\\sbadge\\stier\\snotification :tmi.twitch.tv USERNOTICE #examplechannel :1000 bits!",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000009",
+            "kind": "system",
+            "author": {
+              "name": "Cheerer",
+              "color": null,
+              "roles": [],
+              "key": "cheerer"
+            },
+            "parts": [],
+            "system": "bits badge tier notification"
+          }
+        ]
+      },
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000009:msg",
+            "kind": "chat",
+            "author": {
+              "name": "Cheerer",
+              "color": null,
+              "roles": [],
+              "key": "cheerer"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "1000 bits!"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=Watcher;emotes=;id=cccc0003-0000-0000-0000-000000000010;login=watcher;msg-id=viewermilestone;msg-param-category=watch-streak;system-msg=Watcher\\swatched\\s10\\sconsecutive\\sstreams :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000010",
+            "kind": "system",
+            "author": {
+              "name": "Watcher",
+              "color": null,
+              "roles": [],
+              "key": "watcher"
+            },
+            "parts": [],
+            "system": "Watcher watched 10 consecutive streams"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=moderator/1;color=;display-name=OldMod;emotes=;id=cccc0003-0000-0000-0000-000000000011;login=oldmod;msg-id=modiversary;system-msg=OldMod\\shas\\sbeen\\sa\\smod\\sfor\\s2\\syears :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000011",
+            "kind": "system",
+            "author": {
+              "name": "OldMod",
+              "color": null,
+              "roles": [
+                "mod"
+              ],
+              "key": "oldmod"
+            },
+            "parts": [],
+            "system": "OldMod has been a mod for 2 years"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=broadcaster/1;color=#FF4500;display-name=ExampleStreamer;emotes=;id=cccc0003-0000-0000-0000-000000000012;login=examplestreamer;msg-id=announcement;msg-param-color=PRIMARY;system-msg= :tmi.twitch.tv USERNOTICE #examplechannel :Stream starts in 5 minutes",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000012",
+            "kind": "chat",
+            "author": {
+              "name": "ExampleStreamer",
+              "color": "#FF4500",
+              "roles": [
+                "owner"
+              ],
+              "key": "examplestreamer"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "Stream starts in 5 minutes"
+              }
+            ],
+            "action": false,
+            "firstMsg": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=Quiet;emotes=;id=cccc0003-0000-0000-0000-000000000013;login=quiet;msg-id=announcement;system-msg= :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": []
+  },
+  {
+    "line": "@badges=;color=;display-name=Ritual;emotes=;id=cccc0003-0000-0000-0000-000000000014;login=ritual;msg-id=ritual;msg-param-ritual-name=new_chatter;system-msg=@Ritual\\sis\\snew\\shere.\\sSay\\shello! :tmi.twitch.tv USERNOTICE #examplechannel :HeyGuys",
+    "calls": []
+  },
+  {
+    "line": "@badges=;color=;display-name=NoSystem;emotes=;id=cccc0003-0000-0000-0000-000000000015;login=nosystem;msg-id=sub :tmi.twitch.tv USERNOTICE #examplechannel :a sub with text but no system-msg",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000015:msg",
+            "kind": "chat",
+            "author": {
+              "name": "NoSystem",
+              "color": null,
+              "roles": [],
+              "key": "nosystem"
+            },
+            "parts": [
+              {
+                "t": "text",
+                "v": "a sub with text but no system-msg"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "line": "@badges=;color=;display-name=Escapes;emotes=;id=cccc0003-0000-0000-0000-000000000016;login=escapes;msg-id=raid;system-msg=semi\\:colon\\sback\\\\slash\\sline\\nbreak\\rreturn\\qother\\ :tmi.twitch.tv USERNOTICE #examplechannel",
+    "calls": [
+      {
+        "call": "onMessage",
+        "args": [
+          {
+            "id": "tw:cccc0003-0000-0000-0000-000000000016",
+            "kind": "system",
+            "author": {
+              "name": "Escapes",
+              "color": null,
+              "roles": [],
+              "key": "escapes"
+            },
+            "parts": [],
+            "system": "semi;colon back\\slash line\nbreak\rreturnqother"
+          }
+        ]
+      }
+    ]
+  }
+]

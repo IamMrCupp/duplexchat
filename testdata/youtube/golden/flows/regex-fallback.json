@@ -1,0 +1,70 @@
+{
+  "events": [
+    {
+      "event": "step",
+      "step": "resolve"
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "connecting",
+        "ищу трансляцию…"
+      ]
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/watch?v=DDDDDDDDDDD",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/live_chat?continuation=REGEX_TOKEN",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "call",
+      "call": "onStatus",
+      "args": [
+        "live",
+        "чат подключен"
+      ]
+    },
+    {
+      "event": "fetch",
+      "method": "GET",
+      "url": "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DDDDDDDDDDDD&format=json",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "accept-language": "en-US,en;q=0.9",
+        "cookie": "SOCS=CAI"
+      },
+      "body": null
+    },
+    {
+      "event": "later",
+      "ms": 1000,
+      "next": "poll"
+    }
+  ],
+  "state": {
+    "videoId": "DDDDDDDDDDD",
+    "ownerChannelId": null,
+    "apiKey": "AIzaFALLBACKfallbackfallbackfallback0",
+    "clientVersion": "2.20260708.00.00",
+    "continuation": "REGEX_TOKEN",
+    "errStreak": 0
+  }
+}
