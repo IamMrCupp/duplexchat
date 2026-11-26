@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>megarohas_multichat — overlay</title>
+<title>duplexchat — overlay</title>
 <link rel="stylesheet" href="/overlay.css">
 </head>
 <body>
@@ -14,16 +14,16 @@
 <script>
 'use strict';
 const q = new URLSearchParams(location.search);
-const LIMIT = Math.max(5, +q.get('limit') || 60);   // страховочный потолок по количеству в DOM
-const FADE = Math.max(0, +q.get('fade') || 0);      // секунды до исчезновения, 0 = не исчезать
+const LIMIT = Math.max(5, +q.get('limit') || 60);   // a safety cap on how many messages stay on the page
+const FADE = Math.max(0, +q.get('fade') || 0);      // seconds before a message goes, 0 = it stays
 const SHOW_TS = q.get('ts') === '1';
-const DIR_TOP = (q.get('dir') || '').toLowerCase() === 'top'; // ?dir=top — чат растёт сверху вниз
-const SHOW_PLATFORM = q.get('platform') !== '0'; // ?platform=0 — скрыть значки платформ
-const SHOW_BADGES = q.get('badges') !== '0';     // ?badges=0 — скрыть значки ролей
+const DIR_TOP = (q.get('dir') || '').toLowerCase() === 'top'; // ?dir=top — chat grows from the top down
+const SHOW_PLATFORM = q.get('platform') !== '0'; // ?platform=0 — hide the platform icons
+const SHOW_BADGES = q.get('badges') !== '0';     // ?badges=0 — hide the role badges
 
-// ?size=22 — размер шрифта в px; ?font=Имя — шрифт (системный или файл из папки fonts:
-// все файлы *.ttf/otf/woff/woff2 оттуда регистрируются как @font-face,
-// имя семейства = имя файла без расширения)
+// ?size=22 — font size in px; ?font=Name — a font (installed, or a file from the fonts folder:
+// every *.ttf/otf/woff/woff2 there is registered as an @font-face,
+// and the family name is the file name without the extension)
 const rootStyle = document.documentElement.style;
 if (+q.get('size') > 0) rootStyle.setProperty('--size', (+q.get('size')) + 'px');
 // ?bg=88 — how solid the message background is, 0–100 (--bg-opacity in overlay.css)
@@ -63,11 +63,11 @@ const ANIM_MS = parseFloat(cs.getPropertyValue('--anim')) || 320;
 const GAP = parseFloat(cs.getPropertyValue('--line-gap')) || 6;
 const DISSOLVE = parseFloat(cs.getPropertyValue('--dissolve')) || 22;
 
-// Маска-«туман» нарисована на области больше плашки на --dissolve и ездит
-// через mask-position. Направления градиентов в CSS подобраны так, что
-// у обеих фаз один и тот же путь FROM→TO: при появлении туман стартует
-// на «дышащем» крае и рассасывается за него, при исчезновении — стартует
-// за краем и наползает. Никакого резкого пропадания маски по завершении.
+// The “fog” mask is drawn over an area --dissolve bigger than the bubble and moves
+// through mask-position. The gradient directions in the CSS are chosen so that
+// both phases take the same FROM→TO path: entering, the fog starts
+// on the “breathing” edge and clears past it; leaving, it starts
+// past the edge and creeps in. The mask never vanishes abruptly at the end.
 const MASK_FROM = DIR_TOP ? '0px 0px' : `0px -${DISSOLVE}px`;
 const MASK_TO = DIR_TOP ? `0px -${DISSOLVE}px` : '0px 0px';
 
@@ -86,10 +86,10 @@ const R_ICONS = {
   member: '<svg class="badge" viewBox="0 0 24 24" fill="#2ba640" xmlns="http://www.w3.org/2000/svg"><path d="M12 21S3 14.7 3 8.9C3 5.9 5.4 4 7.9 4c1.6 0 3.1.8 4.1 2.1C13 4.8 14.5 4 16.1 4 18.6 4 21 5.9 21 8.9 21 14.7 12 21 12 21z"/></svg>',
 };
 
-// Приглушённо-пастельная палитра: 20 оттенков по цветовому кругу (шаг 18°),
-// чуть темнее классической пастели, чтобы лучше читалось. Ник каждого автора
-// детерминированно получает свой цвет.
-// ?origcolors=1 — уважать «родные» цвета ников (например, выбранные на Twitch).
+// A muted pastel palette: 20 hues around the colour wheel (18° apart),
+// a little darker than classic pastel so it reads better. Each author’s name
+// always gets the same colour.
+// ?origcolors=1 — use names’ own colours instead (the ones chosen on Twitch, say).
 const PALETTE = [];
 for (let hue = 0; hue < 360; hue += 18) {
   PALETTE.push(`hsl(${hue} ${hue % 36 === 0 ? 50 : 58}% ${hue % 36 === 0 ? 70 : 65}%)`);
@@ -122,7 +122,7 @@ function fmtTime(ts) {
   return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
 }
 
-// --- построение DOM сообщения (без вставки на страницу) ---
+// --- building a message’s DOM (without adding it to the page) ---
 function buildMsg(m) {
   const div = el('div', 'msg ' + (m.kind || 'chat') + (m.action ? ' action' : ''));
 
@@ -176,17 +176,17 @@ function buildMsg(m) {
   return div;
 }
 
-// --- анимации (Web Animations API: не зависят от гонок style-recalc,
-// в отличие от CSS-transition на свежевставленных элементах) ---
-// Появление: обёртка-«слот» растёт, сообщение из фейда выползает из края
-// чата; туман держится на кромке первую половину и плавно уезжает за
-// край. Исчезновение: обёртка схлопывается, сообщение дрейфует к краю,
-// гаснет и растворяется в тумане — целиком, без обрезки «со своего низа».
+// --- animations (the Web Animations API: no races with style recalculation,
+// unlike CSS transitions on freshly inserted elements) ---
+// Entering: the “slot” wrapper grows and the message fades in from the edge
+// of the chat; the fog holds at the edge for the first half, then slides past
+// it. Leaving: the wrapper collapses and the message drifts to the edge,
+// fades and dissolves into the fog — all of it, without its bottom being cut off.
 const EASE = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
 
 function animateMask(wrap, entering) {
-  // enter: туман на кромке (FROM) до середины, потом уезжает (TO);
-  // leave: туман наползает из-за края в первой половине и остаётся.
+  // enter: fog at the edge (FROM) until halfway, then it moves off (TO);
+  // leave: fog creeps in from past the edge in the first half and stays.
   try {
     const half = ANIM_MS / 2;
     wrap.animate(
@@ -195,7 +195,7 @@ function animateMask(wrap, entering) {
         ? { delay: half, duration: half, easing: 'ease', fill: 'both' }
         : { duration: half, easing: 'ease', fill: 'forwards' }
     );
-  } catch (e) { /* нет маски — не смертельно */ }
+  } catch (e) { /* no mask support — not fatal */ }
 }
 
 function animateOut(wrap, instant) {
@@ -222,13 +222,13 @@ function animateOut(wrap, instant) {
   setTimeout(() => wrap.remove(), ANIM_MS + 60);
 }
 
-// Убрать всё, что после появления новичка не влезает ЦЕЛИКОМ по высоте
-// (и страховочный лимит по количеству). Считаем по финальным высотам
-// (dataset.h), а не по текущим кадрам анимации — детерминированно.
+// Remove everything that no longer fits ENTIRELY once the newcomer is in
+// (plus the safety cap on count). Count with final heights
+// (dataset.h), not the current animation frame, so it’s deterministic.
 function trimAll(instant) {
   const live = [...chat.children].filter(c => !c.dataset.out);
   const newestFirst = DIR_TOP ? live : live.reverse();
-  const avail = window.innerHeight - 20 - vbarH; // паддинги контейнера, minus the viewer bar
+  const avail = window.innerHeight - 20 - vbarH; // the container’s padding, minus the viewer bar
   let used = 0;
   for (let i = 0; i < newestFirst.length; i++) {
     const c = newestFirst[i];
@@ -265,14 +265,14 @@ function place(m, instant) {
   if (FADE > 0) setTimeout(() => animateOut(wrap), FADE * 1000);
 }
 
-// --- очередь показа: в память сообщения приходят пачками (особенно с
-// YouTube), на экран выдаются строго по одному. Темп подстраивается под
-// длину очереди, чтобы не отставать от живого чата. ---
+// --- the display queue: messages arrive in batches (especially from
+// YouTube) and go on screen strictly one at a time. The pace follows
+// the queue length so it keeps up with live chat. ---
 const queue = [];
 let pumping = false;
 
-// Темп нарочно спокойный: сообщения не должны суетливо сдвигать друг друга,
-// даже когда пришла пачка. При переполнении очереди лишнее просто отпадёт.
+// The pace is calm on purpose: messages shouldn’t jostle each other
+// even when a batch arrives. If the queue overflows, the extra just drops.
 function pace() {
   if (queue.length > 30) return 180;
   if (queue.length > 12) return 300;
@@ -297,7 +297,7 @@ function enqueue(m) {
   pump();
 }
 
-// --- удаления (модерация) ---
+// --- deletions (moderation) ---
 function removeById(id) {
   const n = byId.get(id);
   if (n) animateOut(n);

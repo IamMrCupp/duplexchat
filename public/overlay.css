@@ -1,27 +1,27 @@
 /* ============================================================
-   megarohas_multichat — стиль оверлея для OBS.
-   Этот файл можно свободно редактировать: сохранил — в OBS
-   нажми «Обновить» у browser source (или страница сама
-   подтянет стиль при перезагрузке).
-   Фон страницы прозрачный — в OBS будет виден только чат.
+   duplexchat — the OBS overlay’s style.
+   Edit this file freely: save it, then in OBS
+   press “Refresh” on the browser source (or the page
+   picks the style up when it reloads).
+   The page background is transparent — OBS shows only the chat.
    ============================================================ */
 
 :root {
-  /* --- базовые ручки, крути здесь --- */
+  /* --- the main knobs: turn them here --- */
   --font: "Segoe UI", "Inter", system-ui, sans-serif;
-  --size: 17px;             /* размер текста сообщений (перекрывается ?size=N) */
-  --anim: 380ms;            /* длительность анимаций появления/исчезновения */
-  --dissolve: 22px;         /* высота «тумана», в котором растворяется край сообщения */
-  --line-gap: 6px;          /* расстояние между сообщениями */
-  --pad: 7px 12px;          /* внутренние отступы плашки */
-  --radius: 10px;           /* скругление плашки */
+  --size: 17px;             /* message text size (?size=N overrides it) */
+  --anim: 380ms;            /* how long the enter/leave animations take */
+  --dissolve: 22px;         /* height of the “fog” a message’s edge dissolves into */
+  --line-gap: 6px;          /* space between messages */
+  --pad: 7px 12px;          /* padding inside the bubble */
+  --radius: 10px;           /* bubble corner radius */
   --bg-opacity: 0.62;       /* how solid the message background is, 0–1 (?bg=N overrides, N in percent) */
-  --bg: rgba(10, 10, 14, var(--bg-opacity));   /* фон обычного сообщения */
+  --bg: rgba(10, 10, 14, var(--bg-opacity));   /* an ordinary message’s background */
   --text: #ffffff;
   --name-weight: 700;
-  --emote-size: 1.55em;     /* высота смайлов/эмоутов */
+  --emote-size: 1.55em;     /* emoji/emote height */
   --shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-  --sys-color: #c8c8d8;     /* цвет системных строк (сабы, рейды) */
+  --sys-color: #c8c8d8;     /* system lines’ colour (subs, raids) */
 }
 
 /* --- viewer bar (?viewers=1) ---------------------------------------
@@ -59,7 +59,7 @@ html, body {
   height: 100%;
 }
 
-/* Колонка чата прижата к низу, старое уезжает вверх и удаляется */
+/* The chat column sits at the bottom; old messages move up and are removed */
 #chat {
   display: flex;
   flex-direction: column;
@@ -71,7 +71,7 @@ html, body {
   color: var(--text);
 }
 
-/* --- сообщение --- */
+/* --- message --- */
 .msg {
   background: var(--bg);
   border-radius: var(--radius);
@@ -80,30 +80,31 @@ html, body {
   word-wrap: break-word;
   overflow-wrap: anywhere;
   line-height: 1.35;
-  align-self: flex-start;   /* плашка по ширине текста; замени на stretch для полной ширины */
+  align-self: flex-start;   /* bubble as wide as its text; use stretch for full width */
   max-width: 100%;
 }
 
-/* --- обёртка-«слот»: механика появления/исчезновения ---
-   Каждое сообщение лежит в .mwrap. При появлении обёртка растёт по
-   высоте, и сообщение выползает из края чата, материализуясь из пустоты;
-   при исчезновении обёртка схлопывается, и сообщение растворяется у
-   края — мягкая градиентная маска вместо жёсткой обрезки. Куда прижат
-   контент внутри обёртки (enter/leave), решает, какой край «дышит».
-   transform/opacity композитятся GPU; высота меняется у 1-2 элементов
-   за раз — стабильные 60 fps. */
+/* --- the “slot” wrapper: how messages enter and leave ---
+   Each message sits in a .mwrap. Entering, the wrapper grows in height
+   and the message slides out of the chat’s edge, appearing from nothing;
+   leaving, the wrapper collapses and the message dissolves at the edge —
+   a soft gradient mask instead of a hard cut. Where the content sits
+   inside the wrapper (enter/leave) decides which edge “breathes”.
+   transform/opacity are composited on the GPU; only one or two heights
+   change at once, so it holds 60 fps. */
 .mwrap {
   display: flex;
   flex-direction: column;
   margin-top: var(--line-gap);
   max-width: 100%;
 }
-/* Сами переходы гоняет JS через Web Animations API (element.animate) —
-   это надёжнее CSS-transition на свежевставленных элементах. Здесь только
-   статика: обрезка и маска-«туман». Маска нарисована на области больше
-   плашки на --dissolve; JS ездит её mask-position так, что к концу
-   появления туман целиком за краем — снятие маски ничего не меняет
-   визуально. */
+/* The transitions themselves are driven by JS through the Web Animations
+   API (element.animate), which is more reliable than CSS transitions on
+   freshly inserted elements. Only the static parts live here: clipping and
+   the “fog” mask. The mask covers an area --dissolve bigger than the
+   bubble; JS moves its mask-position so that by the end of entering the
+   fog is entirely past the edge, and removing the mask changes nothing
+   you can see. */
 .mwrap.anim {
   overflow: hidden;
   -webkit-mask-repeat: no-repeat;
@@ -112,11 +113,11 @@ html, body {
           mask-size: 100% calc(100% + var(--dissolve));
 }
 
-/* по умолчанию (чат растёт снизу вверх):
-   появление — сообщение выползает из нижнего края (контент прижат к
-   верху обёртки, мягкий нижний край);
-   исчезновение — растворяется верхом (контент прижат к низу, мягкий
-   верхний край) */
+/* by default (chat grows bottom up):
+   entering — the message slides out of the bottom edge (content at the
+   top of the wrapper, soft bottom edge);
+   leaving — it dissolves through its top (content at the bottom, soft
+   top edge) */
 .mwrap.enter {
   justify-content: flex-start;
   -webkit-mask-image: linear-gradient(to top, transparent 0, #000 var(--dissolve));
@@ -128,7 +129,7 @@ html, body {
           mask-image: linear-gradient(to bottom, transparent 0, #000 var(--dissolve));
 }
 
-/* ?dir=top — чат растёт сверху вниз, всё зеркально */
+/* ?dir=top — chat grows from the top down, everything mirrored */
 body.dir-top #chat { justify-content: flex-start; }
 body.dir-top .mwrap.enter {
   justify-content: flex-end;
@@ -141,24 +142,24 @@ body.dir-top .mwrap.leave {
           mask-image: linear-gradient(to top, transparent 0, #000 var(--dissolve));
 }
 
-/* --- автор --- */
+/* --- author --- */
 .name {
   font-weight: var(--name-weight);
   margin-right: 2px;
 }
 .name::after { content: ":"; color: var(--text); font-weight: 400; margin-left: 1px; }
 
-/* иконка платформы перед ником */
+/* platform icon before the name */
 .platform {
   width: 0.9em; height: 0.9em;
   vertical-align: -0.08em;
   margin-right: 5px;
   opacity: 0.9;
 }
-/* не нужна иконка платформы? добавь к адресу ?platform=0
-   (или раскомментируй: .platform { display: none; } ) */
+/* don’t want the platform icon? add ?platform=0 to the address
+   (or uncomment: .platform { display: none; } ) */
 
-/* значки ролей (модер, владелец, VIP, саб, спонсор) */
+/* role badges (mod, owner, VIP, sub, member) */
 .badge {
   width: 1em; height: 1em;
   vertical-align: -0.14em;
@@ -166,7 +167,7 @@ body.dir-top .mwrap.leave {
 }
 img.badge { border-radius: 3px; }
 
-/* аватарки (есть только у YouTube) — по умолчанию выключены
+/* avatars (YouTube only) — off by default
 .avatar {
   width: 1.4em; height: 1.4em;
   border-radius: 50%;
@@ -176,7 +177,7 @@ img.badge { border-radius: 3px; }
 */
 .avatar { display: none; }
 
-/* --- текст и эмоуты --- */
+/* --- text and emotes --- */
 .emote {
   height: var(--emote-size);
   vertical-align: -0.45em;
@@ -184,10 +185,10 @@ img.badge { border-radius: 3px; }
 }
 .msg.action .text { font-style: italic; }
 
-/* время (включается ?ts=1) */
+/* the time (turned on with ?ts=1) */
 .time { font-size: 0.75em; opacity: 0.55; margin-right: 6px; }
 
-/* --- системные строки: сабы, рейды, membership --- */
+/* --- system lines: subs, raids, memberships --- */
 .msg.system {
   background: rgba(10, 10, 14, 0.45);
   color: var(--sys-color);
@@ -212,14 +213,14 @@ img.badge { border-radius: 3px; }
 }
 .sticker { height: 3em; display: block; margin-top: 4px; }
 
-/* --- новое членство/спонсорство --- */
+/* --- new memberships --- */
 .msg.member {
   border-left: 4px solid #2ba640;
   background: linear-gradient(90deg, rgba(43, 166, 64, 0.25), var(--bg) 65%);
 }
 
-/* цвета ников по умолчанию, если платформа цвет не дала,
-   назначаются автоматически из палитры ниже (data-hue) */
+/* default name colours, used when the platform gives none,
+   come from the palette below automatically (data-hue) */
 
 /* ============================================================
    Viewer bar. Sits above the chat column (z-index), so messages
