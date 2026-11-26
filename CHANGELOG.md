@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/IamMrCupp/duplexchat/compare/v0.2.0...v0.3.0) (2026-11-26)
+
+
+### Features
+
+* **server:** state, fonts, port fallback and banner ([#4](https://github.com/IamMrCupp/duplexchat/issues/4)) ([d3e75ab](https://github.com/IamMrCupp/duplexchat/commit/d3e75abf2b685e9ebb73993e9c77ac39e03a007a))
+
 ## [0.2.0](https://github.com/IamMrCupp/duplexchat/compare/v0.1.0...v0.2.0) (2026-11-26)
 
 
