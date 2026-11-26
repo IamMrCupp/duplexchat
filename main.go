@@ -18,6 +18,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/app"
 	"github.com/IamMrCupp/duplexchat/internal/applog"
 	"github.com/IamMrCupp/duplexchat/internal/config"
+	"github.com/IamMrCupp/duplexchat/internal/emotes"
 	"github.com/IamMrCupp/duplexchat/internal/gate"
 	"github.com/IamMrCupp/duplexchat/internal/hub"
 	"github.com/IamMrCupp/duplexchat/internal/server"
@@ -73,7 +74,7 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	store := sources.NewStore(cfg, cfgPath, sources.Options{Warn: func(s string) { fmt.Fprintln(stderr, s) }})
 	chats := &app.App{Store: store, Hub: feed, Readers: map[string]app.Factory{
 		// DUPLEXCHAT_TWITCH_IRC points the reader at another IRC server (tests)
-		"twitch": twitch.Factory(nil, getenv("DUPLEXCHAT_TWITCH_IRC")),
+		"twitch": twitch.Factory(emotes.New().For, getenv("DUPLEXCHAT_TWITCH_IRC")),
 	}}
 
 	handler := server.New(server.Options{
