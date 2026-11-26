@@ -1,0 +1,71 @@
+name: release-pr-automerge
+
+# Merge release-please's release PR once CI passes on it, so a release ships
+# without a manual merge. This merges only the release PR, and only at the
+# commit CI passed on.
+#
+# workflow_run always runs this file as it is on main, never a PR's copy.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [release-please--branches--main--components--duplexchat]
+
+permissions:
+  contents: read
+
+jobs:
+  merge:
+    # A fork can name its branch like the release branch, so the run has to
+    # come from this repo, not only carry that name.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge the release PR
+        env:
+          # The PAT, not github.token: a merge pushed with github.token
+          # triggers no workflows, so release-please would never cut the
+          # release.
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_PAT }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then echo "RELEASE_PLEASE_PAT isn't set"; exit 1; fi
+          pr=$(gh pr list -R "$REPO" --head "$BRANCH" --base main --state open \
+                 --label "autorelease: pending" --json number,headRefOid \
+                 --jq ".[] | select(.headRefOid == \"$SHA\") | .number")
+          if [ -z "$pr" ]; then
+            echo "No open release PR at $SHA. It moved on since this CI run, or it's already merged."
+            exit 0
+          fi
+          # Wait for every check main's ruleset requires, or the merge is
+          # refused. Today they're all in CI, but a required check added in
+          # another workflow could still be running when CI finishes.
+          if ! out=$(gh pr checks "$pr" -R "$REPO" --required --watch --fail-fast --interval 5 2>&1); then
+            echo "$out"
+            case "$out" in
+              *"no required checks"*) ;;  # nothing required on main: carry on
+              *) echo "A required check on #$pr didn't pass. Not merging."; exit 1 ;;
+            esac
+          fi
+          # --match-head-commit refuses if release-please pushed again meanwhile;
+          # that newer commit gets its own CI run and its own try.
+          # Empty body: the default lists every change, which release-please
+          # would then repeat in the changelog.
+          if ! gh pr merge "$pr" -R "$REPO" --merge --body "" --match-head-commit "$SHA"; then
+            # Someone merged it by hand at the same moment. That's fine. GitHub
+            # can say "merge already in progress" before the PR shows merged.
+            for _ in 1 2 3 4 5 6; do
+              if [ "$(gh pr view "$pr" -R "$REPO" --json state --jq .state)" = MERGED ]; then
+                echo "#$pr was merged by someone else meanwhile."
+                exit 0
+              fi
+              sleep 5
+            done
+            exit 1
+          fi
