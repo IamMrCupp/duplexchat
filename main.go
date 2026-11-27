@@ -22,6 +22,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/emotes"
 	"github.com/IamMrCupp/duplexchat/internal/gate"
 	"github.com/IamMrCupp/duplexchat/internal/hub"
+	"github.com/IamMrCupp/duplexchat/internal/secrets"
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
 	"github.com/IamMrCupp/duplexchat/internal/twitch"
@@ -59,6 +60,9 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	log := applog.NewTo(filepath.Join(dir, "error.log"), stderr)
 	cfgPath := filepath.Join(dir, "config.json")
 	cfg := config.Load(cfgPath)
+	// one copy per folder sends; a second one still reads chat
+	sendLock := secrets.AcquireSendLock(dir, os.Getpid(), nil)
+	defer sendLock.Release()
 
 	port, err := server.Port(cfg.Port)
 	if err != nil {
@@ -100,7 +104,11 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	})
 	srv := &http.Server{Handler: handler, ReadHeaderTimeout: 10 * time.Second}
 
-	fmt.Fprint(stdout, server.Banner(actual, server.LANOrigins(cfg.Host, actual), nil))
+	var notes []string
+	if !sendLock.Held {
+		notes = append(notes, sendLock.Reason)
+	}
+	fmt.Fprint(stdout, server.Banner(actual, server.LANOrigins(cfg.Host, actual), notes))
 	chats.Start()
 	if *openWindow {
 		go func() {
