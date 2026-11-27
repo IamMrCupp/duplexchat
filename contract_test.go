@@ -20,7 +20,6 @@ var localURL = regexp.MustCompile("['\"`](/(?:api|fonts|events|overlay|dock|setu
 // notYet are routes the pages call that arrive with later issues. When one
 // lands, move it out of here and the test checks it's really served.
 var notYet = map[string]string{
-	"/api/send":                  "#10",
 	"/api/setup/":                "#13",
 	"/api/setup/state":           "#13",
 	"/api/setup/twitch/signin":   "#11",
@@ -46,6 +45,7 @@ var gated = map[string]string{
 	"/api/test":        "POST",
 	"/api/clear":       "POST",
 	"/api/dock/target": "POST",
+	"/api/send":        "POST",
 }
 
 func referenced(t *testing.T) map[string][]string {
