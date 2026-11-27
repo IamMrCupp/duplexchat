@@ -355,3 +355,28 @@ func TestRemovingAnAbsentSectionCreatesNoFile(t *testing.T) {
 		t.Fatal("file created")
 	}
 }
+
+// Sets of different sections from several goroutines all land: each
+// read-merge-write is whole.
+func TestConcurrentSetsAllLand(t *testing.T) {
+	s := New(tmp(t), Options{})
+	done := make(chan struct{})
+	for i := 0; i < 20; i++ {
+		go func(i int) {
+			defer func() { done <- struct{}{} }()
+			if err := s.Set(fmt.Sprint("s", i), obj("n", i)); err != nil {
+				t.Error(err)
+			}
+			s.Get("s0")
+			s.Problem()
+		}(i)
+	}
+	for i := 0; i < 20; i++ {
+		<-done
+	}
+	for i := 0; i < 20; i++ {
+		if s.Get(fmt.Sprint("s", i)) == nil {
+			t.Fatalf("section s%d lost", i)
+		}
+	}
+}

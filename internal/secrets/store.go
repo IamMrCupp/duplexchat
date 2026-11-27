@@ -18,6 +18,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/IamMrCupp/duplexchat/internal/jsjson"
@@ -25,8 +26,10 @@ import (
 
 const posix = runtime.GOOS != "windows"
 
-// Store is one secrets file.
+// Store is one secrets file. It's safe for concurrent use: each Get, and
+// each Set's read-merge-write, happens whole, as on Node's single thread.
 type Store struct {
+	mu   sync.Mutex
 	file string
 	log  func(kind string, what any)
 	now  func() time.Time
@@ -62,6 +65,8 @@ func New(file string, o Options) *Store {
 
 // Problem is what the owner should know about the file, for /setup, or "".
 func (s *Store) Problem() string {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	var parts []string
 	for _, p := range []string{s.readError, s.brokenNote} {
 		if p != "" {
@@ -125,6 +130,8 @@ func (s *Store) read() *jsjson.Object {
 // Get returns a copy of one section, or nil when it's missing or isn't an
 // object. An array reads as an object keyed by index, as { ...array } does.
 func (s *Store) Get(section string) *jsjson.Object {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	v, _ := s.read().Get(section)
 	switch t := v.(type) {
 	case *jsjson.Object:
@@ -144,6 +151,8 @@ func (s *Store) Get(section string) *jsjson.Object {
 // one, so the secrets never sit in a wider-mode file and a crash mid-write
 // can't leave half a token behind.
 func (s *Store) Set(section string, value *jsjson.Object) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	data := s.read()
 	if s.readError != "" {
 		return ErrUnreadable
