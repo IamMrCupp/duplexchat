@@ -119,3 +119,46 @@ func TestAddRefusesNonStreams(t *testing.T) {
 		t.Error("a refused add saved config.json")
 	}
 }
+
+// The Twitch client ID /setup saves lands in config.json and survives the
+// panel's own saves; clearing it drops the key (server.test.js case 7).
+func TestTwitchClientIDSurvivesSaves(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "config.json")
+	if err := os.WriteFile(path, []byte(`{"port": 8787, "twitchClientId": 12345, "sources": []}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	s := NewStore(config.Load(path), path, Options{NewID: counterIDs()})
+	if got := s.TwitchClientID(); got != "" {
+		t.Fatalf("a non-string client ID reads as %q, want \"\"", got)
+	}
+	read := func() string {
+		b, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return string(b)
+	}
+	s.SetTwitchClientID("fakeclientid0123456789abcdefgh")
+	if got := s.TwitchClientID(); got != "fakeclientid0123456789abcdefgh" {
+		t.Fatalf("TwitchClientID = %q", got)
+	}
+	if !strings.Contains(read(), `"twitchClientId": "fakeclientid0123456789abcdefgh"`) {
+		t.Fatalf("not saved:\n%s", read())
+	}
+	if _, err := s.Add("https://www.twitch.tv/examplechannel"); err != nil {
+		t.Fatal(err)
+	}
+	s.Remove(s.List()[0].ID)
+	s.Save()
+	if !strings.Contains(read(), `"twitchClientId": "fakeclientid0123456789abcdefgh"`) {
+		t.Fatalf("lost on a later save:\n%s", read())
+	}
+	if _, err := os.Stat(filepath.Join(dir, "secrets.json")); !os.IsNotExist(err) {
+		t.Fatalf("secrets.json exists before any sign-in: %v", err)
+	}
+	s.SetTwitchClientID("")
+	if strings.Contains(read(), "twitchClientId") {
+		t.Fatalf("an empty client ID is still written:\n%s", read())
+	}
+}

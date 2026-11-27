@@ -60,7 +60,10 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	log := applog.NewTo(filepath.Join(dir, "error.log"), stderr)
 	cfgPath := filepath.Join(dir, "config.json")
 	cfg := config.Load(cfgPath)
-	// one copy per folder sends; a second one still reads chat
+	// tokens and client secrets: secrets.json beside config.json, owner-only.
+	// One copy per folder sends; a second one still reads chat (two sharing
+	// single-use refresh tokens would sign each other out).
+	vault := secrets.New(filepath.Join(dir, "secrets.json"), secrets.Options{Log: log.Write})
 	sendLock := secrets.AcquireSendLock(dir, os.Getpid(), nil)
 	defer sendLock.Release()
 
@@ -103,6 +106,7 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 		},
 		Targets:   chats.Targets,
 		SetTarget: chats.SetTarget,
+		Notices:   func() []string { return []string{vault.Problem()} },
 		State: func() server.State {
 			return server.State{
 				Version: version, Host: cfg.Host, Port: actual,
