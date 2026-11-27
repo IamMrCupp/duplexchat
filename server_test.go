@@ -520,3 +520,55 @@ func TestSecondCopyDoesNotSend(t *testing.T) {
 		t.Fatal("lock left behind after a clean stop")
 	}
 }
+
+// The dock picks a reply target: the session shows it, and config.json
+// keeps it by URL for the next start (multichat's onChange saves).
+func TestDockTargetPickIsShownAndSaved(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{
+		map[string]any{"id": "x", "url": "https://twitch.tv/examplechannel"},
+		map[string]any{"id": "y", "url": "https://twitch.tv/second"},
+	}})
+	var s struct {
+		Platforms map[string]struct {
+			Connected bool
+			Target    *string
+			TargetKey *string
+			Choices   []struct{ ID, Label string }
+		}
+	}
+	_, _, body := a.get(t, "/api/dock/session", "")
+	json.Unmarshal([]byte(body), &s)
+	tw := s.Platforms["twitch"]
+	// no replyTo saved: the first source was the only one when it was added,
+	// so it's pinned; both are offered
+	if !tw.Connected || *tw.Target != "#examplechannel" || len(tw.Choices) != 2 || tw.Choices[1].Label != "#second" {
+		t.Fatalf("before: %s", body)
+	}
+	headers := map[string]string{"origin": fmt.Sprintf("http://127.0.0.1:%d", a.port), "x-dock-token": a.token(t)}
+	code, out := a.do(t, "POST", "/api/dock/target", headers, fmt.Sprintf(`{"platform":"twitch","source":%q}`, tw.Choices[1].ID))
+	if code != 200 || !strings.Contains(out, `"target":"#second"`) || !strings.Contains(out, `"targetKey":"`+tw.Choices[1].ID+`:second"`) {
+		t.Fatalf("pick: %d %s", code, out)
+	}
+	cfg, _ := os.ReadFile(filepath.Join(a.dir, "config.json"))
+	if !strings.Contains(string(cfg), "\"replyTo\": {\n    \"twitch\": \"https://twitch.tv/second\"\n  }") {
+		t.Fatalf("config.json:\n%s", cfg)
+	}
+	if code, out := a.do(t, "POST", "/api/dock/target", headers, `{"platform":"twitch","source":"nope"}`); code != 400 || !strings.Contains(out, "bad_target") {
+		t.Errorf("bad pick: %d %s", code, out)
+	}
+}
+
+// The second copy's session says sending is off, and why, on each platform.
+func TestSecondCopySessionSaysWhy(t *testing.T) {
+	dir := t.TempDir()
+	first := startIn(t, dir, "DUPLEXCHAT_DIR="+dir)
+	second := startIn(t, dir, "DUPLEXCHAT_DIR="+dir)
+	_, _, body := second.get(t, "/api/dock/session", "")
+	want := fmt.Sprintf(`"detail":"Sending is off in this copy: another copy of the server (process %d) is already running`, first.cmd.Process.Pid)
+	if strings.Count(body, want) != 2 || strings.Contains(body, `"available":true`) {
+		t.Fatalf("second session: %s", body)
+	}
+	if _, _, body := first.get(t, "/api/dock/session", ""); strings.Contains(body, "Sending is off") {
+		t.Fatalf("first session: %s", body)
+	}
+}

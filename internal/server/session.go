@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/IamMrCupp/duplexchat/internal/gate"
+	"github.com/IamMrCupp/duplexchat/internal/targets"
 )
 
 // MaxText is the longest reply the dock may send (multichat MAX_TEXT).
@@ -14,32 +15,23 @@ const MaxText = 500
 // PlatformStatus is one platform's entry in the session's platforms, in
 // multichat's key order (lib/sendapi.js platformStatus).
 type PlatformStatus struct {
-	Available  bool    `json:"available"`
-	Configured bool    `json:"configured"`
-	SignedIn   bool    `json:"signedIn"`
-	As         *string `json:"as"`
-	Detail     string  `json:"detail"`
-	Connected  bool    `json:"connected"`
-	Target     *string `json:"target"`
-	TargetKey  *string `json:"targetKey"`
-	Choices    []any   `json:"choices"`
-	MaxLength  int     `json:"maxLength"`
-	Warning    string  `json:"warning"`
+	Available  bool             `json:"available"`
+	Configured bool             `json:"configured"`
+	SignedIn   bool             `json:"signedIn"`
+	As         *string          `json:"as"`
+	Detail     string           `json:"detail"`
+	Connected  bool             `json:"connected"`
+	Target     *string          `json:"target"`
+	TargetKey  *string          `json:"targetKey"`
+	Choices    []targets.Choice `json:"choices"`
+	MaxLength  int              `json:"maxLength"`
+	Warning    string           `json:"warning"`
 }
 
 // Platforms is the session's platforms, Twitch first.
 type Platforms struct {
 	Twitch  PlatformStatus `json:"twitch"`
 	YouTube PlatformStatus `json:"youtube"`
-}
-
-// NoSending is what multichat reports with no senders: nothing signed in,
-// nothing to reply to. Sending replaces it (#9–#12).
-func NoSending() Platforms {
-	off := func(label string) PlatformStatus {
-		return PlatformStatus{Detail: "Sending to " + label + " isn't in this build.", Choices: []any{}, MaxLength: MaxText}
-	}
-	return Platforms{Twitch: off("Twitch"), YouTube: off("YouTube")}
 }
 
 // apiJSON is the send API's json(): no caching, no sniffing.
@@ -90,10 +82,7 @@ func (s *Server) session(w http.ResponseWriter, r *http.Request) {
 	if !s.gated(w, r, gate.IfPresent, false) {
 		return
 	}
-	platforms := NoSending()
-	if s.opts.Platforms != nil {
-		platforms = s.opts.Platforms()
-	}
+	platforms := s.platformStatus()
 	apiJSON(w, http.StatusOK, struct {
 		Token     string    `json:"token"`
 		MaxLength int       `json:"maxLength"`

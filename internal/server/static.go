@@ -3,6 +3,7 @@
 package server
 
 import (
+	"github.com/IamMrCupp/duplexchat/internal/targets"
 	"io/fs"
 	"net/http"
 	"path"
@@ -54,11 +55,16 @@ type Options struct {
 	FontsDir string            // the user's fonts/ folder; "" → no fonts
 	Log      func(string, any) // error.log; nil → ignored
 
-	Port      int              // the port actually bound; Host and Origin must name it
-	Token     string           // the per-process session token
-	Platforms func() Platforms // the session's platforms; nil → NoSending
-	Peer      *string          // test seam for the gate: the peer address
-	Panel     Panel            // the panel's buttons; nil → their routes 404
+	Port  int     // the port actually bound; Host and Origin must name it
+	Token string  // the per-process session token
+	Peer  *string // test seam for the gate: the peer address
+	Panel Panel   // the panel's buttons; nil → their routes 404
+
+	// Sending. With none of it set, every platform reads as not in this build.
+	Disabled  func() string                        // why sending is off in this copy, or ""
+	Targets   func() map[string]targets.Target     // where replies go; nil → nowhere
+	SetTarget func(platform, sourceID string) bool // a pick from the dock
+	Senders   map[string]Sender                    // by platform
 }
 
 // Server answers HTTP requests.
@@ -79,6 +85,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer s.recover(rw)
 	if r.Method == http.MethodGet && r.URL.Path == "/api/dock/session" {
 		s.session(rw, r)
+		return
+	}
+	if r.Method == http.MethodPost && r.URL.Path == "/api/dock/target" {
+		s.dockTarget(rw, r)
 		return
 	}
 	if r.Method == http.MethodGet && s.get(rw, r) {

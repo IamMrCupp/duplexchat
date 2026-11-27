@@ -11,12 +11,19 @@ import (
 
 	"github.com/IamMrCupp/duplexchat/internal/hub"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
+	"github.com/IamMrCupp/duplexchat/internal/targets"
 )
 
 // Adapter is a running chat reader.
 type Adapter interface {
 	Start()
 	Stop()
+}
+
+// Targeted is a reader that knows where its chat is: the Twitch login it
+// joined, the YouTube broadcast and its owner. Reply targets read it.
+type Targeted interface {
+	Target() targets.Reader
 }
 
 // Handlers is what a reader reports through.
@@ -87,6 +94,31 @@ func (a *App) stop(id string) {
 	if ad != nil {
 		ad.Stop()
 	}
+}
+
+// readerInfo is what source id's reader knows, if it's running and says.
+func (a *App) readerInfo(id string) targets.Reader {
+	a.mu.Lock()
+	ad := a.adapters[id]
+	a.mu.Unlock()
+	if t, ok := ad.(Targeted); ok {
+		return t.Target()
+	}
+	return targets.Reader{}
+}
+
+// Targets is where replies go, per platform (lib/targets.js get()).
+func (a *App) Targets() map[string]targets.Target { return a.Store.Targets(a.readerInfo) }
+
+// SetTarget is an explicit pick from the dock. On a change the choice is
+// saved and the pages are told, as multichat's onChange does.
+func (a *App) SetTarget(platform, sourceID string) bool {
+	if !a.Store.SetTarget(platform, sourceID) {
+		return false
+	}
+	a.Store.Save()
+	a.status()
+	return true
 }
 
 // Start runs every saved source (startup).

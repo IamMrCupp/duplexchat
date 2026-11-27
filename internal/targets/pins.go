@@ -1,7 +1,8 @@
 // Package targets decides which chat a reply goes to: one pinned source per
-// platform (multichat lib/targets.js at 29a9d2c). This is the pin half —
-// enough to write replyTo into config.json as multichat does. The dock's
-// view and explicit choices land with sending (#9).
+// platform (multichat lib/targets.js at 29a9d2c). A source is pinned
+// automatically only when it's the sole source of its platform at the moment
+// it's added; after that the pin moves only when someone picks another
+// source, and removing the pinned source leaves the platform with no target.
 package targets
 
 import "github.com/IamMrCupp/duplexchat/internal/config"
@@ -9,9 +10,13 @@ import "github.com/IamMrCupp/duplexchat/internal/config"
 // Platforms in the order multichat writes them.
 var Platforms = []string{"twitch", "youtube"}
 
-// Source is what pinning needs to know about a source.
+// Source is what the targets need to know about a source. Pinning uses the
+// first three; the dock's view also shows the channel and what the reader
+// knows.
 type Source struct {
 	ID, URL, Platform string
+	Channel           string
+	Reader            Reader
 }
 
 // Pins holds the pinned source ID per platform.
