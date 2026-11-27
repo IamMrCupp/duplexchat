@@ -19,6 +19,7 @@ Node is needed only here. It isn't used at runtime or in CI.
 | `twitch.js` | `TwitchSource` (fake socket), `parseLine`, `unescapeTag`, `rolesFromBadges`, `channelFromUrl`, the emote loaders (fake `fetch`) | `testdata/twitch/` | `testdata/twitch/golden/` |
 | `youtube.js` | `YouTubeSource` through resolve → init → poll (fake `fetch`), `_handleActions`, the page and run helpers | `testdata/youtube/` | `testdata/youtube/golden/` |
 | `config.js` | `server.js`'s load block, `detectPlatform`, `addSource`, `removeSource`, `saveConfig`, with the real `lib/targets.js` and `cleanPresets` | `testdata/config/cases/` | `testdata/config/golden/` |
+| `secrets.js` | `lib/tokens.js`'s `SecretStore`: a run of `set()` calls on a starting file, then `get()` | `testdata/secrets/cases/` | `testdata/secrets/golden/` |
 
 ## Reading the goldens
 

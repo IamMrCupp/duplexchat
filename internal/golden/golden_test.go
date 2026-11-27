@@ -38,6 +38,7 @@ func TestInputsMatchGoldens(t *testing.T) {
 		{"youtube/flows", ".json", "youtube/golden/flows"},
 		{"youtube/actions", ".json", "youtube/golden/actions"},
 		{"config/cases", ".json", "config/golden"},
+		{"secrets/cases", ".json", "secrets/golden"},
 	}
 	for _, p := range pairs {
 		ins := names(t, p.in, p.ext)

@@ -15,6 +15,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"sync"
 	"testing"
@@ -488,5 +489,34 @@ func TestPanelAddRemoveSaves(t *testing.T) {
 	saved, _ = os.ReadFile(filepath.Join(a.dir, "config.json"))
 	if strings.Contains(string(saved), "examplechannel") {
 		t.Errorf("config.json after delete:\n%s", saved)
+	}
+}
+
+// Two copies on one folder: the second says sending is off and names the
+// first; the first gives the lock back when it's stopped.
+func TestSecondCopyDoesNotSend(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("needs SIGINT")
+	}
+	dir := t.TempDir()
+	first := startIn(t, dir, "DUPLEXCHAT_DIR="+dir)
+	if strings.Contains(first.out.String(), "Sending is off") {
+		t.Fatalf("first copy can't send:\n%s", first.out.String())
+	}
+	second := startIn(t, dir, "DUPLEXCHAT_DIR="+dir)
+	want := fmt.Sprintf("  Sending is off in this copy: another copy of the server (process %d) is already running from this folder and owns sending. Use that one's dock, or stop it.\n", first.cmd.Process.Pid)
+	if !strings.Contains(second.out.String(), want) {
+		t.Fatalf("second banner:\n%s", second.out.String())
+	}
+	second.cmd.Process.Signal(os.Interrupt)
+	second.cmd.Wait()
+	lock := filepath.Join(dir, "sending.lock")
+	if b, _ := os.ReadFile(lock); string(b) != fmt.Sprint(first.cmd.Process.Pid) {
+		t.Fatalf("the second copy touched the lock: %q", b)
+	}
+	first.cmd.Process.Signal(os.Interrupt)
+	first.cmd.Wait()
+	if _, err := os.Stat(lock); !os.IsNotExist(err) {
+		t.Fatal("lock left behind after a clean stop")
 	}
 }
