@@ -20,8 +20,6 @@ var localURL = regexp.MustCompile("['\"`](/(?:api|fonts|events|overlay|dock|setu
 // notYet are routes the pages call that arrive with later issues. When one
 // lands, move it out of here and the test checks it's really served.
 var notYet = map[string]string{
-	"/api/setup/":                "#13",
-	"/api/setup/state":           "#13",
 	"/api/setup/twitch/signin":   "#11",
 	"/api/setup/twitch/signout":  "#11",
 	"/api/setup/twitch/cancel":   "#11",
@@ -46,7 +44,12 @@ var gated = map[string]string{
 	"/api/clear":       "POST",
 	"/api/dock/target": "POST",
 	"/api/send":        "POST",
+	"/api/setup/state": "GET",
+	"/api/setup/":      "POST", // + <platform>/<action>
 }
+
+// suffix completes a prefix route the pages build on.
+var suffix = map[string]string{"/api/sources/": "abcd1234", "/api/setup/": "twitch/client"}
 
 func referenced(t *testing.T) map[string][]string {
 	t.Helper()
@@ -87,9 +90,7 @@ func TestPagesOnlyUseKnownRoutes(t *testing.T) {
 			continue
 		case gated[p] != "":
 			path := p
-			if strings.HasSuffix(p, "/") {
-				path += "abcd1234"
-			}
+			path += suffix[p]
 			if code, body := a.do(t, gated[p], path, map[string]string{}, ""); code != 403 {
 				t.Errorf("%s %s (used by %v): %d %s, want 403 from the gate", gated[p], path, refs[p], code, body)
 			}

@@ -611,3 +611,51 @@ func TestSendNullBodyIs400(t *testing.T) {
 		t.Errorf("dock-logic.js: %d", code)
 	}
 }
+
+// Source cases 7–9, the parts that don't need a platform's sender (those
+// come with #11 and #12): /setup's state is gated and says why a second copy
+// won't send, a second copy changes nothing, nothing writes secrets.json
+// before a sign-in, and a copy that doesn't own sending leaves / to the panel
+// even for a redirect-shaped visit.
+func TestSetupFromBinary(t *testing.T) {
+	dir := t.TempDir()
+	first := startIn(t, dir, "DUPLEXCHAT_DIR="+dir)
+	second := startIn(t, dir, "DUPLEXCHAT_DIR="+dir)
+	tok1, tok2 := first.token(t), second.token(t)
+
+	code, body := first.do(t, "GET", "/api/setup/state", map[string]string{"x-dock-token": tok1}, "")
+	var st struct {
+		Platforms map[string]map[string]any
+		Notices   []string
+	}
+	json.Unmarshal([]byte(body), &st)
+	if code != 200 || len(st.Platforms) != 2 || st.Notices == nil || len(st.Notices) != 0 {
+		t.Fatalf("first copy's state: %d %s", code, body)
+	}
+	if code, body := first.do(t, "GET", "/api/setup/state", nil, ""); code != 403 || !strings.Contains(body, `"no_token"`) {
+		t.Errorf("state without a token: %d %s", code, body)
+	}
+	origin1 := fmt.Sprintf("http://127.0.0.1:%d", first.port)
+	if code, _ := first.do(t, "POST", "/api/setup/twitch/client", map[string]string{"origin": origin1, "x-dock-token": "wrong"}, `{"clientId":"x"}`); code != 403 {
+		t.Errorf("wrong token: %d", code)
+	}
+
+	code, body = second.do(t, "GET", "/api/setup/state", map[string]string{"x-dock-token": tok2}, "")
+	json.Unmarshal([]byte(body), &st)
+	if code != 200 || len(st.Notices) != 1 || !strings.HasPrefix(st.Notices[0], "Sending is off in this copy: another copy of the server") {
+		t.Fatalf("second copy's state: %d %s", code, body)
+	}
+	origin2 := fmt.Sprintf("http://127.0.0.1:%d", second.port)
+	for _, p := range []string{"twitch", "youtube"} {
+		code, body := second.do(t, "POST", "/api/setup/"+p+"/client", map[string]string{"origin": origin2, "x-dock-token": tok2}, `{"clientId":"fakeclientid0123456789abcdefgh"}`)
+		if code != 409 || !strings.Contains(body, `"code":"sending_disabled"`) {
+			t.Errorf("second copy, %s client: %d %s", p, code, body)
+		}
+	}
+	if code, _, body := second.get(t, "/?state=made-up&code=made-up", ""); code != 200 || !strings.Contains(body, `id="rows"`) {
+		t.Errorf("second copy's / isn't the panel: %d", code)
+	}
+	if _, err := os.Stat(filepath.Join(dir, "secrets.json")); !os.IsNotExist(err) {
+		t.Errorf("secrets.json exists before any sign-in: %v", err)
+	}
+}

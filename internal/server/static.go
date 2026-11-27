@@ -65,6 +65,7 @@ type Options struct {
 	Targets   func() map[string]targets.Target     // where replies go; nil → nowhere
 	SetTarget func(platform, sourceID string) bool // a pick from the dock
 	Senders   map[string]Sender                    // by platform
+	Notices   func() []string                      // for /setup: what the owner should see (never secrets)
 }
 
 // Server answers HTTP requests.
@@ -93,6 +94,18 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	if r.Method == http.MethodPost && r.URL.Path == "/api/dock/target" {
 		s.dockTarget(rw, r)
+		return
+	}
+	if r.Method == http.MethodGet && r.URL.Path == "/api/setup/state" {
+		s.setupState(rw, r)
+		return
+	}
+	if m := setupPath.FindStringSubmatch(r.URL.Path); m != nil && r.Method == http.MethodPost {
+		s.setupAction(rw, r, m[1], m[2])
+		return
+	}
+	// a sign-in redirect is claimed before the panel gets /
+	if s.callback(rw, r) {
 		return
 	}
 	if r.Method == http.MethodGet && s.get(rw, r) {

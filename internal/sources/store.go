@@ -119,6 +119,24 @@ func (s *Store) SetTarget(platform, sourceID string) bool {
 	return s.pins.Set(platform, sourceID)
 }
 
+// TwitchClientID is the Twitch client ID in config.json, or "" when there's
+// none or it isn't a string (server.js getClientId).
+func (s *Store) TwitchClientID() string {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	id, _ := s.cfg.TwitchClientID.(string)
+	return id
+}
+
+// SetTwitchClientID replaces it and saves config.json through the same
+// writer as everything else, so a later save keeps it ("" drops the key).
+func (s *Store) SetTwitchClientID(id string) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.cfg.TwitchClientID = id
+	s.save()
+}
+
 // Targets is where replies go, per platform. reader tells what a source's
 // running reader knows; it's called without the store's lock held.
 func (s *Store) Targets(reader func(id string) targets.Reader) map[string]targets.Target {

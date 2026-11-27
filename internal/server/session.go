@@ -42,11 +42,16 @@ func apiJSON(w http.ResponseWriter, status int, v any) {
 	if err := enc.Encode(v); err != nil {
 		panic(err)
 	}
+	apiRaw(w, status, bytes.TrimSuffix(buf.Bytes(), []byte("\n")))
+}
+
+// apiRaw is apiJSON for a body that's already JSON.
+func apiRaw(w http.ResponseWriter, status int, body []byte) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.WriteHeader(status)
-	w.Write(bytes.TrimSuffix(buf.Bytes(), []byte("\n")))
+	w.Write(body)
 }
 
 // gated runs the gate; on refusal it answers 403 {error, code} and returns
