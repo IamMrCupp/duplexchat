@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/IamMrCupp/duplexchat/compare/v0.13.0...v0.14.0) (2026-11-27)
+
+
+### Features
+
+* **setup:** setup state, actions and the sign-in callback (refs [#13](https://github.com/IamMrCupp/duplexchat/issues/13)) ([23d0469](https://github.com/IamMrCupp/duplexchat/commit/23d04698237179987fec99ef6c10129b9c2a3180))
+
 ## [0.13.0](https://github.com/IamMrCupp/duplexchat/compare/v0.12.0...v0.13.0) (2026-11-27)
 
 
