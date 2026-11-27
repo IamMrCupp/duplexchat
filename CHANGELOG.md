@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/IamMrCupp/duplexchat/compare/v0.9.0...v0.10.0) (2026-11-27)
+
+
+### Features
+
+* **auth:** secrets.json store and sending lock (refs [#9](https://github.com/IamMrCupp/duplexchat/issues/9)) ([b5cf2f2](https://github.com/IamMrCupp/duplexchat/commit/b5cf2f2d83790aa5468f7905269b69c69b656cfa))
+
 ## [0.9.0](https://github.com/IamMrCupp/duplexchat/compare/v0.8.0...v0.9.0) (2026-11-26)
 
 
