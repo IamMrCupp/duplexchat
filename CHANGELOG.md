@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/IamMrCupp/duplexchat/compare/v0.11.0...v0.12.0) (2026-11-27)
+
+
+### Features
+
+* **auth:** reply targets and platform status for the dock ([#9](https://github.com/IamMrCupp/duplexchat/issues/9)) ([69ec532](https://github.com/IamMrCupp/duplexchat/commit/69ec532d4df4dcb22a810728da74cf500be3439e))
+
 ## [0.11.0](https://github.com/IamMrCupp/duplexchat/compare/v0.10.0...v0.11.0) (2026-11-27)
 
 
