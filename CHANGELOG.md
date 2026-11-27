@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://github.com/IamMrCupp/duplexchat/compare/v0.12.0...v0.13.0) (2026-11-27)
+
+
+### Features
+
+* **dock:** send replies through the gate ([#10](https://github.com/IamMrCupp/duplexchat/issues/10)) ([e7877c3](https://github.com/IamMrCupp/duplexchat/commit/e7877c35f2a013d4df669d5ef54e5b0ba544be50))
+
 ## [0.12.0](https://github.com/IamMrCupp/duplexchat/compare/v0.11.0...v0.12.0) (2026-11-27)
 
 
