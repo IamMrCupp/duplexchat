@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.11.0](https://github.com/IamMrCupp/duplexchat/compare/v0.10.0...v0.11.0) (2026-11-27)
+
+
+### Features
+
+* **auth:** token session with single-use refresh and one 401 retry (refs [#9](https://github.com/IamMrCupp/duplexchat/issues/9)) ([1968518](https://github.com/IamMrCupp/duplexchat/commit/19685189dc8ca1991facfa3f0cee5efbcc019dbd))
+
+
+### Bug Fixes
+
+* **auth:** make the secrets store safe for concurrent use (refs [#9](https://github.com/IamMrCupp/duplexchat/issues/9)) ([f75a429](https://github.com/IamMrCupp/duplexchat/commit/f75a4293fdddd617009b30a656de6819214bcfce))
+
 ## [0.10.0](https://github.com/IamMrCupp/duplexchat/compare/v0.9.0...v0.10.0) (2026-11-27)
 
 
