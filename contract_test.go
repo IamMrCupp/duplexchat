@@ -21,7 +21,6 @@ var localURL = regexp.MustCompile("['\"`](/(?:api|fonts|events|overlay|dock|setu
 // lands, move it out of here and the test checks it's really served.
 var notYet = map[string]string{
 	"/api/send":                  "#10",
-	"/api/dock/target":           "#9",
 	"/api/setup/":                "#13",
 	"/api/setup/state":           "#13",
 	"/api/setup/twitch/signin":   "#11",
@@ -42,10 +41,11 @@ var notYet = map[string]string{
 // gated are the panel's writes: without the session headers they're a 403,
 // which proves the route exists.
 var gated = map[string]string{
-	"/api/sources":  "POST",
-	"/api/sources/": "DELETE", // + <id>, and <id>/reconnect
-	"/api/test":     "POST",
-	"/api/clear":    "POST",
+	"/api/sources":     "POST",
+	"/api/sources/":    "DELETE", // + <id>, and <id>/reconnect
+	"/api/test":        "POST",
+	"/api/clear":       "POST",
+	"/api/dock/target": "POST",
 }
 
 func referenced(t *testing.T) map[string][]string {

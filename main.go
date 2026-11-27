@@ -95,6 +95,14 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 		Events:   feed,
 		FontsDir: fontsDir,
 		Log:      log.Write,
+		Disabled: func() string {
+			if sendLock.Held {
+				return ""
+			}
+			return sendLock.Reason
+		},
+		Targets:   chats.Targets,
+		SetTarget: chats.SetTarget,
 		State: func() server.State {
 			return server.State{
 				Version: version, Host: cfg.Host, Port: actual,

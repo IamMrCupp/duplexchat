@@ -18,6 +18,7 @@ import (
 
 	"github.com/IamMrCupp/duplexchat/internal/app"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
+	"github.com/IamMrCupp/duplexchat/internal/targets"
 )
 
 // Where Twitch chat is.
@@ -403,3 +404,6 @@ func (r *Reader) usernotice(m Line) {
 		})
 	}
 }
+
+// Target is where this chat is, for reply targets.
+func (r *Reader) Target() targets.Reader { return targets.Reader{Channel: r.Channel} }

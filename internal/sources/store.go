@@ -105,9 +105,33 @@ func randomID() string {
 func (s *Store) targetList() []targets.Source {
 	out := make([]targets.Source, len(s.entries))
 	for i, e := range s.entries {
-		out[i] = targets.Source{ID: e.ID, URL: e.URL, Platform: e.Platform}
+		out[i] = targets.Source{ID: e.ID, URL: e.URL, Platform: e.Platform, Channel: e.Channel}
 	}
 	return out
+}
+
+// SetTarget pins sourceID as platform's reply target (an explicit pick from
+// the dock). It's false for an unknown platform or a source of another
+// platform. Saving and telling the pages is the caller's.
+func (s *Store) SetTarget(platform, sourceID string) bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.pins.Set(platform, sourceID)
+}
+
+// Targets is where replies go, per platform. reader tells what a source's
+// running reader knows; it's called without the store's lock held.
+func (s *Store) Targets(reader func(id string) targets.Reader) map[string]targets.Target {
+	s.mu.Lock()
+	list := s.targetList()
+	pins := s.pins.Snapshot()
+	s.mu.Unlock()
+	if reader != nil {
+		for i := range list {
+			list[i].Reader = reader(list[i].ID)
+		}
+	}
+	return targets.View(list, pins)
 }
 
 // List returns the sources in the order they were added.

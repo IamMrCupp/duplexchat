@@ -23,6 +23,7 @@ import (
 
 	"github.com/IamMrCupp/duplexchat/internal/app"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
+	"github.com/IamMrCupp/duplexchat/internal/targets"
 )
 
 // What the requests say they are (multichat's values).
@@ -607,4 +608,12 @@ func parseItem(item any) ([]app.Field, string) {
 			{Key: "parts", Value: []app.Part{}}, {Key: "system", Value: runsToText(get(r, "message", "runs"))}}, id
 	}
 	return nil, ""
+}
+
+// Target is the broadcast this chat is on and whose it is, for reply
+// targets. Both are empty until the reader has found them.
+func (r *Reader) Target() targets.Reader {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return targets.Reader{VideoID: r.VideoID, OwnerChannelID: r.OwnerChannelID}
 }
