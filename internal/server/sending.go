@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -35,6 +36,9 @@ type SenderStatus struct {
 type Sender interface {
 	Status() SenderStatus
 	MaxLength() int // the platform's own message limit; 0 when it has none
+	// Send posts text to the target's chat. An error (or a panic) is logged
+	// and the dock is told only that the platform couldn't be reached.
+	Send(ctx context.Context, text string, t targets.Target) (SendResult, error)
 }
 
 func (s *Server) targets() map[string]targets.Target {

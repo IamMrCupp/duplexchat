@@ -572,3 +572,42 @@ func TestSecondCopySessionSaysWhy(t *testing.T) {
 		t.Fatalf("first session: %s", body)
 	}
 }
+
+// Source case 2: a gated send that reports honest state. With no sign-in
+// both platforms answer, neither sends; the gate refuses the rest.
+func TestGatedSendReportsHonestState(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	origin := fmt.Sprintf("http://127.0.0.1:%d", a.port)
+	token := a.token(t)
+	send := func(headers map[string]string) (int, string) {
+		return a.do(t, "POST", "/api/send", headers, `{"target":"both","text":"hello"}`)
+	}
+	code, body := send(map[string]string{"origin": origin, "x-dock-token": token})
+	var out struct{ Results map[string]struct{ OK bool } }
+	json.Unmarshal([]byte(body), &out)
+	if code != 200 || len(out.Results) != 2 || out.Results["twitch"].OK || out.Results["youtube"].OK {
+		t.Fatalf("send: %d %s", code, body)
+	}
+	for want, h := range map[string]map[string]string{
+		"no_token":   {"origin": origin},
+		"bad_token":  {"origin": origin, "x-dock-token": "wrong"},
+		"bad_origin": {"origin": "https://evil.example", "x-dock-token": token},
+		"bad_host":   {"origin": origin, "x-dock-token": token, "host": fmt.Sprintf("evil.example:%d", a.port)},
+	} {
+		if code, body := send(h); code != 403 || !strings.Contains(body, `"code":"`+want+`"`) {
+			t.Errorf("%s: %d %s", want, code, body)
+		}
+	}
+}
+
+// Source case 6: a null body is a 400, not a crash.
+func TestSendNullBodyIs400(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	code, body := a.do(t, "POST", "/api/send", map[string]string{"origin": fmt.Sprintf("http://127.0.0.1:%d", a.port), "x-dock-token": a.token(t)}, "null")
+	if code != 400 || !strings.Contains(body, `"code":"bad_request"`) {
+		t.Fatalf("%d %s", code, body)
+	}
+	if code, hdr, js := a.get(t, "/dock-logic.js", ""); code != 200 || !strings.Contains(hdr.Get("Content-Type"), "javascript") || !strings.Contains(js, "DockLogic") {
+		t.Errorf("dock-logic.js: %d", code)
+	}
+}

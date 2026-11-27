@@ -5,23 +5,52 @@ package server
 // those cases arrive with their routes (#10, #13).
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"strings"
+	"sync"
 	"testing"
 	"testing/fstest"
 
 	"github.com/IamMrCupp/duplexchat/internal/targets"
 )
 
-// fakeSender is helpers.js fakeSender: signed in as example_user.
+// fakeSender is helpers.js fakeSender: signed in as example_user, records
+// what it was asked to send and answers however the test says.
 type fakeSender struct {
 	signedIn  bool
 	as, id    string
 	maxLength int
+	reply     func(text string, t targets.Target) (SendResult, error)
+
+	mu   sync.Mutex
+	sent []sent
+}
+
+type sent struct {
+	text   string
+	target targets.Target
+}
+
+func (f *fakeSender) Send(_ context.Context, text string, t targets.Target) (SendResult, error) {
+	f.mu.Lock()
+	f.sent = append(f.sent, sent{text, t})
+	n := len(f.sent)
+	f.mu.Unlock()
+	if f.reply != nil {
+		return f.reply(text, t)
+	}
+	return SendResult{OK: true, ID: fmt.Sprintf("fake-%d", n)}, nil
+}
+
+func (f *fakeSender) count() int {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return len(f.sent)
 }
 
 func newFakeSender() *fakeSender { return &fakeSender{signedIn: true, as: "example_user"} }
@@ -70,7 +99,14 @@ func (a *api) do(method, path string, headers map[string]string, body string) (i
 		r.Header.Set("Content-Type", "application/json")
 	}
 	for k, v := range headers {
-		r.Header.Set(k, v)
+		switch {
+		case k == "Host":
+			r.Host = v
+		case k == "Origin" && v == "":
+			r.Header.Del("Origin") // no Origin at all
+		default:
+			r.Header.Set(k, v)
+		}
 	}
 	rec := httptest.NewRecorder()
 	a.srv.ServeHTTP(rec, r)
@@ -82,6 +118,21 @@ func (a *api) do(method, path string, headers map[string]string, body string) (i
 func (a *api) post(path string, body any, headers map[string]string) (int, map[string]any) {
 	b, _ := json.Marshal(body)
 	return a.do(http.MethodPost, path, headers, string(b))
+}
+
+// send posts to /api/send filling in expect as the dock does (the target
+// keys on show), unless the body has its own.
+func (a *api) send(body map[string]any, headers map[string]string) (int, map[string]any) {
+	if _, ok := body["expect"]; !ok {
+		expect := map[string]any{}
+		for p, t := range a.srv.targets() {
+			if t.Pinned {
+				expect[p] = t.Key
+			}
+		}
+		body["expect"] = expect
+	}
+	return a.post("/api/send", body, headers)
 }
 
 func (a *api) platform(p string) map[string]any {

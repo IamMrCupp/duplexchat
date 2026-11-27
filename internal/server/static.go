@@ -87,6 +87,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.session(rw, r)
 		return
 	}
+	if r.Method == http.MethodPost && r.URL.Path == "/api/send" {
+		s.send(rw, r)
+		return
+	}
 	if r.Method == http.MethodPost && r.URL.Path == "/api/dock/target" {
 		s.dockTarget(rw, r)
 		return
