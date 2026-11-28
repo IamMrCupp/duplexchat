@@ -610,6 +610,14 @@ func parseItem(item any) ([]app.Field, string) {
 	return nil, ""
 }
 
+// InnerTube is the interface key and client version the watch page gave,
+// which the free viewer count reuses.
+func (r *Reader) InnerTube() (apiKey, clientVersion string) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return r.APIKey, r.ClientVersion
+}
+
 // Target is the broadcast this chat is on and whose it is, for reply
 // targets. Both are empty until the reader has found them.
 func (r *Reader) Target() targets.Reader {

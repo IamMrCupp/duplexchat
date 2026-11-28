@@ -56,6 +56,7 @@ type fakeTwitch struct {
 	deny        string
 	asked       string
 	chat, users func(c call) reply
+	streams     func(c call) reply
 	revoked     []string
 	calls       []call
 	// a refresh answer is held until hold is closed; seen is closed when one arrives
@@ -166,6 +167,15 @@ func (f *fakeTwitch) serve(w http.ResponseWriter, r *http.Request) {
 			rep = reply{200, map[string]any{"data": []any{map[string]any{"id": "9001", "login": c.query.Get("login"), "display_name": c.query.Get("login")}}}, nil}
 		default:
 			rep = reply{200, map[string]any{"data": []any{map[string]any{"id": "1001", "login": "example_user", "display_name": "Example_User"}}}, nil}
+		}
+	case "GET /helix/streams":
+		switch {
+		case !f.authed(c):
+			rep = invalid
+		case f.streams != nil:
+			rep = f.streams(c)
+		default:
+			rep = reply{200, map[string]any{"data": []any{map[string]any{"user_login": "examplechannel", "type": "live", "viewer_count": 42, "started_at": "2026-11-20T10:00:00Z"}}}, nil}
 		}
 	case "POST /helix/chat/messages":
 		switch {

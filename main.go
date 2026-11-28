@@ -27,6 +27,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/sources"
 	"github.com/IamMrCupp/duplexchat/internal/twitch"
 	"github.com/IamMrCupp/duplexchat/internal/twitchsend"
+	"github.com/IamMrCupp/duplexchat/internal/viewers"
 	"github.com/IamMrCupp/duplexchat/internal/window"
 	"github.com/IamMrCupp/duplexchat/internal/youtube"
 	"github.com/IamMrCupp/duplexchat/internal/youtubesend"
@@ -82,7 +83,13 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	feed := hub.New(hub.Options{})
+	var counts *viewers.Counts // set below; the feed's first page asks it
+	feed := hub.New(hub.Options{OnFirstClient: func() {
+		// first page in: don't wait for the next tick
+		if counts != nil {
+			go counts.Refresh(context.Background())
+		}
+	}})
 	go feed.Run(ctx)
 	store := sources.NewStore(cfg, cfgPath, sources.Options{Warn: func(s string) { fmt.Fprintln(stderr, s) }})
 	chats := &app.App{Store: store, Hub: feed, Readers: map[string]app.Factory{
@@ -95,13 +102,49 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 	// DUPLEXCHAT_TWITCH_HTTP points sending at another Twitch (tests): both
 	// id.twitch.tv and api.twitch.tv at one origin
 	twitchHTTP := getenv("DUPLEXCHAT_TWITCH_HTTP")
-	senders := map[string]server.Sender{
-		"twitch": twitchsend.New(twitchsend.Options{
-			Store: vault, ClientID: store.TwitchClientID, SetClientID: store.SetTwitchClientID,
-			IDBase: twitchHTTP, APIBase: twitchHTTP,
-		}),
-		"youtube": youtubesend.New(youtubesend.Options{Store: vault, Endpoints: googleEndpoints(getenv("DUPLEXCHAT_GOOGLE_HTTP"))}),
+	// A sign-in or sign-out changes what the count can say: ask again now
+	// instead of leaving the old answer up until the next tick. Nobody
+	// watching, nobody to tell: the first page to connect asks anyway.
+	viewersStale := func() {
+		if counts != nil && feed.Clients() > 0 {
+			go counts.RefreshNow(context.Background())
+		}
 	}
+	twitchSender := twitchsend.New(twitchsend.Options{
+		Store: vault, ClientID: store.TwitchClientID, SetClientID: store.SetTwitchClientID,
+		IDBase: twitchHTTP, APIBase: twitchHTTP, OnAuthChange: viewersStale,
+	})
+	senders := map[string]server.Sender{
+		"twitch": twitchSender,
+		"youtube": youtubesend.New(youtubesend.Options{
+			Store: vault, Endpoints: googleEndpoints(getenv("DUPLEXCHAT_GOOGLE_HTTP")), OnAuthChange: viewersStale,
+		}),
+	}
+
+	// Viewer counts for the overlay's bar: Twitch through the official API
+	// with the dock's sign-in; YouTube through the watch page's own
+	// interface, so no API quota is spent. Only polled while a page is
+	// connected, and never with the tokens in a copy that doesn't own sending.
+	interval := 30 * time.Second
+	if cfg.YouTubeViewers == "api" {
+		interval = 60 * time.Second
+	}
+	youtubeOrigin := getenv("DUPLEXCHAT_YOUTUBE_ORIGIN")
+	counts = viewers.New(viewers.Options{
+		ListSources: chats.ViewerSources,
+		Twitch: func(ctx context.Context, logins []string) (viewers.Twitch, error) {
+			if !sendLock.Held {
+				return viewers.Twitch{State: "signed_out", Note: "Viewer counts for Twitch come from the copy of the server that owns sending."}, nil
+			}
+			return twitchSender.Viewers(ctx, logins)
+		},
+		YouTube: func(ctx context.Context, s viewers.Source) (*viewers.YouTube, error) {
+			return viewers.FetchYouTube(ctx, viewers.FetchOptions{VideoID: s.VideoID, APIKey: s.APIKey, ClientVersion: s.ClientVersion, Origin: youtubeOrigin})
+		},
+		Interval: interval,
+		Active:   func() bool { return feed.Clients() > 0 },
+		OnChange: func(c hub.ViewerCounts) { feed.Viewers(c) },
+	})
 
 	handler := server.New(server.Options{
 		Port:     actual,
@@ -150,6 +193,8 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 
 	served := make(chan error, 1)
 	go func() { served <- srv.Serve(ln) }()
+	counts.Start()
+	defer counts.Stop()
 	select {
 	case err := <-served:
 		if !errors.Is(err, http.ErrServerClosed) {

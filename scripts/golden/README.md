@@ -21,6 +21,7 @@ Node is needed only here. It isn't used at runtime or in CI.
 | `config.js` | `server.js`'s load block, `detectPlatform`, `addSource`, `removeSource`, `saveConfig`, with the real `lib/targets.js` and `cleanPresets` | `testdata/config/cases/` | `testdata/config/golden/` |
 | `secrets.js` | `lib/tokens.js`'s `SecretStore`: a run of `set()` calls on a starting file, then `get()` | `testdata/secrets/cases/` | `testdata/secrets/golden/` |
 | `session.js` | `lib/oauth-session.js`'s `TokenSession` with the real `SecretStore`, against a local token endpoint: each step's refresh request, what `tokens()` returned, and the file after | `testdata/session/cases/` | `testdata/session/golden/` |
+| `viewers.js` | `lib/viewers.js`'s `parseYouTubeViewers`, including the inputs it throws on | `testdata/viewers/cases/parse.json` | `testdata/viewers/golden/parse.json` |
 
 ## Reading the goldens
 

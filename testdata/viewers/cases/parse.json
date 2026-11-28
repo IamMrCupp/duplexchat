@@ -1,0 +1,452 @@
+[
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "viewCount": {
+                "simpleText": "ſcheduled"
+              },
+              "originalViewCount": "5"
+            }
+          }
+        }
+      },
+      {
+        "updateDateTextAction": {
+          "dateText": {
+            "simpleText": "ſcheduled for"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5"
+            }
+          }
+        }
+      },
+      {
+        "updateDateTextAction": {
+          "dateText": {
+            "simpleText": "  Scheduled for x"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5"
+            }
+          }
+        }
+      },
+      {
+        "updateDateTextAction": {
+          "dateText": {
+            "simpleText": "SCHEDULED"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5"
+            }
+          }
+        }
+      },
+      {
+        "updateDateTextAction": {
+          "dateText": {
+            "simpleText": "scheduled_x"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5"
+            }
+          }
+        }
+      },
+      {
+        "updateDateTextAction": {
+          "dateText": {
+            "simpleText": "unscheduled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5",
+              "viewCount": {
+                "simpleText": "WAITING"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5",
+              "viewCount": {
+                "simpleText": "waiting_list"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5",
+              "viewCount": {
+                "simpleText": "éwaitingé"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5",
+              "viewCount": {
+                "runs": [
+                  {
+                    "text": "3 "
+                  },
+                  {
+                    "text": "waiting"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "5",
+              "viewCount": {
+                "runs": [
+                  {
+                    "text": "3 "
+                  },
+                  {},
+                  {
+                    "text": null
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": ""
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": " 12 "
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "0x1A"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "1e3"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": -5
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": 2.5
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": 3.5
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": -0.5
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": 0.49999999999999994
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "Infinity",
+              "viewCount": {
+                "simpleText": "1 234 567 watching"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "viewCount": {
+                "simpleText": "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "viewCount": {
+                "simpleText": 12345
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": 1,
+              "originalViewCount": [
+                7
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": "yes",
+              "originalViewCount": true
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": 0,
+              "originalViewCount": "5"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "actions": "ab"
+  },
+  {
+    "actions": [
+      {
+        "updateViewershipAction": {
+          "viewCount": {
+            "videoViewCountRenderer": {
+              "isLive": true,
+              "originalViewCount": "1"
+            }
+          }
+        }
+      }
+    ],
+    "updateViewershipAction": {}
+  },
+  [
+    1,
+    2
+  ],
+  "str"
+]
