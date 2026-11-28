@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/IamMrCupp/duplexchat/compare/v0.18.0...v0.19.0) (2026-11-28)
+
+
+### Features
+
+* **info:** stream info API and presets (refs [#17](https://github.com/IamMrCupp/duplexchat/issues/17)) ([2704cf6](https://github.com/IamMrCupp/duplexchat/commit/2704cf6e8815e4b192b6277c6b7d65488f3b2bb4))
+
 ## [0.18.0](https://github.com/IamMrCupp/duplexchat/compare/v0.17.0...v0.18.0) (2026-11-28)
 
 
