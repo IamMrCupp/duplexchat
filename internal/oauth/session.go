@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"math"
 	"net/http"
-	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -224,21 +222,8 @@ func (s *Session) Authorized(ctx context.Context, call func(t *jsjson.Object) (R
 
 // truthy is JavaScript truthiness of o[k].
 func truthy(o *jsjson.Object, k string) bool {
-	v, ok := o.Get(k)
-	if !ok {
-		return false
-	}
-	switch t := v.(type) {
-	case nil:
-		return false
-	case bool:
-		return t
-	case float64:
-		return t != 0 && !math.IsNaN(t)
-	case string:
-		return t != ""
-	}
-	return true
+	v, _ := o.Get(k)
+	return jsjson.Truthy(v)
 }
 
 // same is o[k] === p[k] for the values a secrets file holds.
@@ -253,33 +238,4 @@ func same(o, p *jsjson.Object, k string) bool {
 }
 
 // number is Number(v) for a JSON value; present false is undefined (NaN).
-func number(v any, present bool) float64 {
-	if !present {
-		return math.NaN()
-	}
-	switch t := v.(type) {
-	case nil:
-		return 0
-	case bool:
-		if t {
-			return 1
-		}
-		return 0
-	case float64:
-		return t
-	case string:
-		s := strings.TrimSpace(t)
-		if s == "" {
-			return 0
-		}
-		if strings.ContainsAny(s, "_xXpPnN") && s != "Infinity" && s != "-Infinity" && s != "+Infinity" {
-			return math.NaN()
-		}
-		f, err := strconv.ParseFloat(s, 64)
-		if err != nil {
-			return math.NaN()
-		}
-		return f
-	}
-	return math.NaN()
-}
+func number(v any, present bool) float64 { return jsjson.ToNumber(v, present) }

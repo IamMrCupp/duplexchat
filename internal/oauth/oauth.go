@@ -123,3 +123,22 @@ func PostForm(ctx context.Context, client *http.Client, url string, params []Par
 	req.Header.Set("content-type", "application/x-www-form-urlencoded")
 	return Fetch(ctx, client, req, timeout)
 }
+
+// EncodeURIComponent is JavaScript's: everything but ASCII letters, digits
+// and -_.!~*'() is percent-encoded as UTF-8.
+func EncodeURIComponent(s string) string {
+	const hex = "0123456789ABCDEF"
+	var b strings.Builder
+	for _, c := range []byte(strings.ToValidUTF8(s, "�")) {
+		switch {
+		case c >= 'a' && c <= 'z', c >= 'A' && c <= 'Z', c >= '0' && c <= '9',
+			strings.IndexByte("-_.!~*'()", c) >= 0:
+			b.WriteByte(c)
+		default:
+			b.WriteByte('%')
+			b.WriteByte(hex[c>>4])
+			b.WriteByte(hex[c&0xf])
+		}
+	}
+	return b.String()
+}

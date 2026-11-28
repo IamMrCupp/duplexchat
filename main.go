@@ -26,6 +26,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
 	"github.com/IamMrCupp/duplexchat/internal/twitch"
+	"github.com/IamMrCupp/duplexchat/internal/twitchsend"
 	"github.com/IamMrCupp/duplexchat/internal/window"
 	"github.com/IamMrCupp/duplexchat/internal/youtube"
 )
@@ -90,6 +91,16 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 		"youtube": youtube.Factory(getenv("DUPLEXCHAT_YOUTUBE_ORIGIN")),
 	}}
 
+	// DUPLEXCHAT_TWITCH_HTTP points sending at another Twitch (tests): both
+	// id.twitch.tv and api.twitch.tv at one origin
+	twitchHTTP := getenv("DUPLEXCHAT_TWITCH_HTTP")
+	senders := map[string]server.Sender{
+		"twitch": twitchsend.New(twitchsend.Options{
+			Store: vault, ClientID: store.TwitchClientID, SetClientID: store.SetTwitchClientID,
+			IDBase: twitchHTTP, APIBase: twitchHTTP,
+		}),
+	}
+
 	handler := server.New(server.Options{
 		Port:     actual,
 		Token:    gate.NewToken(),
@@ -107,6 +118,7 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 		Targets:   chats.Targets,
 		SetTarget: chats.SetTarget,
 		Notices:   func() []string { return []string{vault.Problem()} },
+		Senders:   senders,
 		State: func() server.State {
 			return server.State{
 				Version: version, Host: cfg.Host, Port: actual,
