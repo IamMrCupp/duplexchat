@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/IamMrCupp/duplexchat/compare/v0.14.0...v0.15.0) (2026-11-28)
+
+
+### Features
+
+* **twitch:** device-code sign-in and sending ([#11](https://github.com/IamMrCupp/duplexchat/issues/11)) ([7e8b73f](https://github.com/IamMrCupp/duplexchat/commit/7e8b73f3ef10e15c060320504b69fedb63b0a0f1))
+
 ## [0.14.0](https://github.com/IamMrCupp/duplexchat/compare/v0.13.0...v0.14.0) (2026-11-27)
 
 
