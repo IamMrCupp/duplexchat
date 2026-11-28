@@ -68,10 +68,16 @@ type fakeTwitch struct {
 	grantHold, grantSeen chan struct{}
 	// device scripts POST /oauth2/device
 	device func() reply
+	// the signed-in user's channel, for stream info
+	channel map[string]any
+	patch   func(c call) reply
+	search  func(c call) reply
+	patches []call
 }
 
 func newFake(t *testing.T, pendingPolls int) *fakeTwitch {
-	f := &fakeTwitch{pendingLeft: pendingPolls, asked: "user:write:chat"}
+	f := &fakeTwitch{pendingLeft: pendingPolls, asked: "user:write:chat",
+		channel: map[string]any{"broadcaster_id": "1001", "broadcaster_login": "example_user", "broadcaster_name": "Example_User", "game_id": "100", "game_name": "Old Category", "title": "Old title", "tags": []any{"old"}}}
 	f.srv = httptest.NewServer(http.HandlerFunc(f.serve))
 	t.Cleanup(f.srv.Close)
 	return f
@@ -185,6 +191,42 @@ func (f *fakeTwitch) serve(w http.ResponseWriter, r *http.Request) {
 			rep = f.chat(c)
 		default:
 			rep = reply{200, map[string]any{"data": []any{map[string]any{"message_id": "fake-msg-1", "is_sent": true, "drop_reason": nil}}}, nil}
+		}
+	case "GET /helix/channels":
+		switch {
+		case !f.authed(c):
+			rep = invalid
+		case c.query.Get("broadcaster_id") == f.channel["broadcaster_id"]:
+			rep = reply{200, map[string]any{"data": []any{f.channel}}, nil}
+		default:
+			rep = reply{200, map[string]any{"data": []any{}}, nil}
+		}
+	case "PATCH /helix/channels":
+		switch {
+		case !f.authed(c):
+			rep = invalid
+		default:
+			f.patches = append(f.patches, c)
+			switch {
+			case f.patch != nil:
+				rep = f.patch(c)
+			case !strings.Contains(f.asked, "channel:manage:broadcast"):
+				rep = reply{401, map[string]any{"status": 401, "message": "Missing scope: channel:manage:broadcast or user:edit:broadcast"}, nil}
+			default:
+				rep = reply{204, nil, nil}
+			}
+		}
+	case "GET /helix/search/categories":
+		switch {
+		case !f.authed(c):
+			rep = invalid
+		case f.search != nil:
+			rep = f.search(c)
+		default:
+			rep = reply{200, map[string]any{"data": []any{
+				map[string]any{"id": "509670", "name": "Example Category", "box_art_url": "https://static-cdn.jtvnw.net/ttv-boxart/509670-52x72.jpg"},
+				map[string]any{"name": "no id"},
+			}, "pagination": map[string]any{}}, nil}
 		}
 	default:
 		rep = reply{404, map[string]any{"status": 404, "message": "no such fake route"}, nil}
