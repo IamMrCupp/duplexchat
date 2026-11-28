@@ -20,6 +20,10 @@
 // Google has no chat-only scope. Quota costs and the daily reset:
 //
 //	https://developers.google.com/youtube/v3/determine_quota_cost
+//
+// Stream info (title, category, tags) uses the same sign-in and scope, and
+// spends quota only when the info panel is opened, refreshed or saved; see
+// info.go.
 package youtubesend
 
 import (
@@ -72,6 +76,11 @@ const (
 	CostVideosList   = 1
 	CostChannelsList = 1
 	CostDailyDefault = 10000
+
+	CostBroadcastsList   = 1
+	CostBroadcastsUpdate = 1
+	CostVideosUpdate     = 50
+	CostCategoriesList   = 1
 )
 
 var clientIDRE = regexp.MustCompile(`^[A-Za-z0-9._-]{10,200}$`)
@@ -121,6 +130,7 @@ type Sender struct {
 	quotaBlockedUntil float64
 	usedDay           string
 	usedUnits         int
+	categoryList      []any // videoCategories.list, asked once per run; nil until then
 }
 
 type pending struct {
