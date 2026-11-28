@@ -1,0 +1,161 @@
+[
+  {
+    "out": {
+      "live": true,
+      "count": 5
+    }
+  },
+  {
+    "out": {
+      "live": false,
+      "count": null
+    }
+  },
+  {
+    "out": {
+      "live": false,
+      "count": null
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 5
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 5
+    }
+  },
+  {
+    "out": {
+      "live": false,
+      "count": null
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 5
+    }
+  },
+  {
+    "out": {
+      "live": false,
+      "count": null
+    }
+  },
+  {
+    "out": {
+      "live": false,
+      "count": null
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 5
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 0
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 12
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 26
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 1000
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 0
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 3
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 4
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 0
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 0
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 1234567
+    }
+  },
+  {
+    "out": null
+  },
+  {
+    "throws": "TypeError"
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 7
+    }
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 1
+    }
+  },
+  {
+    "out": {
+      "live": false,
+      "count": null
+    }
+  },
+  {
+    "out": null
+  },
+  {
+    "out": {
+      "live": true,
+      "count": 1
+    }
+  },
+  {
+    "out": null
+  },
+  {
+    "out": null
+  }
+]

@@ -12,6 +12,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/hub"
 	"github.com/IamMrCupp/duplexchat/internal/sources"
 	"github.com/IamMrCupp/duplexchat/internal/targets"
+	"github.com/IamMrCupp/duplexchat/internal/viewers"
 )
 
 // Adapter is a running chat reader.
@@ -105,6 +106,34 @@ func (a *App) readerInfo(id string) targets.Reader {
 		return t.Target()
 	}
 	return targets.Reader{}
+}
+
+// InnerTube is a YouTube reader's interface key and client version, which
+// the free viewer count reuses.
+type InnerTube interface {
+	InnerTube() (apiKey, clientVersion string)
+}
+
+// ViewerSources is every source as the viewer counts see it, in the panel's
+// order: Twitch with the login its reader joined, YouTube with the broadcast
+// its reader found. A source without a running reader carries neither.
+func (a *App) ViewerSources() []viewers.Source {
+	var out []viewers.Source
+	for _, e := range a.Store.List() {
+		s := viewers.Source{Platform: e.Platform}
+		a.mu.Lock()
+		ad := a.adapters[e.ID]
+		a.mu.Unlock()
+		if t, ok := ad.(Targeted); ok {
+			r := t.Target()
+			s.Channel, s.VideoID = r.Channel, r.VideoID
+		}
+		if it, ok := ad.(InnerTube); ok {
+			s.APIKey, s.ClientVersion = it.InnerTube()
+		}
+		out = append(out, s)
+	}
+	return out
 }
 
 // Targets is where replies go, per platform (lib/targets.js get()).

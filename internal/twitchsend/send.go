@@ -43,6 +43,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/secrets"
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/targets"
+	"github.com/IamMrCupp/duplexchat/internal/viewers"
 )
 
 const (
@@ -574,6 +575,72 @@ func (s *Sender) rateLimited(r oauth.Response) server.SendResult {
 func (s *Sender) blocked() server.SendResult {
 	retry := math.Max(1, math.Ceil((s.blockedUntil-s.now())/1000))
 	return server.SendResult{Code: "rate_limited", Reason: "Twitch rate limit hit — holding off.", RetryAfter: int(retry)}
+}
+
+// ---------- viewer counts (for the overlay bar) ----------
+
+// Viewers is Get Streams for the overlay's bar: any user token, no scope
+// beyond what sending already has. Offline channels are simply absent from
+// the answer.
+//
+//	https://dev.twitch.tv/docs/api/reference/#get-streams
+func (s *Sender) Viewers(ctx context.Context, logins []string) (viewers.Twitch, error) {
+	const signIn = "Sign in to Twitch on /setup to show viewers."
+	const held = "Twitch rate limit hit — holding off."
+	if !s.Status().SignedIn {
+		return viewers.Twitch{State: "signed_out", Note: signIn}, nil
+	}
+	s.mu.Lock()
+	blocked := s.now() < s.blockedUntil
+	s.mu.Unlock()
+	if blocked {
+		return viewers.Twitch{State: "error", Note: held}, nil
+	}
+	if len(logins) > 100 {
+		logins = logins[:100]
+	}
+	qs := make([]string, len(logins))
+	for i, l := range logins {
+		qs[i] = "user_login=" + oauth.EncodeURIComponent(l)
+	}
+	r, err := s.helix(ctx, http.MethodGet, "/helix/streams?"+strings.Join(qs, "&"), nil)
+	if err != nil {
+		if errors.Is(err, oauth.ErrSignedOut) {
+			note := s.session.Problem()
+			if note == "" {
+				note = signIn
+			}
+			return viewers.Twitch{State: "signed_out", Note: note}, nil
+		}
+		return viewers.Twitch{State: "error", Note: "Couldn't reach Twitch."}, nil
+	}
+	switch r.Status {
+	case 429:
+		s.rateLimited(r)
+		return viewers.Twitch{State: "error", Note: held}, nil
+	case 401:
+		if err := s.session.Expire(); err != nil {
+			return viewers.Twitch{}, err
+		}
+		return viewers.Twitch{State: "signed_out", Note: Expired}, nil
+	}
+	data, isList := get(r.JSON, "data").([]any)
+	if r.Status != 200 || !jsjson.Truthy(r.JSON) || !isList {
+		return viewers.Twitch{State: "error", Note: fmt.Sprintf("Twitch answered HTTP %d.", r.Status)}, nil
+	}
+	live := map[string]float64{}
+	for _, d := range data {
+		if !jsjson.Truthy(d) || get(d, "type") != "live" || !truthy(d, "user_login") {
+			continue
+		}
+		vc, has := jsjson.Get(d, "viewer_count")
+		n := jsjson.ToNumber(vc, has)
+		if math.IsNaN(n) || math.IsInf(n, 0) {
+			continue
+		}
+		live[strings.ToLower(jsjson.ToString(get(d, "user_login")))] = n
+	}
+	return viewers.Twitch{State: "ok", Live: live}, nil
 }
 
 // ---------- send ----------

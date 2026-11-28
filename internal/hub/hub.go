@@ -22,9 +22,9 @@ const HistoryCap = 100
 
 // Count is one platform's viewer count as the pages expect it.
 type Count struct {
-	State string `json:"state"`
-	Count *int   `json:"count"`
-	Note  string `json:"note"`
+	State string   `json:"state"`
+	Count *float64 `json:"count"`
+	Note  string   `json:"note"`
 }
 
 // ViewerCounts is the viewers payload, Twitch first.
