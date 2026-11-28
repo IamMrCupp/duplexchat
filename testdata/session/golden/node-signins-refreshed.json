@@ -1,0 +1,19 @@
+{
+  "steps": [
+    {
+      "request": "client_id=fakeclientid&grant_type=refresh_token&refresh_token=T_REFRESH_1",
+      "result": "{\"accessToken\":\"T_ACCESS_2\",\"refreshToken\":\"T_REFRESH_2\",\"expiresAt\":1795014400000,\"scopes\":[\"user:write:chat\",\"channel:manage:broadcast\"],\"userId\":\"12345\",\"login\":\"examplechannel\",\"displayName\":\"Exämple Chan 🎮\"}",
+      "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_2\",\n    \"refreshToken\": \"T_REFRESH_2\",\n    \"expiresAt\": 1795014400000,\n    \"scopes\": [\n      \"user:write:chat\",\n      \"channel:manage:broadcast\"\n    ],\n    \"userId\": \"12345\",\n    \"login\": \"examplechannel\",\n    \"displayName\": \"Exämple Chan 🎮\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\",\n    \"accessToken\": \"Y_ACCESS_1\",\n    \"refreshToken\": \"Y_REFRESH_1\",\n    \"expiresAt\": 1794999999000,\n    \"channelId\": \"UCfakefakefakefakefake00\",\n    \"channelTitle\": \"Chan \\\"quoted\\\" <b>&</b>\",\n    \"handle\": \"@exämple\"\n  }\n}"
+    },
+    {
+      "request": "client_id=000000000000-fake.apps.googleusercontent.com&client_secret=FAKE_SECRET&grant_type=refresh_token&refresh_token=Y_REFRESH_1",
+      "result": "{\"clientId\":\"000000000000-fake.apps.googleusercontent.com\",\"clientSecret\":\"FAKE_SECRET\",\"accessToken\":\"Y_ACCESS_2\",\"refreshToken\":\"Y_REFRESH_1\",\"expiresAt\":1795003599000,\"channelId\":\"UCfakefakefakefakefake00\",\"channelTitle\":\"Chan \\\"quoted\\\" <b>&</b>\",\"handle\":\"@exämple\"}",
+      "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_2\",\n    \"refreshToken\": \"T_REFRESH_2\",\n    \"expiresAt\": 1795014400000,\n    \"scopes\": [\n      \"user:write:chat\",\n      \"channel:manage:broadcast\"\n    ],\n    \"userId\": \"12345\",\n    \"login\": \"examplechannel\",\n    \"displayName\": \"Exämple Chan 🎮\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\",\n    \"accessToken\": \"Y_ACCESS_2\",\n    \"refreshToken\": \"Y_REFRESH_1\",\n    \"expiresAt\": 1795003599000,\n    \"channelId\": \"UCfakefakefakefakefake00\",\n    \"channelTitle\": \"Chan \\\"quoted\\\" <b>&</b>\",\n    \"handle\": \"@exämple\"\n  }\n}"
+    },
+    {
+      "request": null,
+      "result": "{\"accessToken\":\"T_ACCESS_2\",\"refreshToken\":\"T_REFRESH_2\",\"expiresAt\":1795014400000,\"scopes\":[\"user:write:chat\",\"channel:manage:broadcast\"],\"userId\":\"12345\",\"login\":\"examplechannel\",\"displayName\":\"Exämple Chan 🎮\"}",
+      "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_2\",\n    \"refreshToken\": \"T_REFRESH_2\",\n    \"expiresAt\": 1795014400000,\n    \"scopes\": [\n      \"user:write:chat\",\n      \"channel:manage:broadcast\"\n    ],\n    \"userId\": \"12345\",\n    \"login\": \"examplechannel\",\n    \"displayName\": \"Exämple Chan 🎮\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\",\n    \"accessToken\": \"Y_ACCESS_2\",\n    \"refreshToken\": \"Y_REFRESH_1\",\n    \"expiresAt\": 1795003599000,\n    \"channelId\": \"UCfakefakefakefakefake00\",\n    \"channelTitle\": \"Chan \\\"quoted\\\" <b>&</b>\",\n    \"handle\": \"@exämple\"\n  }\n}"
+    }
+  ]
+}
