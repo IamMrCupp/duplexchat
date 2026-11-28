@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/IamMrCupp/duplexchat/compare/v0.16.1...v0.17.0) (2026-11-28)
+
+
+### Features
+
+* **viewers:** live viewer counts for the overlay bar (refs [#14](https://github.com/IamMrCupp/duplexchat/issues/14)) ([2fd22d5](https://github.com/IamMrCupp/duplexchat/commit/2fd22d5d99daf11785cd7914506b5a6bee4d65b4))
+
 ## [0.16.1](https://github.com/IamMrCupp/duplexchat/compare/v0.16.0...v0.16.1) (2026-11-28)
 
 
