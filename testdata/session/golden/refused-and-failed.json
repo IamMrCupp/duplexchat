@@ -1,0 +1,29 @@
+{
+  "steps": [
+    {
+      "request": "client_id=fakeclientid&grant_type=refresh_token&refresh_token=T_REFRESH_1",
+      "result": "Error: refresh failed: HTTP 503",
+      "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_1\",\n    \"refreshToken\": \"T_REFRESH_1\",\n    \"expiresAt\": 1795000000000,\n    \"userId\": \"1\",\n    \"login\": \"x\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\",\n    \"accessToken\": \"Y_ACCESS_1\",\n    \"refreshToken\": \"Y_REFRESH_1\",\n    \"expiresAt\": 1795000400000,\n    \"channelId\": \"UCx\"\n  }\n}"
+    },
+    {
+      "request": "client_id=fakeclientid&grant_type=refresh_token&refresh_token=T_REFRESH_1",
+      "result": "{\"accessToken\":\"T_ACCESS_2\",\"refreshToken\":\"T_REFRESH_2\",\"expiresAt\":1795000000000,\"userId\":\"1\",\"login\":\"x\"}",
+      "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_2\",\n    \"refreshToken\": \"T_REFRESH_2\",\n    \"expiresAt\": 1795000000000,\n    \"userId\": \"1\",\n    \"login\": \"x\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\",\n    \"accessToken\": \"Y_ACCESS_1\",\n    \"refreshToken\": \"Y_REFRESH_1\",\n    \"expiresAt\": 1795000400000,\n    \"channelId\": \"UCx\"\n  }\n}"
+    },
+    {
+      "request": "client_id=000000000000-fake.apps.googleusercontent.com&client_secret=FAKE_SECRET&grant_type=refresh_token&refresh_token=Y_REFRESH_1",
+      "result": "SignedOut",
+      "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_2\",\n    \"refreshToken\": \"T_REFRESH_2\",\n    \"expiresAt\": 1795000000000,\n    \"userId\": \"1\",\n    \"login\": \"x\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\"\n  }\n}"
+    },
+    {
+      "request": null,
+      "result": "SignedOut",
+      "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_2\",\n    \"refreshToken\": \"T_REFRESH_2\",\n    \"expiresAt\": 1795000000000,\n    \"userId\": \"1\",\n    \"login\": \"x\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\"\n  }\n}"
+    },
+    {
+      "request": "client_id=fakeclientid&grant_type=refresh_token&refresh_token=T_REFRESH_2",
+      "result": "SignedOut",
+      "file": "{\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\"\n  }\n}"
+    }
+  ]
+}

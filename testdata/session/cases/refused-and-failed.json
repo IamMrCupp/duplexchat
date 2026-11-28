@@ -1,0 +1,121 @@
+{
+  "about": "Failures: a platform error keeps the tokens; a forced refresh with no expires_in expires now; Google refusing the refresh token keeps only the client; Twitch refusing it removes the section.",
+  "now": 1795000000000,
+  "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_1\",\n    \"refreshToken\": \"T_REFRESH_1\",\n    \"expiresAt\": 1795000000000,\n    \"userId\": \"1\",\n    \"login\": \"x\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\",\n    \"accessToken\": \"Y_ACCESS_1\",\n    \"refreshToken\": \"Y_REFRESH_1\",\n    \"expiresAt\": 1795000400000,\n    \"channelId\": \"UCx\"\n  }\n}",
+  "steps": [
+    {
+      "section": "twitch",
+      "params": [
+        [
+          "client_id",
+          "fakeclientid"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "status": 503,
+      "answer": "{\"status\":503,\"message\":\"down\"}"
+    },
+    {
+      "section": "twitch",
+      "params": [
+        [
+          "client_id",
+          "fakeclientid"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "force": true,
+      "status": 200,
+      "answer": "{\"access_token\":\"T_ACCESS_2\",\"refresh_token\":\"T_REFRESH_2\"}"
+    },
+    {
+      "section": "youtube",
+      "params": [
+        [
+          "client_id",
+          "$clientId"
+        ],
+        [
+          "client_secret",
+          "$clientSecret"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "keep": [
+        "clientId",
+        "clientSecret"
+      ],
+      "force": true,
+      "status": 400,
+      "answer": "{\"error\":\"invalid_grant\",\"error_description\":\"Token has been expired or revoked.\"}"
+    },
+    {
+      "section": "youtube",
+      "params": [
+        [
+          "client_id",
+          "$clientId"
+        ],
+        [
+          "client_secret",
+          "$clientSecret"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "keep": [
+        "clientId",
+        "clientSecret"
+      ],
+      "status": 200,
+      "answer": "{}"
+    },
+    {
+      "section": "twitch",
+      "params": [
+        [
+          "client_id",
+          "fakeclientid"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "force": true,
+      "status": 401,
+      "answer": "{\"status\":401,\"message\":\"Invalid refresh token\"}"
+    }
+  ]
+}

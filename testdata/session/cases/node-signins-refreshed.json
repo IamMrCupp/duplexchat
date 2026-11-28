@@ -1,0 +1,72 @@
+{
+  "about": "A file Node wrote with a Twitch and a YouTube sign-in (fields this build doesn't use, non-ASCII, U+2028, quotes) is refreshed: Twitch rotates the refresh token, Google keeps it, a healthy token isn't refreshed again.",
+  "now": 1795000000000,
+  "file": "{\n  \"twitch\": {\n    \"accessToken\": \"T_ACCESS_1\",\n    \"refreshToken\": \"T_REFRESH_1\",\n    \"expiresAt\": 1795000060000,\n    \"scopes\": [\n      \"user:write:chat\",\n      \"channel:manage:broadcast\"\n    ],\n    \"userId\": \"12345\",\n    \"login\": \"examplechannel\",\n    \"displayName\": \"Exämple Chan 🎮\"\n  },\n  \"youtube\": {\n    \"clientId\": \"000000000000-fake.apps.googleusercontent.com\",\n    \"clientSecret\": \"FAKE_SECRET\",\n    \"accessToken\": \"Y_ACCESS_1\",\n    \"refreshToken\": \"Y_REFRESH_1\",\n    \"expiresAt\": 1794999999000,\n    \"channelId\": \"UCfakefakefakefakefake00\",\n    \"channelTitle\": \"Chan \\\"quoted\\\" <b>&</b>\",\n    \"handle\": \"@exämple\"\n  }\n}",
+  "steps": [
+    {
+      "section": "twitch",
+      "params": [
+        [
+          "client_id",
+          "fakeclientid"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "status": 200,
+      "answer": "{\"access_token\":\"T_ACCESS_2\",\"refresh_token\":\"T_REFRESH_2\",\"expires_in\":14400,\"scope\":[\"user:write:chat\"],\"token_type\":\"bearer\"}"
+    },
+    {
+      "section": "youtube",
+      "params": [
+        [
+          "client_id",
+          "$clientId"
+        ],
+        [
+          "client_secret",
+          "$clientSecret"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "keep": [
+        "clientId",
+        "clientSecret"
+      ],
+      "status": 200,
+      "answer": "{\"access_token\":\"Y_ACCESS_2\",\"expires_in\":3599,\"scope\":\"https://www.googleapis.com/auth/youtube.force-ssl\",\"token_type\":\"Bearer\"}"
+    },
+    {
+      "section": "twitch",
+      "params": [
+        [
+          "client_id",
+          "fakeclientid"
+        ],
+        [
+          "grant_type",
+          "refresh_token"
+        ],
+        [
+          "refresh_token",
+          "$refreshToken"
+        ]
+      ],
+      "status": 500,
+      "answer": "{}"
+    }
+  ]
+}
