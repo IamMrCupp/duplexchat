@@ -231,6 +231,45 @@ func TestViewersAndOverlayFiles(t *testing.T) {
 	}
 }
 
+// Source case 10, the switch half: the official YouTube count is an opt-in,
+// gated, saved to config.json, and switching back leaves no key behind.
+func TestYouTubeViewerSourceIsAnOptInSavedToConfig(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	cfg := func() map[string]any {
+		var c map[string]any
+		b, _ := os.ReadFile(filepath.Join(a.dir, "config.json"))
+		json.Unmarshal(b, &c)
+		return c
+	}
+	token := a.token(t)
+	source := func() any {
+		_, body := a.do(t, "GET", "/api/setup/state", map[string]string{"x-dock-token": token}, "")
+		var st struct {
+			Platforms map[string]map[string]any
+		}
+		json.Unmarshal([]byte(body), &st)
+		return st.Platforms["youtube"]["viewerSource"]
+	}
+	origin := fmt.Sprintf("http://127.0.0.1:%d", a.port)
+	headers := map[string]string{"origin": origin, "x-dock-token": token}
+	if got := source(); got != "free" { // free is the default
+		t.Fatalf("default %v", got)
+	}
+	if code, body := a.do(t, "POST", "/api/setup/youtube/viewers", map[string]string{"origin": origin}, `{"source":"api"}`); code != 403 {
+		t.Fatalf("no token: %d %s", code, body)
+	}
+	if code, body := a.do(t, "POST", "/api/setup/youtube/viewers", headers, `{"source":"api"}`); code != 200 {
+		t.Fatalf("%d %s", code, body)
+	}
+	if cfg()["youtubeViewers"] != "api" || source() != "api" {
+		t.Fatalf("config %v, state %v", cfg()["youtubeViewers"], source())
+	}
+	a.do(t, "POST", "/api/setup/youtube/viewers", headers, `{"source":"free"}`)
+	if v, has := cfg()["youtubeViewers"]; has || source() != "free" {
+		t.Fatalf("config still has %v, state %v", v, source())
+	}
+}
+
 // Port busy: the next one is used and the banner shows the real port.
 func TestPortFallback(t *testing.T) {
 	busy, err := net.Listen("tcp", "127.0.0.1:0")

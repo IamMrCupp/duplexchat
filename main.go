@@ -114,12 +114,11 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 		Store: vault, ClientID: store.TwitchClientID, SetClientID: store.SetTwitchClientID,
 		IDBase: twitchHTTP, APIBase: twitchHTTP, OnAuthChange: viewersStale,
 	})
-	senders := map[string]server.Sender{
-		"twitch": twitchSender,
-		"youtube": youtubesend.New(youtubesend.Options{
-			Store: vault, Endpoints: googleEndpoints(getenv("DUPLEXCHAT_GOOGLE_HTTP")), OnAuthChange: viewersStale,
-		}),
-	}
+	youtubeSender := youtubesend.New(youtubesend.Options{
+		Store: vault, Endpoints: googleEndpoints(getenv("DUPLEXCHAT_GOOGLE_HTTP")), OnAuthChange: viewersStale,
+		GetViewerSource: store.YouTubeViewers, SetViewerSource: store.SetYouTubeViewers,
+	})
+	senders := map[string]server.Sender{"twitch": twitchSender, "youtube": youtubeSender}
 
 	// Viewer counts for the overlay's bar: Twitch through the official API
 	// with the dock's sign-in; YouTube through the watch page's own
@@ -138,9 +137,15 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 			}
 			return twitchSender.Viewers(ctx, logins)
 		},
-		YouTube: func(ctx context.Context, s viewers.Source) (*viewers.YouTube, error) {
-			return viewers.FetchYouTube(ctx, viewers.FetchOptions{VideoID: s.VideoID, APIKey: s.APIKey, ClientVersion: s.ClientVersion, Origin: youtubeOrigin})
-		},
+		// Free by default. With "youtubeViewers": "api" in config.json (or the
+		// switch on /setup) the official API is asked first; if it can't
+		// answer (not signed in, quota gone, count hidden) the free path does.
+		YouTube: viewers.PreferOfficial(
+			func() bool { return store.YouTubeViewers() == "api" && sendLock.Held },
+			youtubeSender.Viewers,
+			func(ctx context.Context, s viewers.Source) (*viewers.YouTube, error) {
+				return viewers.FetchYouTube(ctx, viewers.FetchOptions{VideoID: s.VideoID, APIKey: s.APIKey, ClientVersion: s.ClientVersion, Origin: youtubeOrigin})
+			}),
 		Interval: interval,
 		Active:   func() bool { return feed.Clients() > 0 },
 		OnChange: func(c hub.ViewerCounts) { feed.Viewers(c) },
