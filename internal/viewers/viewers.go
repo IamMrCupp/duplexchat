@@ -652,3 +652,18 @@ func (c *Counts) Stop() {
 		c.stop = nil
 	}
 }
+
+// PreferOfficial is the YouTube count for the poller when the official
+// source may be switched on: while use() says so, the Data API is asked
+// first, and when it can't answer (not signed in, quota gone, count hidden)
+// the free path does.
+func PreferOfficial(use func() bool, official func(ctx context.Context, videoID string) (*YouTube, error), free func(ctx context.Context, s Source) (*YouTube, error)) func(ctx context.Context, s Source) (*YouTube, error) {
+	return func(ctx context.Context, s Source) (*YouTube, error) {
+		if use() {
+			if r, _ := official(ctx, s.VideoID); r != nil {
+				return r, nil
+			}
+		}
+		return free(ctx, s)
+	}
+}

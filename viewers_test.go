@@ -105,3 +105,83 @@ func viewersEvent(t *testing.T, port int) string {
 	}
 	return ""
 }
+
+// The official YouTube count on the real binary: switched on in config.json
+// and signed in, the count comes from videos.list; a second copy on the same
+// folder doesn't own the sign-in, so it reads the free count instead and
+// spends no quota.
+func TestOfficialYouTubeCountOnlyFromTheCopyThatOwnsSending(t *testing.T) {
+	var mu sync.Mutex
+	var asked []string
+	up := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		asked = append(asked, r.Method+" "+r.URL.Path)
+		mu.Unlock()
+		w.Header().Set("content-type", "application/json")
+		switch r.URL.Path {
+		case "/youtube/v3/videos": // Google: the official count
+			if r.Header.Get("Authorization") != "Bearer FAKE_YT_ACCESS_1" {
+				w.WriteHeader(401)
+				return
+			}
+			io.WriteString(w, `{"items":[{"id":"FAKEvideo01","liveStreamingDetails":{"actualStartTime":"2026-11-20T10:00:00Z","concurrentViewers":"152"}}]}`)
+		case "/youtubei/v1/updated_metadata": // the watch page's interface: the free count
+			io.WriteString(w, `{"actions":[{"updateViewershipAction":{"viewCount":{"videoViewCountRenderer":{"isLive":true,"originalViewCount":"7"}}}}]}`)
+		default:
+			w.WriteHeader(404)
+		}
+	}))
+	defer up.Close()
+	count := func(key string) int {
+		mu.Lock()
+		defer mu.Unlock()
+		n := 0
+		for _, a := range asked {
+			if a == key {
+				n++
+			}
+		}
+		return n
+	}
+
+	dir := t.TempDir()
+	cfg := fmt.Sprintf(`{"port": %d, "sources": [{"id": "y1", "url": "https://www.youtube.com/watch?v=FAKEvideo01"}], "youtubeViewers": "api"}`, freePort(t))
+	if err := os.WriteFile(filepath.Join(dir, "config.json"), []byte(cfg), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	sec := fmt.Sprintf(`{"youtube": {"clientId": "000000000000-fakefakefakefake.apps.googleusercontent.com", "clientSecret": "FAKE_CLIENT_SECRET_do_not_use", "accessToken": "FAKE_YT_ACCESS_1", "refreshToken": "FAKE_YT_REFRESH_1", "expiresAt": %d, "channelId": "UCfake", "channelTitle": "Example Channel"}}`, time.Now().Add(time.Hour).UnixMilli())
+	if err := os.WriteFile(filepath.Join(dir, "secrets.json"), []byte(sec), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	env := []string{"DUPLEXCHAT_DIR=" + dir, "DUPLEXCHAT_GOOGLE_HTTP=" + up.URL, "DUPLEXCHAT_YOUTUBE_ORIGIN=" + up.URL}
+	a := startIn(t, dir, env...)
+	official := `{"type":"viewers","viewers":{"twitch":{"state":"none","count":null,"note":""},"youtube":{"state":"live","count":152,"note":""}}}`
+	if e := viewersEvent(t, a.port); e != official {
+		t.Fatalf("first copy: %s", e)
+	}
+	if count("GET /youtube/v3/videos") != 1 || count("POST /youtubei/v1/updated_metadata") != 0 {
+		t.Fatalf("asked %q", asked)
+	}
+
+	b := startIn(t, dir, env...)
+	free := `{"type":"viewers","viewers":{"twitch":{"state":"none","count":null,"note":""},"youtube":{"state":"live","count":7,"note":""}}}`
+	if e := viewersEvent(t, b.port); e != free {
+		t.Fatalf("second copy: %s", e)
+	}
+	if count("GET /youtube/v3/videos") != 1 || count("POST /youtubei/v1/updated_metadata") != 1 {
+		t.Fatalf("asked %q", asked)
+	}
+
+	// Signed in but not switched on: free, and no quota spent.
+	dir2 := t.TempDir()
+	cfg2 := fmt.Sprintf(`{"port": %d, "sources": [{"id": "y1", "url": "https://www.youtube.com/watch?v=FAKEvideo01"}]}`, freePort(t))
+	os.WriteFile(filepath.Join(dir2, "config.json"), []byte(cfg2), 0o644)
+	os.WriteFile(filepath.Join(dir2, "secrets.json"), []byte(sec), 0o600)
+	c := startIn(t, dir2, "DUPLEXCHAT_DIR="+dir2, "DUPLEXCHAT_GOOGLE_HTTP="+up.URL, "DUPLEXCHAT_YOUTUBE_ORIGIN="+up.URL)
+	if e := viewersEvent(t, c.port); e != free {
+		t.Fatalf("switched off: %s", e)
+	}
+	if count("GET /youtube/v3/videos") != 1 {
+		t.Fatalf("asked %q", asked)
+	}
+}

@@ -137,6 +137,26 @@ func (s *Store) SetTwitchClientID(id string) {
 	s.save()
 }
 
+// YouTubeViewers is where the overlay's YouTube count comes from: "api"
+// when config.json says so, else "free" (server.js getViewerSource).
+func (s *Store) YouTubeViewers() string {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.cfg.YouTubeViewers == "api" {
+		return "api"
+	}
+	return "free"
+}
+
+// SetYouTubeViewers switches it and saves config.json; "free" leaves the
+// key out, as the source's save does.
+func (s *Store) SetYouTubeViewers(source string) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.cfg.YouTubeViewers = source
+	s.save()
+}
+
 // Targets is where replies go, per platform. reader tells what a source's
 // running reader knows; it's called without the store's lock held.
 func (s *Store) Targets(reader func(id string) targets.Reader) map[string]targets.Target {

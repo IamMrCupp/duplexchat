@@ -83,3 +83,30 @@ func TestFetchQueryOrderWithAKey(t *testing.T) {
 		t.Fatal(q)
 	}
 }
+
+func TestPreferOfficialAsksTheAPIFirstOnlyWhenSwitchedOn(t *testing.T) {
+	var asked []string
+	var mu sync.Mutex
+	note := func(s string) { mu.Lock(); asked = append(asked, s); mu.Unlock() }
+	var on bool
+	var answer *YouTube
+	f := PreferOfficial(func() bool { return on },
+		func(_ context.Context, id string) (*YouTube, error) { note("api " + id); return answer, nil },
+		func(_ context.Context, s Source) (*YouTube, error) { note("free " + s.VideoID); return live(3), nil })
+	src := yt("FAKEvideo01")
+	if got, _ := f(bg, src); !reflect.DeepEqual(got, live(3)) || !reflect.DeepEqual(asked, []string{"free FAKEvideo01"}) {
+		t.Fatalf("off: %+v %v", got, asked)
+	}
+	on, asked, answer = true, nil, live(152)
+	if got, _ := f(bg, src); !reflect.DeepEqual(got, live(152)) || !reflect.DeepEqual(asked, []string{"api FAKEvideo01"}) {
+		t.Fatalf("on: %+v %v", got, asked)
+	}
+	asked, answer = nil, nil // can't tell: the free path answers
+	if got, _ := f(bg, src); !reflect.DeepEqual(got, live(3)) || !reflect.DeepEqual(asked, []string{"api FAKEvideo01", "free FAKEvideo01"}) {
+		t.Fatalf("fallback: %+v %v", got, asked)
+	}
+	asked, answer = nil, notLive // not live is an answer, not a fallback
+	if got, _ := f(bg, src); !reflect.DeepEqual(got, notLive) || len(asked) != 1 {
+		t.Fatalf("not live: %+v %v", got, asked)
+	}
+}

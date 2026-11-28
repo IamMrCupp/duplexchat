@@ -46,6 +46,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/secrets"
 	"github.com/IamMrCupp/duplexchat/internal/server"
 	"github.com/IamMrCupp/duplexchat/internal/targets"
+	"github.com/IamMrCupp/duplexchat/internal/viewers"
 )
 
 const (
@@ -94,6 +95,12 @@ type Options struct {
 	// OnAuthChange is called after a sign-in lands or a sign-in ends. A
 	// panic in it is contained.
 	OnAuthChange func()
+	// GetViewerSource and SetViewerSource are where the overlay's YouTube
+	// count comes from ("free": the watch page's own interface, no quota;
+	// "api": videos.list, 1 unit a poll), kept in config.json by the server.
+	// Nil is "free" and a switch that keeps nothing.
+	GetViewerSource func() string
+	SetViewerSource func(source string)
 
 	Endpoints Endpoints // zero → DefaultEndpoints
 	Now       func() time.Time
@@ -129,6 +136,12 @@ func New(o Options) *Sender {
 	}
 	if o.Now == nil {
 		o.Now = time.Now
+	}
+	if o.GetViewerSource == nil {
+		o.GetViewerSource = func() string { return "free" }
+	}
+	if o.SetViewerSource == nil {
+		o.SetViewerSource = func(string) {}
 	}
 	s := &Sender{o: o, ep: ep, chatIDs: map[string]any{}}
 	s.session = &oauth.Session{
@@ -324,6 +337,8 @@ func (s *Sender) SetupState(port int) *jsjson.Object {
 	return ok("clientId", or(y, "clientId", ""), "hasSecret", truthy(y, "clientSecret"),
 		"channelId", channelID, "handle", handle, "redirectUri", uri, "scope", Scope,
 		"signinError", s.signinError,
+		// free = the watch page's own interface, no quota; api = videos.list, 1 unit a poll
+		"viewerSource", viewerSource(s.o.GetViewerSource()), "viewerPollCost", CostVideosList,
 		"quota", ok("perSend", CostInsert, "perBroadcastLookup", CostVideosList, "dailyDefault", CostDailyDefault,
 			"usedTodayEstimate", s.usedUnits, "resetsInMs", MsUntilPacificMidnight(now), "exhausted", now < s.quotaBlockedUntil))
 }
@@ -351,8 +366,14 @@ func (s *Sender) authChanged() {
 	s.o.OnAuthChange()
 }
 
-// Setup runs one of /setup's actions; nil for one it doesn't have. (The
-// viewer-source switch comes with #14.)
+func viewerSource(v string) string {
+	if v == "api" {
+		return "api"
+	}
+	return "free"
+}
+
+// Setup runs one of /setup's actions; nil for one it doesn't have.
 func (s *Sender) Setup(ctx context.Context, action string, body *jsjson.Object, port int) (*server.SetupResult, error) {
 	switch action {
 	case "client":
@@ -361,6 +382,13 @@ func (s *Sender) Setup(ctx context.Context, action string, body *jsjson.Object, 
 		return s.startSignin(port), nil
 	case "signout":
 		return s.signOut(ctx)
+	case "viewers":
+		source, _ := get(body, "source").(string)
+		if source != "free" && source != "api" {
+			return answer(400, ok("error", "source must be free or api", "code", "bad_source")), nil
+		}
+		s.o.SetViewerSource(source)
+		return answer(200, ok("ok", true)), nil
 	}
 	return nil, nil
 }
@@ -680,6 +708,54 @@ func (s *Sender) refusal(r oauth.Response, videoID string) (server.SendResult, e
 		code = jsjson.ToString(reason)
 	}
 	return failure(code, message), nil
+}
+
+// ---------- viewer counts (the official source) ----------
+
+// Viewers is the overlay's YouTube count through the Data API, for those
+// who switched to it: one videos.list a poll, 1 unit, counted in the
+// estimate. concurrentViewers is there only while the broadcast is live and
+// the owner hasn't hidden the count.
+//
+//	https://developers.google.com/youtube/v3/docs/videos
+//
+// nil is "can't tell" (not signed in, quota gone, an error, a hidden count),
+// and the caller falls back to the free path.
+func (s *Sender) Viewers(ctx context.Context, videoID string) (*viewers.YouTube, error) {
+	if videoID == "" || !s.Status().SignedIn {
+		return nil, nil
+	}
+	s.mu.Lock()
+	blocked := s.now() < s.quotaBlockedUntil
+	s.mu.Unlock()
+	if blocked {
+		return nil, nil
+	}
+	r, err := s.api(ctx, http.MethodGet, "/videos?part=liveStreamingDetails&id="+oauth.EncodeURIComponent(videoID), nil, CostVideosList)
+	if err != nil {
+		return nil, nil
+	}
+	if r.Status != 200 {
+		s.refusal(r, videoID) // records quota exhaustion, or a dead sign-in
+		return nil, nil
+	}
+	var v any
+	if items, isList := get(r.JSON, "items").([]any); isList && len(items) > 0 {
+		v = items[0]
+	}
+	d := get(v, "liveStreamingDetails")
+	if !jsjson.Truthy(v) || !jsjson.Truthy(d) {
+		return nil, nil
+	}
+	if truthy(d, "actualEndTime") || !truthy(d, "actualStartTime") {
+		return &viewers.YouTube{}, nil
+	}
+	cv, has := jsjson.Get(d, "concurrentViewers")
+	n := jsjson.ToNumber(cv, has)
+	if math.IsNaN(n) || math.IsInf(n, 0) {
+		return nil, nil // live, but the count is hidden
+	}
+	return &viewers.YouTube{Live: true, Count: n}, nil
 }
 
 // ---------- send ----------
