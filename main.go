@@ -165,10 +165,12 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 			}
 			return sendLock.Reason
 		},
-		Targets:   chats.Targets,
-		SetTarget: chats.SetTarget,
-		Notices:   func() []string { return []string{vault.Problem()} },
-		Senders:   senders,
+		Targets:    chats.Targets,
+		SetTarget:  chats.SetTarget,
+		Notices:    func() []string { return []string{vault.Problem()} },
+		GetPresets: store.InfoPresets,
+		SetPresets: store.SetInfoPresets,
+		Senders:    senders,
 		State: func() server.State {
 			return server.State{
 				Version: version, Host: cfg.Host, Port: actual,

@@ -2,6 +2,7 @@ package info
 
 import (
 	"encoding/json"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -89,5 +90,34 @@ func TestCleanPresets(t *testing.T) {
 	}
 	if n := len(CleanPresets(many)); n != MaxPresets {
 		t.Errorf("kept %d presets, want %d", n, MaxPresets)
+	}
+}
+
+// infoapi.test.js: "presets and tags from a hand-edited config are cleaned,
+// not trusted", case for case.
+func TestPresetsAndTagsFromAHandEditedConfigAreCleanedNotTrusted(t *testing.T) {
+	if got := CleanPresets("nope"); len(got) != 0 {
+		t.Fatalf("%v", got)
+	}
+	got, _ := json.Marshal(CleanPresets(decode(t, `[null, 7, {"title":"no name"}, {"name":"ok","tags":"nope","category":"nope"}, {"name":"OK"}]`)))
+	if string(got) != `[{"name":"ok","title":"","tags":[],"category":{}}]` {
+		t.Fatalf("%s", got)
+	}
+	var eighty []any
+	for i := 0; i < 80; i++ {
+		eighty = append(eighty, map[string]any{"name": "n" + strconv.Itoa(i)})
+	}
+	if n := len(CleanPresets(eighty)); n != MaxPresets {
+		t.Fatalf("%d", n)
+	}
+	if got := CleanTags(decode(t, `[" a ", "A", 5, null, "b\nc"]`)); strings.Join(got, "|") != "a|b c" {
+		t.Fatalf("%q", got)
+	}
+	var five []any
+	for i := 0; i < 500; i++ {
+		five = append(five, "t"+strconv.Itoa(i))
+	}
+	if n := len(CleanTags(five)); n != 50 {
+		t.Fatalf("%d", n)
 	}
 }

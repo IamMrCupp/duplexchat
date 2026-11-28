@@ -3,6 +3,7 @@ package sources
 import (
 	"bytes"
 	"fmt"
+	"github.com/IamMrCupp/duplexchat/internal/info"
 	"os"
 	"path/filepath"
 	"strings"
@@ -160,5 +161,67 @@ func TestTwitchClientIDSurvivesSaves(t *testing.T) {
 	s.SetTwitchClientID("")
 	if strings.Contains(read(), "twitchClientId") {
 		t.Fatalf("an empty client ID is still written:\n%s", read())
+	}
+}
+
+// Presets saved from the stream info panel land in config.json in the
+// source's key order, survive the panel's own saves, and read back as
+// presets; an empty list drops the key.
+func TestInfoPresetsSurviveSaves(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "config.json")
+	if err := os.WriteFile(path, []byte(`{"port": 8787, "sources": [], "infoPresets": [{"name": "From before", "title": "Kept", "tags": ["a"]}, {"junk": true}]}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	s := NewStore(config.Load(path), path, Options{NewID: counterIDs()})
+	if got := info.CleanPresets(s.InfoPresets()); len(got) != 1 || got[0].Name != "From before" {
+		t.Fatalf("%+v", got)
+	}
+	read := func() string {
+		b, _ := os.ReadFile(path)
+		return string(b)
+	}
+	list := append(info.CleanPresets(s.InfoPresets()), info.Preset{Name: "Repair night", Title: "Fixing", Tags: []string{"repair"},
+		Category: info.Categories{Twitch: &info.Category{ID: "509670", Name: "Example Category"}}})
+	s.SetInfoPresets(list)
+	want := `"infoPresets": [
+    {
+      "name": "From before",
+      "title": "Kept",
+      "tags": [
+        "a"
+      ],
+      "category": {}
+    },
+    {
+      "name": "Repair night",
+      "title": "Fixing",
+      "tags": [
+        "repair"
+      ],
+      "category": {
+        "twitch": {
+          "id": "509670",
+          "name": "Example Category"
+        }
+      }
+    }
+  ]`
+	if !strings.Contains(read(), want) {
+		t.Fatalf("saved:\n%s", read())
+	}
+	// read back as presets, and kept through the panel's own save
+	if got := info.CleanPresets(s.InfoPresets()); len(got) != 2 || got[1].Category.Twitch == nil {
+		t.Fatalf("%+v", got)
+	}
+	if _, err := s.Add("https://www.twitch.tv/examplechannel"); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(read(), want) {
+		t.Fatalf("lost on a later save:\n%s", read())
+	}
+	s.SetInfoPresets(nil)
+	if strings.Contains(read(), "infoPresets") {
+		t.Fatalf("empty list kept the key:\n%s", read())
 	}
 }

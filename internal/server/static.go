@@ -3,6 +3,7 @@
 package server
 
 import (
+	"github.com/IamMrCupp/duplexchat/internal/info"
 	"github.com/IamMrCupp/duplexchat/internal/targets"
 	"io/fs"
 	"net/http"
@@ -66,6 +67,11 @@ type Options struct {
 	SetTarget func(platform, sourceID string) bool // a pick from the dock
 	Senders   map[string]Sender                    // by platform
 	Notices   func() []string                      // for /setup: what the owner should see (never secrets)
+
+	// Stream info presets, kept in config.json: the raw value as found, and
+	// a cleaned list to save.
+	GetPresets func() any
+	SetPresets func([]info.Preset)
 }
 
 // Server answers HTTP requests.
@@ -102,6 +108,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	if m := setupPath.FindStringSubmatch(r.URL.Path); m != nil && r.Method == http.MethodPost {
 		s.setupAction(rw, r, m[1], m[2])
+		return
+	}
+	if s.info(rw, r) {
 		return
 	}
 	// a sign-in redirect is claimed before the panel gets /
