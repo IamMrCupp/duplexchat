@@ -7,6 +7,7 @@ package sources
 import (
 	"crypto/rand"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/url"
@@ -154,6 +155,28 @@ func (s *Store) SetYouTubeViewers(source string) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.cfg.YouTubeViewers = source
+	s.save()
+}
+
+// InfoPresets is config.json's infoPresets as last read or saved, for the
+// stream info panel to clean.
+func (s *Store) InfoPresets() any {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.cfg.InfoPresets
+}
+
+// SetInfoPresets replaces them and saves config.json; an empty list leaves
+// the key out.
+func (s *Store) SetInfoPresets(list []info.Preset) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	// kept as JSON values, as Load leaves them, so the next clean reads them
+	var plain any
+	if b, err := json.Marshal(list); err == nil {
+		json.Unmarshal(b, &plain)
+	}
+	s.cfg.InfoPresets = plain
 	s.save()
 }
 

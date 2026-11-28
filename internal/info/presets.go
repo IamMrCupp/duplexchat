@@ -1,5 +1,6 @@
-// Package info is the stream info panel. For now it holds preset cleaning,
-// which config.json saving needs (multichat lib/infoapi.js at 29a9d2c).
+// Package info is the stream info panel's cleaning rules: titles, tags,
+// categories and presets as multichat lib/infoapi.js at 29a9d2c cleans them.
+// config.json saving and the info routes both use them.
 package info
 
 import "strings"
@@ -22,8 +23,10 @@ func jsSpace(r rune) bool {
 	return r >= '\u2000' && r <= '\u200a'
 }
 
-// clip: a string with whitespace runs collapsed to one space, trimmed, cut to
+// Clip: a string with whitespace runs collapsed to one space, trimmed, cut to
 // n code points; anything that isn't a string is "".
+func Clip(v any, n int) string { return clip(v, n) }
+
 func clip(v any, n int) string {
 	s, ok := v.(string)
 	if !ok {
@@ -78,6 +81,9 @@ type Category struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
 }
+
+// ValidID is the pattern a category or broadcast ID must match.
+func ValidID(id string) bool { return validID(id) }
 
 func validID(id string) bool {
 	if len(id) < 1 || len(id) > 32 {

@@ -19,14 +19,7 @@ var localURL = regexp.MustCompile("['\"`](/(?:api|fonts|events|overlay|dock|setu
 
 // notYet are routes the pages call that arrive with later issues. When one
 // lands, move it out of here and the test checks it's really served.
-var notYet = map[string]string{
-	"/api/info/state":          "#17",
-	"/api/info/current":        "#17",
-	"/api/info/categories":     "#17",
-	"/api/info/save":           "#17",
-	"/api/info/presets":        "#17",
-	"/api/info/presets/delete": "#17",
-}
+var notYet = map[string]string{}
 
 // gated are the panel's writes: without the session headers they're a 403,
 // which proves the route exists.
@@ -47,6 +40,13 @@ var gated = map[string]string{
 	"/api/setup/youtube/signout": "POST",
 	"/api/setup/youtube/client":  "POST",
 	"/api/setup/youtube/viewers": "POST",
+
+	"/api/info/state":          "GET",
+	"/api/info/current":        "GET",
+	"/api/info/categories":     "GET",
+	"/api/info/save":           "POST",
+	"/api/info/presets":        "POST",
+	"/api/info/presets/delete": "POST",
 }
 
 // suffix completes a prefix route the pages build on.
