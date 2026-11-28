@@ -20,9 +20,6 @@ var localURL = regexp.MustCompile("['\"`](/(?:api|fonts|events|overlay|dock|setu
 // notYet are routes the pages call that arrive with later issues. When one
 // lands, move it out of here and the test checks it's really served.
 var notYet = map[string]string{
-	"/api/setup/youtube/signin":  "#12",
-	"/api/setup/youtube/signout": "#12",
-	"/api/setup/youtube/client":  "#12",
 	"/api/setup/youtube/viewers": "#14",
 	"/api/info/state":            "#17",
 	"/api/info/current":          "#17",
@@ -44,9 +41,12 @@ var gated = map[string]string{
 	"/api/setup/state": "GET",
 	"/api/setup/":      "POST", // + <platform>/<action>
 
-	"/api/setup/twitch/signin":  "POST",
-	"/api/setup/twitch/signout": "POST",
-	"/api/setup/twitch/cancel":  "POST",
+	"/api/setup/twitch/signin":   "POST",
+	"/api/setup/twitch/signout":  "POST",
+	"/api/setup/twitch/cancel":   "POST",
+	"/api/setup/youtube/signin":  "POST",
+	"/api/setup/youtube/signout": "POST",
+	"/api/setup/youtube/client":  "POST",
 }
 
 // suffix completes a prefix route the pages build on.

@@ -82,7 +82,7 @@ func start(t *testing.T, config map[string]any, env ...string) *instance {
 
 // offline keeps the binary off the internet: Twitch and YouTube go
 // to a port nothing listens on.
-var offline = []string{"DUPLEXCHAT_TWITCH_IRC=127.0.0.1:1", "DUPLEXCHAT_TWITCH_HTTP=http://127.0.0.1:1", "DUPLEXCHAT_YOUTUBE_ORIGIN=http://127.0.0.1:1"}
+var offline = []string{"DUPLEXCHAT_TWITCH_IRC=127.0.0.1:1", "DUPLEXCHAT_TWITCH_HTTP=http://127.0.0.1:1", "DUPLEXCHAT_GOOGLE_HTTP=http://127.0.0.1:1", "DUPLEXCHAT_YOUTUBE_ORIGIN=http://127.0.0.1:1"}
 
 func startIn(t *testing.T, dir string, env ...string) *instance {
 	t.Helper()
@@ -327,8 +327,7 @@ func TestSessionFromBinary(t *testing.T) {
 	if code != 200 || len(s.Token) < 43 || hdr.Get("Cache-Control") != "no-store" {
 		t.Fatalf("session: %d %q %s", code, hdr.Get("Cache-Control"), body)
 	}
-	// Twitch sending is in the build (#11); YouTube's comes with #12
-	for p, available := range map[string]bool{"twitch": true, "youtube": false} {
+	for p, available := range map[string]bool{"twitch": true, "youtube": true} {
 		if s.Platforms[p]["signedIn"] != false || s.Platforms[p]["available"] != available {
 			t.Errorf("%s: %v", p, s.Platforms[p])
 		}
@@ -750,5 +749,57 @@ func TestBrokenSecretsFileIsSetAsideAndReported(t *testing.T) {
 	}
 	if b, _ := os.ReadFile(filepath.Join(a.dir, "error.log")); strings.Contains(string(b), "FAKE_REFRESH") {
 		t.Fatalf("error.log: %s", b)
+	}
+}
+
+// Source case 9: the YouTube client goes to secrets.json (0600), never
+// config.json; a made-up sign-in callback gets the 400 page and / is still
+// the panel; nothing about it reaches the log or the output.
+func TestYouTubeClientGoesToSecretsAndThePanelKeepsSlash(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	token := a.token(t)
+	origin := fmt.Sprintf("http://127.0.0.1:%d", a.port)
+	code, body := a.do(t, "POST", "/api/setup/youtube/client", map[string]string{"origin": origin, "x-dock-token": token},
+		`{"clientId":"000000000000-fakefakefakefake.apps.googleusercontent.com","clientSecret":"FAKE_CLIENT_SECRET_do_not_use"}`)
+	if code != 200 {
+		t.Fatalf("save: %d %s", code, body)
+	}
+	file := filepath.Join(a.dir, "secrets.json")
+	b, _ := os.ReadFile(file)
+	var saved map[string]map[string]any
+	json.Unmarshal(b, &saved)
+	if saved["youtube"]["clientSecret"] != "FAKE_CLIENT_SECRET_do_not_use" {
+		t.Fatalf("secrets.json: %s", b)
+	}
+	if runtime.GOOS != "windows" {
+		if fi, _ := os.Stat(file); fi.Mode().Perm() != 0o600 {
+			t.Fatalf("mode %v", fi.Mode().Perm())
+		}
+	}
+	if b, _ := os.ReadFile(filepath.Join(a.dir, "config.json")); strings.Contains(string(b), "FAKE_CLIENT_SECRET") {
+		t.Fatalf("config.json: %s", b)
+	}
+
+	_, body = a.do(t, "GET", "/api/setup/state", map[string]string{"x-dock-token": token}, "")
+	var st struct{ Platforms map[string]map[string]any }
+	json.Unmarshal([]byte(body), &st)
+	y := st.Platforms["youtube"]
+	if y["available"] != true || y["hasSecret"] != true || y["redirectUri"] != origin || strings.Contains(body, "FAKE_CLIENT_SECRET") {
+		t.Fatalf("state: %s", body)
+	}
+
+	// a stray OAuth-shaped visit is refused; the panel is still the panel
+	if code, hdr, body := a.get(t, "/?state=made-up&code=made-up", ""); code != 400 || !strings.HasPrefix(hdr.Get("Content-Type"), "text/html") || !strings.Contains(body, "a sign-in this server started") {
+		t.Fatalf("made-up callback: %d %s", code, body)
+	}
+	if code, _, body := a.get(t, "/", ""); code != 200 || !strings.Contains(body, `id="rows"`) {
+		t.Fatalf("panel: %d", code)
+	}
+	// nothing was written to the log about any of it
+	if b, _ := os.ReadFile(filepath.Join(a.dir, "error.log")); strings.Contains(string(b), "FAKE_") {
+		t.Fatalf("error.log: %s", b)
+	}
+	if strings.Contains(a.out.String(), "FAKE_") {
+		t.Fatalf("output: %s", a.out.String())
 	}
 }
