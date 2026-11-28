@@ -73,6 +73,8 @@ type fakeGoogle struct {
 	hold, seen           chan struct{} // a refresh answer waits for hold; seen closes when one arrives
 	// a code exchange's answer waits for exchangeHold; exchangeSeen closes when one arrives
 	exchangeHold, exchangeSeen chan struct{}
+	// the channel's broadcasts, once withBroadcasts sets them up
+	world *world
 }
 
 func newGoogle(t *testing.T) *fakeGoogle {
@@ -175,6 +177,15 @@ func (g *fakeGoogle) serve(w http.ResponseWriter, r *http.Request) {
 			rep = g.insert(c)
 		default:
 			rep = reply{200, map[string]any{"kind": "youtube#liveChatMessage", "id": "fake-yt-msg-1", "snippet": c.body["snippet"]}}
+		}
+	case "GET /youtube/v3/liveBroadcasts", "PUT /youtube/v3/liveBroadcasts", "PUT /youtube/v3/videos", "GET /youtube/v3/videoCategories":
+		switch {
+		case g.world == nil:
+			rep = reply{404, map[string]any{"status": 404, "message": "no such fake route"}}
+		case !authed:
+			rep = gErr(401, "authError", "Invalid Credentials")
+		default:
+			rep = g.world.serve(c)
 		}
 	default:
 		rep = reply{404, map[string]any{"status": 404, "message": "no such fake route"}}
