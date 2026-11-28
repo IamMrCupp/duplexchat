@@ -74,8 +74,17 @@ func referenced(t *testing.T) map[string][]string {
 	return out
 }
 
+// missing is how the server says nobody serves a path: the static
+// fallthrough's plain "not found", or the JSON not_found that the setup and
+// info routes give a path or action they don't have.
+func missing(code int, body string) bool {
+	return code == 404 && (body == "not found" || strings.Contains(body, `"code":"not_found"`))
+}
+
 func TestPagesOnlyUseKnownRoutes(t *testing.T) {
 	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	token := a.token(t)
+	session := map[string]string{"origin": fmt.Sprintf("http://127.0.0.1:%d", a.port), "x-dock-token": token}
 	refs := referenced(t)
 	var paths []string
 	for p := range refs {
@@ -94,6 +103,16 @@ func TestPagesOnlyUseKnownRoutes(t *testing.T) {
 			path += suffix[p]
 			if code, body := a.do(t, gated[p], path, map[string]string{}, ""); code != 403 {
 				t.Errorf("%s %s (used by %v): %d %s, want 403 from the gate", gated[p], path, refs[p], code, body)
+			}
+			// The gate runs before the catch-all under /api/info/ and
+			// /api/setup/, so a 403 alone doesn't prove the route is there.
+			// Past the gate, it must answer something other than "missing".
+			body := ""
+			if gated[p] == "POST" {
+				body = "{}"
+			}
+			if code, got := a.do(t, gated[p], path, session, body); missing(code, got) {
+				t.Errorf("%s %s (used by %v): past the gate, nobody serves it: %d %s", gated[p], path, refs[p], code, got)
 			}
 		case p == "/events":
 			continue // a stream; TestViewersAndOverlayFiles reads it
