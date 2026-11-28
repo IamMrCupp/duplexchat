@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/IamMrCupp/duplexchat/compare/v0.16.0...v0.16.1) (2026-11-28)
+
+
+### Bug Fixes
+
+* **oauth:** read the tokens and join a refresh in one step ([dc5ded2](https://github.com/IamMrCupp/duplexchat/commit/dc5ded243b5b1d8e8dcaa9baf3dcd9ee6357350d))
+
 ## [0.16.0](https://github.com/IamMrCupp/duplexchat/compare/v0.15.0...v0.16.0) (2026-11-28)
 
 
