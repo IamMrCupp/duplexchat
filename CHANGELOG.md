@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/IamMrCupp/duplexchat/compare/v0.17.0...v0.18.0) (2026-11-28)
+
+
+### Features
+
+* **viewers:** the official YouTube count as an opt-in ([#14](https://github.com/IamMrCupp/duplexchat/issues/14)) ([d9fdbbc](https://github.com/IamMrCupp/duplexchat/commit/d9fdbbc0e6212dc2a9f83612d9480347f1d17831))
+
 ## [0.17.0](https://github.com/IamMrCupp/duplexchat/compare/v0.16.1...v0.17.0) (2026-11-28)
 
 
