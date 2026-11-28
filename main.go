@@ -29,6 +29,7 @@ import (
 	"github.com/IamMrCupp/duplexchat/internal/twitchsend"
 	"github.com/IamMrCupp/duplexchat/internal/window"
 	"github.com/IamMrCupp/duplexchat/internal/youtube"
+	"github.com/IamMrCupp/duplexchat/internal/youtubesend"
 )
 
 // version is set at release with -ldflags "-X main.version=…".
@@ -99,6 +100,7 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 			Store: vault, ClientID: store.TwitchClientID, SetClientID: store.SetTwitchClientID,
 			IDBase: twitchHTTP, APIBase: twitchHTTP,
 		}),
+		"youtube": youtubesend.New(youtubesend.Options{Store: vault, Endpoints: googleEndpoints(getenv("DUPLEXCHAT_GOOGLE_HTTP"))}),
 	}
 
 	handler := server.New(server.Options{
@@ -160,4 +162,14 @@ func run(args []string, getenv func(string) string, stdout, stderr io.Writer) in
 		srv.Shutdown(shutdown) // the feed's streams end when ctx does
 	}
 	return 0
+}
+
+// googleEndpoints points YouTube sending at another Google (tests):
+// DUPLEXCHAT_GOOGLE_HTTP serves /o/oauth2/v2/auth, /token, /revoke and
+// /youtube/v3. "" is the real Google.
+func googleEndpoints(base string) youtubesend.Endpoints {
+	if base == "" {
+		return youtubesend.Endpoints{}
+	}
+	return youtubesend.Endpoints{Auth: base + "/o/oauth2/v2/auth", Token: base + "/token", Revoke: base + "/revoke", API: base + "/youtube/v3"}
 }

@@ -11,16 +11,17 @@ import (
 // JavaScript's conversions, for the values Parse returns: nil, bool,
 // float64, string, []any and *Object.
 
-// Trim is String#trim: JavaScript's white space and line terminators.
-func Trim(s string) string {
-	return strings.TrimFunc(s, func(r rune) bool {
-		switch r {
-		case '\t', '\n', '\v', '\f', '\r', ' ', 0xa0, 0xfeff, 0x2028, 0x2029:
-			return true
-		}
-		return unicode.Is(unicode.Zs, r)
-	})
+// IsSpace is JavaScript's \s: white space and line terminators.
+func IsSpace(r rune) bool {
+	switch r {
+	case '\t', '\n', '\v', '\f', '\r', ' ', 0xa0, 0xfeff, 0x2028, 0x2029:
+		return true
+	}
+	return unicode.Is(unicode.Zs, r)
 }
+
+// Trim is String#trim.
+func Trim(s string) string { return strings.TrimFunc(s, IsSpace) }
 
 // Truthy is JavaScript truthiness.
 func Truthy(v any) bool {
