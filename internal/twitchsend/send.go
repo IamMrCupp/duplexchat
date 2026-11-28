@@ -21,8 +21,8 @@
 //	https://dev.twitch.tv/docs/api/guide/#twitch-rate-limits
 //
 // The stream info scope is asked for when the stream info panel starts a
-// sign-in, and kept by later sign-ins once granted. The panel itself comes
-// with #17.
+// sign-in, and kept by later sign-ins once granted. The panel's half
+// lives in info.go.
 package twitchsend
 
 import (

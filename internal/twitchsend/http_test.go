@@ -1,6 +1,6 @@
 package twitchsend
 
-// The over-HTTP cases of test/twitch-send.test.js (14 and 19): the real
+// The over-HTTP cases of test/twitch-send.test.js (14, 19 and 29): the real
 // sender behind the server's routes.
 
 import (
@@ -164,5 +164,59 @@ func TestASecondCopyDoesNotSendAndSaysWhy(t *testing.T) {
 	}
 	if f.callCount() != calls {
 		t.Fatal("something reached Twitch")
+	}
+}
+
+// 29
+func TestStreamInfoOverHTTPGrantFromThePanelReadSave(t *testing.T) {
+	f := newFake(t, 1)
+	s := makeSender(t, f).sender
+	a := startApp(s, nil)
+	signIn(t, s)
+
+	if _, j := a.do("GET", "/api/info/state", "", nil); dig(j, "platforms", "twitch", "needsPermission") != true ||
+		dig(j, "platforms", "twitch", "available") != true || dig(j, "platforms", "twitch", "categories") != "search" {
+		t.Fatalf("state: %v", j)
+	}
+	if _, j := a.do("POST", "/api/info/save", `{"platforms":["twitch"],"title":"New title","tags":[]}`, nil); dig(j, "results", "twitch", "code") != "needs_permission" {
+		t.Fatalf("save before the grant: %v", j)
+	}
+	if _, j := a.do("POST", "/api/setup/twitch/signin", `{"info":true}`, nil); j["userCode"] != "ABCDEFGH" {
+		t.Fatalf("grant: %v", j)
+	}
+	waitFor(t, "the info scope", s.hasInfoScope)
+	if _, j := a.do("GET", "/api/setup/state", "", nil); dig(j, "platforms", "twitch", "hasInfoScope") != true {
+		t.Fatalf("setup state: %v", j)
+	}
+	if _, j := a.do("GET", "/api/info/state", "", nil); dig(j, "platforms", "twitch", "ready") != true {
+		t.Fatalf("state: %v", j)
+	}
+	if _, j := a.do("GET", "/api/info/current?platform=twitch", "", nil); dig(j, "info", "title") != "Old title" {
+		t.Fatalf("current: %v", j)
+	}
+	_, j := a.do("GET", "/api/info/categories?platform=twitch&q=exam", "", nil)
+	if list, _ := j["categories"].([]any); len(list) == 0 || dig(list[0], "id") != "509670" {
+		t.Fatalf("categories: %v", j)
+	}
+
+	_, j = a.do("POST", "/api/info/save", `{"platforms":["twitch"],"title":"New title","tags":["repair"],"category":{"twitch":{"id":"509670","name":"Example Category"}}}`, nil)
+	if b, _ := json.Marshal(j["results"]); string(b) != `{"twitch":{"ok":true}}` {
+		t.Fatalf("save: %s", b)
+	}
+	if got := f.patchCalls()[0].raw; got != `{"title":"New title","tags":["repair"],"game_id":"509670"}` {
+		t.Fatalf("patched %s", got)
+	}
+	// too long for Twitch: refused here, Twitch never asked
+	if code, _ := a.do("POST", "/api/info/save", `{"platforms":["twitch"],"title":"`+strings.Repeat("x", 141)+`","tags":[]}`, nil); code != 400 {
+		t.Fatalf("long title: %d", code)
+	}
+	if n := len(f.patchCalls()); n != 1 {
+		t.Fatalf("%d patches", n)
+	}
+	all := strings.Join(a.seen, "\n")
+	for _, secret := range []string{"FAKE_ACCESS", "FAKE_REFRESH", "FAKE_DEVICE"} {
+		if strings.Contains(all, secret) {
+			t.Errorf("%s in a response", secret)
+		}
 	}
 }
