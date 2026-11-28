@@ -10,7 +10,6 @@ import (
 	"sort"
 	"strings"
 	"sync"
-	"unicode"
 	"unicode/utf8"
 
 	"github.com/IamMrCupp/duplexchat/internal/gate"
@@ -44,16 +43,8 @@ func fail(code, reason string) result { return result{Code: code, Reason: reason
 
 var breaks = regexp.MustCompile(`[\r\n\t]+`)
 
-// jsTrim is String#trim: JavaScript's white space and line terminators.
-func jsTrim(s string) string {
-	return strings.TrimFunc(s, func(r rune) bool {
-		switch r {
-		case '\t', '\n', '\v', '\f', '\r', ' ', 0xa0, 0xfeff, 0x2028, 0x2029:
-			return true
-		}
-		return unicode.Is(unicode.Zs, r)
-	})
-}
+// jsTrim is String#trim.
+func jsTrim(s string) string { return jsjson.Trim(s) }
 
 // send is POST /api/send.
 func (s *Server) send(w http.ResponseWriter, r *http.Request) {

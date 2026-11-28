@@ -80,9 +80,9 @@ func start(t *testing.T, config map[string]any, env ...string) *instance {
 	return startIn(t, dir, append([]string{"DUPLEXCHAT_DIR=" + dir}, env...)...)
 }
 
-// offline keeps the binary's readers off the internet: Twitch and YouTube go
+// offline keeps the binary off the internet: Twitch and YouTube go
 // to a port nothing listens on.
-var offline = []string{"DUPLEXCHAT_TWITCH_IRC=127.0.0.1:1", "DUPLEXCHAT_YOUTUBE_ORIGIN=http://127.0.0.1:1"}
+var offline = []string{"DUPLEXCHAT_TWITCH_IRC=127.0.0.1:1", "DUPLEXCHAT_TWITCH_HTTP=http://127.0.0.1:1", "DUPLEXCHAT_YOUTUBE_ORIGIN=http://127.0.0.1:1"}
 
 func startIn(t *testing.T, dir string, env ...string) *instance {
 	t.Helper()
@@ -327,8 +327,9 @@ func TestSessionFromBinary(t *testing.T) {
 	if code != 200 || len(s.Token) < 43 || hdr.Get("Cache-Control") != "no-store" {
 		t.Fatalf("session: %d %q %s", code, hdr.Get("Cache-Control"), body)
 	}
-	for _, p := range []string{"twitch", "youtube"} {
-		if s.Platforms[p]["signedIn"] != false || s.Platforms[p]["available"] != false {
+	// Twitch sending is in the build (#11); YouTube's comes with #12
+	for p, available := range map[string]bool{"twitch": true, "youtube": false} {
+		if s.Platforms[p]["signedIn"] != false || s.Platforms[p]["available"] != available {
 			t.Errorf("%s: %v", p, s.Platforms[p])
 		}
 	}
@@ -657,5 +658,97 @@ func TestSetupFromBinary(t *testing.T) {
 	}
 	if _, err := os.Stat(filepath.Join(dir, "secrets.json")); !os.IsNotExist(err) {
 		t.Errorf("secrets.json exists before any sign-in: %v", err)
+	}
+}
+
+// Source case 7: the Twitch client ID is saved to config.json and survives
+// the panel's own saves; there's no secrets file until a sign-in.
+func TestTwitchClientIDSavedAndSurvives(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	token := a.token(t)
+	origin := fmt.Sprintf("http://127.0.0.1:%d", a.port)
+	headers := map[string]string{"origin": origin, "x-dock-token": token}
+	var st struct{ Platforms map[string]map[string]any }
+	_, body := a.do(t, "GET", "/api/setup/state", map[string]string{"x-dock-token": token}, "")
+	json.Unmarshal([]byte(body), &st)
+	if tw := st.Platforms["twitch"]; tw["available"] != true || tw["configured"] != false || tw["clientId"] != "" {
+		t.Fatalf("state: %s", body)
+	}
+
+	if code, body := a.do(t, "POST", "/api/setup/twitch/client", headers, `{"clientId":"fakeclientid0123456789abcdefgh"}`); code != 200 {
+		t.Fatalf("save: %d %s", code, body)
+	}
+	cfg := func() map[string]any {
+		var c map[string]any
+		b, _ := os.ReadFile(filepath.Join(a.dir, "config.json"))
+		json.Unmarshal(b, &c)
+		return c
+	}
+	if cfg()["twitchClientId"] != "fakeclientid0123456789abcdefgh" {
+		t.Fatalf("config: %v", cfg())
+	}
+	// the panel's own save path keeps it
+	if code, _ := a.do(t, "POST", "/api/clear", headers, ""); code != 200 {
+		t.Fatalf("clear: %d", code)
+	}
+	if code, _ := a.do(t, "DELETE", "/api/sources/abcd1234", headers, ""); code != 404 {
+		t.Fatalf("delete: %d", code)
+	}
+	if code, body := a.do(t, "POST", "/api/sources", headers, `{"url":"https://www.twitch.tv/examplechannel"}`); code != 200 {
+		t.Fatalf("add: %d %s", code, body)
+	}
+	if cfg()["twitchClientId"] != "fakeclientid0123456789abcdefgh" {
+		t.Fatalf("lost on a panel save: %v", cfg())
+	}
+	if _, err := os.Stat(filepath.Join(a.dir, "secrets.json")); !os.IsNotExist(err) {
+		t.Fatalf("secrets.json before a sign-in: %v", err)
+	}
+
+	if code, _ := a.do(t, "POST", "/api/setup/twitch/client", map[string]string{"origin": origin, "x-dock-token": "wrong"}, `{"clientId":"x"}`); code != 403 {
+		t.Fatalf("wrong token: %d", code)
+	}
+	_, body = a.do(t, "POST", "/api/send", headers, `{"target":"twitch","text":"hi"}`)
+	if !strings.Contains(body, `"code":"not_signed_in"`) {
+		t.Fatalf("send: %s", body)
+	}
+}
+
+// Source case 8, the broken-file half: a secrets file that can't be parsed
+// is set aside and reported on /setup, and its contents reach neither the
+// output nor error.log.
+func TestBrokenSecretsFileIsSetAsideAndReported(t *testing.T) {
+	a := start(t, map[string]any{"port": freePort(t), "sources": []any{}})
+	broken := `{"twitch": {"refreshToken": "FAKE_REFRESH_in_a_broken_file"`
+	if err := os.WriteFile(filepath.Join(a.dir, "secrets.json"), []byte(broken), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	_, body := a.do(t, "GET", "/api/setup/state", map[string]string{"x-dock-token": a.token(t)}, "")
+	var st struct {
+		Platforms map[string]map[string]any
+		Notices   []string
+	}
+	json.Unmarshal([]byte(body), &st)
+	if st.Platforms["twitch"]["available"] != true || len(st.Notices) != 1 ||
+		!regexp.MustCompile(`couldn't be parsed, so it was moved to secrets\.json\.broken-`).MatchString(st.Notices[0]) {
+		t.Fatalf("state: %s", body)
+	}
+	entries, _ := os.ReadDir(a.dir)
+	var aside []string
+	for _, e := range entries {
+		if strings.HasPrefix(e.Name(), "secrets.json.broken-") {
+			aside = append(aside, e.Name())
+		}
+	}
+	if len(aside) != 1 {
+		t.Fatalf("set aside: %v", aside)
+	}
+	if b, _ := os.ReadFile(filepath.Join(a.dir, aside[0])); string(b) != broken {
+		t.Fatalf("aside holds %q", b)
+	}
+	if strings.Contains(a.out.String(), "FAKE_REFRESH") {
+		t.Fatalf("output: %s", a.out.String())
+	}
+	if b, _ := os.ReadFile(filepath.Join(a.dir, "error.log")); strings.Contains(string(b), "FAKE_REFRESH") {
+		t.Fatalf("error.log: %s", b)
 	}
 }
