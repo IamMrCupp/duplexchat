@@ -106,6 +106,14 @@ func (s *Session) expire() error {
 // wire share its answer.
 func (s *Session) Refresh(ctx context.Context) (*jsjson.Object, error) {
 	s.mu.Lock()
+	f := s.flight()
+	s.mu.Unlock()
+	return f.wait(ctx)
+}
+
+// flight is the refresh on the wire, started if there isn't one. It runs
+// with s.mu held.
+func (s *Session) flight() *flight {
 	f := s.refreshing
 	if f == nil {
 		f = &flight{done: make(chan struct{})}
@@ -121,7 +129,10 @@ func (s *Session) Refresh(ctx context.Context) (*jsjson.Object, error) {
 			close(f.done)
 		}()
 	}
-	s.mu.Unlock()
+	return f
+}
+
+func (f *flight) wait(ctx context.Context) (*jsjson.Object, error) {
 	select {
 	case <-f.done:
 		return f.t, f.err
@@ -188,16 +199,26 @@ func (s *Session) refresh(generation int) (*jsjson.Object, error) {
 // Tokens are the stored tokens, refreshed first when forced, when there's
 // no access token, or within RefreshMargin of expiresAt. A missing
 // expiresAt never forces one.
+//
+// Reading the file and joining a refresh already on the wire are one step,
+// as they are on Node's single thread. Otherwise a caller that read the old
+// tokens just before a refresh landed would start a second one, spending a
+// refresh token that's already been replaced.
 func (s *Session) Tokens(ctx context.Context, force bool) (*jsjson.Object, error) {
+	s.mu.Lock()
 	t := s.Read()
 	if t == nil || !truthy(t, "refreshToken") {
+		s.mu.Unlock()
 		return nil, ErrSignedOut
 	}
 	exp, _ := t.Get("expiresAt")
 	left := number(exp, t.Has("expiresAt")) - s.now()
 	if force || !truthy(t, "accessToken") || left < float64(RefreshMargin.Milliseconds()) {
-		return s.Refresh(ctx)
+		f := s.flight()
+		s.mu.Unlock()
+		return f.wait(ctx)
 	}
+	s.mu.Unlock()
 	return t, nil
 }
 
