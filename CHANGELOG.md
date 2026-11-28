@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/IamMrCupp/duplexchat/compare/v0.20.0...v0.21.0) (2026-11-28)
+
+
+### Features
+
+* **youtube:** read and save stream info (refs [#17](https://github.com/IamMrCupp/duplexchat/issues/17)) ([ce4d8c0](https://github.com/IamMrCupp/duplexchat/commit/ce4d8c06bb0e4a63220d88a56946f2f730cb37c5))
+
 ## [0.20.0](https://github.com/IamMrCupp/duplexchat/compare/v0.19.0...v0.20.0) (2026-11-28)
 
 
