@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.0](https://github.com/IamMrCupp/duplexchat/compare/v0.19.0...v0.20.0) (2026-11-28)
+
+
+### Features
+
+* **twitch:** read and save stream info (refs [#17](https://github.com/IamMrCupp/duplexchat/issues/17)) ([ccd4870](https://github.com/IamMrCupp/duplexchat/commit/ccd4870a4b141cb9ff5979a53662dcaee0aacc9c))
+
 ## [0.19.0](https://github.com/IamMrCupp/duplexchat/compare/v0.18.0...v0.19.0) (2026-11-28)
 
 
