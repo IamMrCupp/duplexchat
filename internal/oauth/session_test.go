@@ -420,3 +420,67 @@ func TestFail(t *testing.T) {
 		t.Fatalf("got %s", got)
 	}
 }
+
+// A caller that reads the old tokens while a refresh is on the wire joins
+// that refresh, even if the refresh lands before the caller gets as far as
+// asking for one. On Node the read and the join can't be split; here a
+// clock that stalls the second caller between them puts the landing there.
+func TestACallerThatReadTheOldTokensJoinsTheRefreshInFlight(t *testing.T) {
+	f := newFake(t)
+	s, _, c := signedIn(t, f, 2*time.Minute)
+	var hookMu sync.Mutex
+	var hook func()
+	s.Now = func() time.Time {
+		hookMu.Lock()
+		h := hook
+		hook = nil
+		hookMu.Unlock()
+		if h != nil {
+			h()
+		}
+		return c.now()
+	}
+	hold := make(chan struct{})
+	f.mu.Lock()
+	f.hold = hold
+	f.mu.Unlock()
+
+	tokens := func(done chan<- *jsjson.Object) {
+		tok, err := s.Tokens(context.Background(), false)
+		if err != nil {
+			t.Error(err)
+		}
+		done <- tok
+	}
+	first, second := make(chan *jsjson.Object, 1), make(chan *jsjson.Object, 1)
+	go tokens(first)
+	<-f.seen // the first caller's refresh is on the wire
+
+	// the second caller stalls after reading the file, before deciding
+	entered, release := make(chan struct{}), make(chan struct{})
+	hookMu.Lock()
+	hook = func() { close(entered); <-release }
+	hookMu.Unlock()
+	go tokens(second)
+	<-entered
+
+	close(hold) // let the refresh land...
+	var a *jsjson.Object
+	select {
+	case a = <-first: // ...which it can only do now if the read wasn't locked
+	case <-time.After(300 * time.Millisecond):
+	}
+	close(release)
+	if a == nil {
+		a = <-first
+	}
+	b := <-second
+	if f.count() != 1 {
+		t.Fatalf("%d refreshes, want 1: %v", f.count(), f.bodies)
+	}
+	for _, tok := range []*jsjson.Object{a, b} {
+		if tok == nil || tok.String("accessToken") != "FAKE_ACCESS_1" {
+			t.Fatalf("callers got %v and %v", a, b)
+		}
+	}
+}
