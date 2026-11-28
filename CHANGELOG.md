@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.0](https://github.com/IamMrCupp/duplexchat/compare/v0.15.0...v0.16.0) (2026-11-28)
+
+
+### Features
+
+* **youtube:** PKCE sign-in, quota guard and sending ([#12](https://github.com/IamMrCupp/duplexchat/issues/12)) ([ae240bb](https://github.com/IamMrCupp/duplexchat/commit/ae240bb0b9b6351bb2dd1dd3ff45422680b7ae1d))
+
 ## [0.15.0](https://github.com/IamMrCupp/duplexchat/compare/v0.14.0...v0.15.0) (2026-11-28)
 
 
